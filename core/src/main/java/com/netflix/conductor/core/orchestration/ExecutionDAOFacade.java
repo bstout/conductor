@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.conductor.common.metadata.events.EventExecution;
 import com.netflix.conductor.common.metadata.tasks.PollData;
 import com.netflix.conductor.common.metadata.tasks.Task;
+import com.netflix.conductor.common.metadata.tasks.TaskDef;
 import com.netflix.conductor.common.metadata.tasks.TaskExecLog;
 import com.netflix.conductor.common.run.SearchResult;
 import com.netflix.conductor.common.run.Workflow;
@@ -25,6 +26,7 @@ import com.netflix.conductor.core.execution.ApplicationException;
 import com.netflix.conductor.core.execution.ApplicationException.Code;
 import com.netflix.conductor.dao.ExecutionDAO;
 import com.netflix.conductor.dao.IndexDAO;
+import com.netflix.conductor.dao.RateLimitingDao;
 import com.netflix.conductor.metrics.Monitors;
 import java.io.IOException;
 import java.util.List;
@@ -39,7 +41,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Service that acts as a facade for accessing execution data from the {@link ExecutionDAO} and {@link IndexDAO} storage layers
+ * Service that acts as a facade for accessing execution data from the {@link ExecutionDAO}, {@link RateLimitingDao} and {@link IndexDAO} storage layers
  */
 @Singleton
 public class ExecutionDAOFacade {
@@ -50,15 +52,18 @@ public class ExecutionDAOFacade {
 
     private final ExecutionDAO executionDAO;
     private final IndexDAO indexDAO;
+    private final RateLimitingDao rateLimitingDao;
     private final ObjectMapper objectMapper;
     private final Configuration config;
 
     private final ScheduledThreadPoolExecutor scheduledThreadPoolExecutor;
 
     @Inject
-    public ExecutionDAOFacade(ExecutionDAO executionDAO, IndexDAO indexDAO, ObjectMapper objectMapper, Configuration config) {
+    public ExecutionDAOFacade(ExecutionDAO executionDAO, IndexDAO indexDAO, RateLimitingDao rateLimitingDao,
+                              ObjectMapper objectMapper, Configuration config) {
         this.executionDAO = executionDAO;
         this.indexDAO = indexDAO;
+        this.rateLimitingDao = rateLimitingDao;
         this.objectMapper = objectMapper;
         this.config = config;
         this.scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(4,
@@ -262,6 +267,28 @@ public class ExecutionDAOFacade {
         }
     }
 
+    /**
+     * Reset the workflow state by removing from the {@link ExecutionDAO} and
+     * removing this workflow from the {@link IndexDAO}.
+     *
+     * @param workflowId the workflow id to be reset
+     */
+    public void resetWorkflow(String workflowId) {
+        try {
+            Workflow workflow = getWorkflowById(workflowId, true);
+            executionDAO.removeWorkflow(workflowId);
+            if (config.enableAsyncIndexing()) {
+                indexDAO.asyncRemoveWorkflow(workflowId);
+            } else {
+                indexDAO.removeWorkflow(workflowId);
+            }
+        } catch (ApplicationException ae) {
+            throw ae;
+        } catch (Exception e) {
+            throw new ApplicationException(ApplicationException.Code.BACKEND_ERROR, "Error resetting workflow state: " + workflowId, e);
+        }
+    }
+
     public List<Task> createTasks(List<Task> tasks) {
         return executionDAO.createTasks(tasks);
     }
@@ -368,8 +395,8 @@ public class ExecutionDAOFacade {
         return executionDAO.exceedsInProgressLimit(task);
     }
 
-    public boolean exceedsRateLimitPerFrequency(Task task) {
-        return executionDAO.exceedsRateLimitPerFrequency(task);
+    public boolean exceedsRateLimitPerFrequency(Task task, TaskDef taskDef) {
+        return rateLimitingDao.exceedsRateLimitPerFrequency(task, taskDef);
     }
 
     public void addTaskExecLog(List<TaskExecLog> logs) {

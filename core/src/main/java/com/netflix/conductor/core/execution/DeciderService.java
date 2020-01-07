@@ -33,13 +33,12 @@ import com.netflix.conductor.common.run.Workflow.WorkflowStatus;
 import com.netflix.conductor.common.utils.ExternalPayloadStorage.Operation;
 import com.netflix.conductor.common.utils.ExternalPayloadStorage.PayloadType;
 import com.netflix.conductor.common.utils.TaskUtils;
+import com.netflix.conductor.core.config.Configuration;
 import com.netflix.conductor.core.execution.mapper.TaskMapper;
 import com.netflix.conductor.core.execution.mapper.TaskMapperContext;
 import com.netflix.conductor.core.utils.ExternalPayloadStorageUtils;
 import com.netflix.conductor.core.utils.IDGenerator;
-import com.netflix.conductor.core.utils.QueueUtils;
 import com.netflix.conductor.dao.MetadataDAO;
-import com.netflix.conductor.dao.QueueDAO;
 import com.netflix.conductor.metrics.Monitors;
 import java.util.Collections;
 import java.util.HashMap;
@@ -68,24 +67,26 @@ public class DeciderService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DeciderService.class);
 
-    private final QueueDAO queueDAO;
     private final ParametersUtils parametersUtils;
     private final ExternalPayloadStorageUtils externalPayloadStorageUtils;
     private final MetadataDAO metadataDAO;
+    private final Configuration config;
 
     private final Map<String, TaskMapper> taskMappers;
 
     private final Predicate<Task> isNonPendingTask = task -> !task.isRetried() && !task.getStatus().equals(SKIPPED) && !task.isExecuted();
 
+    private static final String PENDING_TASK_TIME_THRESHOLD_PROPERTY_NAME = "workflow.task.pending.time.threshold.minutes";
+
     @Inject
-    public DeciderService(ParametersUtils parametersUtils, QueueDAO queueDAO, MetadataDAO metadataDAO,
+    public DeciderService(ParametersUtils parametersUtils, MetadataDAO metadataDAO,
                           ExternalPayloadStorageUtils externalPayloadStorageUtils,
-                          @Named("TaskMappers") Map<String, TaskMapper> taskMappers) {
-        this.queueDAO = queueDAO;
+                          @Named("TaskMappers") Map<String, TaskMapper> taskMappers, Configuration configuration) {
         this.metadataDAO = metadataDAO;
         this.parametersUtils = parametersUtils;
         this.taskMappers = taskMappers;
         this.externalPayloadStorageUtils = externalPayloadStorageUtils;
+        this.config = configuration;
     }
 
     //QQ public method validation of the input params
@@ -489,7 +490,7 @@ public class DeciderService {
             LOGGER.warn("missing task type " + task.getTaskDefName() + ", workflowId=" + task.getWorkflowInstanceId());
             return;
         }
-        if (task.getStatus().isTerminal() || taskDef.getTimeoutSeconds() <= 0 || !task.getStatus().equals(IN_PROGRESS)) {
+        if (task.getStatus().isTerminal() || taskDef.getTimeoutSeconds() <= 0 || task.getStartTime() <= 0) {
             return;
         }
 
@@ -524,25 +525,34 @@ public class DeciderService {
             LOGGER.warn("missing task type : {}, workflowId= {}", task.getTaskDefName(), task.getWorkflowInstanceId());
             return false;
         }
-        if (task.getStatus().isTerminal() || !task.getStatus().equals(IN_PROGRESS) || taskDefinition.getResponseTimeoutSeconds() == 0) {
+        if (task.getStatus().isTerminal()) {
             return false;
         }
 
-        if (queueDAO.exists(QueueUtils.getQueueName(task), task.getTaskId())) {
-            // this task is present in the queue
-            // this means that it has been updated with callbackAfterSeconds and is not being executed in a worker
+        // calculate pendingTime
+        long now = System.currentTimeMillis();
+        long callbackTime = 1000L * task.getCallbackAfterSeconds();
+        long referenceTime = task.getUpdateTime() > 0 ? task.getUpdateTime() : task.getScheduledTime();
+        long pendingTime = now - (referenceTime + callbackTime);
+        Monitors.recordTaskPendingTime(task.getTaskType(), task.getWorkflowType(), pendingTime);
+        long thresholdMS = config.getIntProperty(PENDING_TASK_TIME_THRESHOLD_PROPERTY_NAME, 60) * 60 * 1000;
+        if (pendingTime > thresholdMS) {
+            LOGGER.warn("Task: {} of type: {} in workflow: {}/{} is in pending state for longer than {} ms",
+                task.getTaskId(), task.getTaskType(), task.getWorkflowInstanceId(), task.getWorkflowType(), thresholdMS);
+        }
+
+        if (!task.getStatus().equals(IN_PROGRESS) || taskDefinition.getResponseTimeoutSeconds() == 0) {
             return false;
         }
 
         LOGGER.debug("Evaluating responseTimeOut for Task: {}, with Task Definition: {}", task, taskDefinition);
-
         long responseTimeout = 1000L * taskDefinition.getResponseTimeoutSeconds();
-        long now = System.currentTimeMillis();
+        long adjustedResponseTimeout = responseTimeout + callbackTime;
         long noResponseTime = now - task.getUpdateTime();
 
-        if (noResponseTime < responseTimeout) {
-            LOGGER.debug("Current responseTime: {} has not exceeded the configured responseTimeout of {} " +
-                    "for the Task: {} with Task Definition: {}", noResponseTime, responseTimeout, task, taskDefinition);
+        if (noResponseTime < adjustedResponseTimeout) {
+            LOGGER.debug("Current responseTime: {} has not exceeded the configured responseTimeout of {} for the Task: {} with Task Definition: {}",
+                pendingTime, responseTimeout, task, taskDefinition);
             return false;
         }
 

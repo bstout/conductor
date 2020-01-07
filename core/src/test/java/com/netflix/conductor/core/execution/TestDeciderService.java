@@ -1,5 +1,9 @@
-/**
+/*
+<<<<<<< HEAD
+ * Copyright 2019 Netflix, Inc.
+=======
  * Copyright 2016 Netflix, Inc.
+>>>>>>> 45397da6... remove usage of exists method in queuedao
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -10,10 +14,20 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-/**
- *
- */
 package com.netflix.conductor.core.execution;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.conductor.common.metadata.tasks.Task;
@@ -28,6 +42,7 @@ import com.netflix.conductor.common.run.Workflow;
 import com.netflix.conductor.common.run.Workflow.WorkflowStatus;
 import com.netflix.conductor.common.utils.JsonMapperProvider;
 import com.netflix.conductor.common.utils.TaskUtils;
+import com.netflix.conductor.core.config.Configuration;
 import com.netflix.conductor.core.execution.DeciderService.DeciderOutcome;
 import com.netflix.conductor.core.execution.mapper.DecisionTaskMapper;
 import com.netflix.conductor.core.execution.mapper.DynamicTaskMapper;
@@ -43,17 +58,10 @@ import com.netflix.conductor.core.execution.mapper.UserDefinedTaskMapper;
 import com.netflix.conductor.core.execution.mapper.WaitTaskMapper;
 import com.netflix.conductor.core.utils.ExternalPayloadStorageUtils;
 import com.netflix.conductor.dao.MetadataDAO;
-import com.netflix.conductor.dao.QueueDAO;
 import com.netflix.spectator.api.Counter;
 import com.netflix.spectator.api.DefaultRegistry;
 import com.netflix.spectator.api.Registry;
 import com.netflix.spectator.api.Spectator;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -68,20 +76,11 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * @author Viren
@@ -113,8 +112,8 @@ public class TestDeciderService {
     public void setup() {
         metadataDAO = mock(MetadataDAO.class);
         externalPayloadStorageUtils = mock(ExternalPayloadStorageUtils.class);
-        QueueDAO queueDAO = mock(QueueDAO.class);
         MetadataDAO metadataDAO = mock(MetadataDAO.class);
+        Configuration config = mock(Configuration.class);
 
         TaskDef taskDef = new TaskDef();
 
@@ -138,7 +137,7 @@ public class TestDeciderService {
         taskMappers.put("WAIT", new WaitTaskMapper(parametersUtils));
         taskMappers.put("HTTP", new HTTPTaskMapper(parametersUtils, metadataDAO));
 
-        deciderService = new DeciderService(parametersUtils, queueDAO, metadataDAO, externalPayloadStorageUtils, taskMappers);
+        deciderService = new DeciderService(parametersUtils, metadataDAO, externalPayloadStorageUtils, taskMappers, config);
     }
 
     @Test
@@ -319,6 +318,47 @@ public class TestDeciderService {
         assertTrue(taskInput.containsKey("taskOutputParam"));
         assertEquals("request id 001", taskInput.get("workflowInputParam"));
         assertEquals("http://location", taskInput.get("taskOutputParam"));
+    }
+
+    @Test
+    public void testGetTaskInputV2WithInputTemplate() {
+        TaskDef def = new TaskDef();
+        Map<String, Object> inputTemplate = new HashMap<>();
+        inputTemplate.put("url", "https://some_url:7004");
+        inputTemplate.put("default_url", "https://default_url:7004");
+        inputTemplate.put("someKey", "someValue");
+
+        def.getInputTemplate().putAll(inputTemplate);
+
+        Map<String, Object> workflowInput = new HashMap<>();
+        workflowInput.put("some_new_url", "https://some_new_url:7004");
+        workflowInput.put("workflow_input_url", "https://workflow_input_url:7004");
+        workflowInput.put("some_other_key", "some_other_value");
+
+        WorkflowDef workflowDef = new WorkflowDef();
+        workflowDef.setName("testGetTaskInputV2WithInputTemplate");
+        workflowDef.setVersion(1);
+
+        Workflow workflow = new Workflow();
+        workflow.setWorkflowDefinition(workflowDef);
+        workflow.setInput(workflowInput);
+
+        WorkflowTask workflowTask = new WorkflowTask();
+        workflowTask.getInputParameters().put("url", "${workflow.input.some_new_url}");
+        workflowTask.getInputParameters().put("workflow_input_url", "${workflow.input.workflow_input_url}");
+        workflowTask.getInputParameters().put("someKey", "${workflow.input.someKey}");
+        workflowTask.getInputParameters().put("someOtherKey", "${workflow.input.some_other_key}");
+        workflowTask.getInputParameters().put("someNowhereToBeFoundKey", "${workflow.input.some_ne_key}");
+
+        Map<String, Object> taskInput = parametersUtils.getTaskInputV2(workflowTask.getInputParameters(), workflow, null, def);
+        assertTrue(taskInput.containsKey("url"));
+        assertTrue(taskInput.containsKey("default_url"));
+        assertEquals(taskInput.get("url"), "https://some_new_url:7004");
+        assertEquals(taskInput.get("default_url"), "https://default_url:7004");
+        assertEquals(taskInput.get("workflow_input_url"), "https://workflow_input_url:7004");
+        assertEquals("some_other_value", taskInput.get("someOtherKey"));
+        assertEquals("someValue", taskInput.get("someKey"));
+        assertNull(taskInput.get("someNowhereToBeFoundKey"));
     }
 
     @Test
@@ -783,9 +823,7 @@ public class TestDeciderService {
         task.setTaskId("aa");
         task.setUpdateTime(System.currentTimeMillis() - TimeUnit.SECONDS.toMillis(11));
 
-        boolean flag = deciderService.isResponseTimedOut(taskDef, task);
-        assertNotNull(task);
-        assertTrue(flag);
+        assertTrue(deciderService.isResponseTimedOut(taskDef, task));
     }
 
     @Test

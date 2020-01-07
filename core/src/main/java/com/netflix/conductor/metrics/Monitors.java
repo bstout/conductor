@@ -29,7 +29,6 @@ import com.netflix.spectator.api.Registry;
 import com.netflix.spectator.api.Spectator;
 import com.netflix.spectator.api.Timer;
 import com.netflix.spectator.api.histogram.PercentileTimer;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -195,6 +194,10 @@ public class Monitors {
 		counter(classQualifier, "task_response_timeout", "taskType", taskType);
 	}
 
+	public static void recordTaskPendingTime(String taskType, String workflowType, long duration) {
+		gauge(classQualifier, "task_pending_time", duration, "workflowName", workflowType, "taskType", taskType);
+	}
+
 	public static void recordWorkflowTermination(String workflowType, WorkflowStatus status, String ownerApp) {
 		counter(classQualifier, "workflow_failure", "workflowName", workflowType, "status", status.name(), "ownerApp", ""+ownerApp);
 	}
@@ -277,5 +280,13 @@ public class Monitors {
 
 	public static void recordDiscardedIndexingCount(String queueType) {
 		getCounter(Monitors.classQualifier, "discarded_index_count", "queueType", queueType).increment();
+	}
+
+	public static void recordAcquireLockUnsuccessful() {
+		counter(classQualifier, "acquire_lock_unsuccessful");
+	}
+
+	public static void recordAcquireLockFailure(String exceptionClassName) {
+		counter(classQualifier, "acquire_lock_failure", "exceptionType", exceptionClassName);
 	}
 }
