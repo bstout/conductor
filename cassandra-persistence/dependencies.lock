@@ -93,18 +93,25 @@
             ],
             "locked": "1.2.2"
         },
-        "javax.el:javax.el-api": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ],
-            "locked": "3.0.0"
-        },
         "javax.inject:javax.inject": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
             "locked": "1"
+        },
+        "javax.validation:validation-api": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.1.Final"
+        },
+        "org.apache.bval:bval-jsr": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.3"
         },
         "org.apache.commons:commons-lang3": {
             "firstLevelTransitive": [
@@ -119,13 +126,6 @@
                 "com.netflix.conductor:conductor-core"
             ],
             "locked": "3.0.0"
-        },
-        "org.hibernate:hibernate-validator": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ],
-            "locked": "6.0.13.Final"
         },
         "org.slf4j:slf4j-api": {
             "firstLevelTransitive": [
@@ -228,18 +228,25 @@
             ],
             "locked": "1.2.2"
         },
-        "javax.el:javax.el-api": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ],
-            "locked": "3.0.0"
-        },
         "javax.inject:javax.inject": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
             "locked": "1"
+        },
+        "javax.validation:validation-api": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.1.Final"
+        },
+        "org.apache.bval:bval-jsr": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.3"
         },
         "org.apache.commons:commons-lang3": {
             "firstLevelTransitive": [
@@ -254,13 +261,6 @@
                 "com.netflix.conductor:conductor-core"
             ],
             "locked": "3.0.0"
-        },
-        "org.hibernate:hibernate-validator": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ],
-            "locked": "6.0.13.Final"
         },
         "org.slf4j:slf4j-api": {
             "firstLevelTransitive": [
@@ -363,18 +363,25 @@
             ],
             "locked": "1.2.2"
         },
-        "javax.el:javax.el-api": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ],
-            "locked": "3.0.0"
-        },
         "javax.inject:javax.inject": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
             "locked": "1"
+        },
+        "javax.validation:validation-api": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.1.Final"
+        },
+        "org.apache.bval:bval-jsr": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.3"
         },
         "org.apache.commons:commons-lang3": {
             "firstLevelTransitive": [
@@ -389,13 +396,6 @@
                 "com.netflix.conductor:conductor-core"
             ],
             "locked": "3.0.0"
-        },
-        "org.hibernate:hibernate-validator": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ],
-            "locked": "6.0.13.Final"
         },
         "org.slf4j:slf4j-api": {
             "firstLevelTransitive": [
@@ -508,18 +508,25 @@
             ],
             "locked": "1.2.2"
         },
-        "javax.el:javax.el-api": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ],
-            "locked": "3.0.0"
-        },
         "javax.inject:javax.inject": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
             "locked": "1"
+        },
+        "javax.validation:validation-api": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.1.Final"
+        },
+        "org.apache.bval:bval-jsr": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.3"
         },
         "org.apache.commons:commons-lang3": {
             "firstLevelTransitive": [
@@ -534,13 +541,6 @@
                 "com.netflix.conductor:conductor-core"
             ],
             "locked": "3.0.0"
-        },
-        "org.hibernate:hibernate-validator": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ],
-            "locked": "6.0.13.Final"
         },
         "org.slf4j:slf4j-api": {
             "firstLevelTransitive": [
@@ -643,18 +643,25 @@
             ],
             "locked": "1.2.2"
         },
-        "javax.el:javax.el-api": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ],
-            "locked": "3.0.0"
-        },
         "javax.inject:javax.inject": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
             "locked": "1"
+        },
+        "javax.validation:validation-api": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.1.Final"
+        },
+        "org.apache.bval:bval-jsr": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.3"
         },
         "org.apache.commons:commons-lang3": {
             "firstLevelTransitive": [
@@ -669,13 +676,6 @@
                 "com.netflix.conductor:conductor-core"
             ],
             "locked": "3.0.0"
-        },
-        "org.hibernate:hibernate-validator": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ],
-            "locked": "6.0.13.Final"
         },
         "org.slf4j:slf4j-api": {
             "firstLevelTransitive": [
@@ -778,22 +778,29 @@
             ],
             "locked": "1.2.2"
         },
-        "javax.el:javax.el-api": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ],
-            "locked": "3.0.0"
-        },
         "javax.inject:javax.inject": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
             "locked": "1"
         },
+        "javax.validation:validation-api": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.1.Final"
+        },
         "junit:junit": {
             "locked": "4.12",
             "requested": "4.12"
+        },
+        "org.apache.bval:bval-jsr": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.3"
         },
         "org.apache.commons:commons-lang3": {
             "firstLevelTransitive": [
@@ -812,13 +819,6 @@
                 "com.netflix.conductor:conductor-core"
             ],
             "locked": "3.0.0"
-        },
-        "org.hibernate:hibernate-validator": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ],
-            "locked": "6.0.13.Final"
         },
         "org.mockito:mockito-core": {
             "locked": "3.1.0",
@@ -925,22 +925,29 @@
             ],
             "locked": "1.2.2"
         },
-        "javax.el:javax.el-api": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ],
-            "locked": "3.0.0"
-        },
         "javax.inject:javax.inject": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
             "locked": "1"
         },
+        "javax.validation:validation-api": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.1.Final"
+        },
         "junit:junit": {
             "locked": "4.12",
             "requested": "4.12"
+        },
+        "org.apache.bval:bval-jsr": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.3"
         },
         "org.apache.commons:commons-lang3": {
             "firstLevelTransitive": [
@@ -959,13 +966,6 @@
                 "com.netflix.conductor:conductor-core"
             ],
             "locked": "3.0.0"
-        },
-        "org.hibernate:hibernate-validator": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ],
-            "locked": "6.0.13.Final"
         },
         "org.mockito:mockito-core": {
             "locked": "3.1.0",
@@ -1072,22 +1072,29 @@
             ],
             "locked": "1.2.2"
         },
-        "javax.el:javax.el-api": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ],
-            "locked": "3.0.0"
-        },
         "javax.inject:javax.inject": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
             "locked": "1"
         },
+        "javax.validation:validation-api": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.1.Final"
+        },
         "junit:junit": {
             "locked": "4.12",
             "requested": "4.12"
+        },
+        "org.apache.bval:bval-jsr": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.3"
         },
         "org.apache.commons:commons-lang3": {
             "firstLevelTransitive": [
@@ -1106,13 +1113,6 @@
                 "com.netflix.conductor:conductor-core"
             ],
             "locked": "3.0.0"
-        },
-        "org.hibernate:hibernate-validator": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ],
-            "locked": "6.0.13.Final"
         },
         "org.mockito:mockito-core": {
             "locked": "3.1.0",
@@ -1219,22 +1219,29 @@
             ],
             "locked": "1.2.2"
         },
-        "javax.el:javax.el-api": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ],
-            "locked": "3.0.0"
-        },
         "javax.inject:javax.inject": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
             "locked": "1"
         },
+        "javax.validation:validation-api": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.1.Final"
+        },
         "junit:junit": {
             "locked": "4.12",
             "requested": "4.12"
+        },
+        "org.apache.bval:bval-jsr": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.3"
         },
         "org.apache.commons:commons-lang3": {
             "firstLevelTransitive": [
@@ -1253,13 +1260,6 @@
                 "com.netflix.conductor:conductor-core"
             ],
             "locked": "3.0.0"
-        },
-        "org.hibernate:hibernate-validator": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ],
-            "locked": "6.0.13.Final"
         },
         "org.mockito:mockito-core": {
             "locked": "3.1.0",

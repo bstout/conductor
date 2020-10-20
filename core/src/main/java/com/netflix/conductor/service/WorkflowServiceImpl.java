@@ -73,8 +73,9 @@ public class WorkflowServiceImpl implements WorkflowService {
      */
     @Service
     public String startWorkflow(StartWorkflowRequest startWorkflowRequest) {
-        return startWorkflow(startWorkflowRequest.getName(), startWorkflowRequest.getVersion(), startWorkflowRequest.getCorrelationId(), startWorkflowRequest.getInput(),
-                startWorkflowRequest.getExternalInputPayloadStoragePath(), startWorkflowRequest.getTaskToDomain(), startWorkflowRequest.getWorkflowDef());
+        return startWorkflow(startWorkflowRequest.getName(), startWorkflowRequest.getVersion(), startWorkflowRequest.getCorrelationId(),
+            startWorkflowRequest.getPriority(), startWorkflowRequest.getInput(), startWorkflowRequest.getExternalInputPayloadStoragePath(),
+            startWorkflowRequest.getTaskToDomain(), startWorkflowRequest.getWorkflowDef());
     }
 
     /**
@@ -348,13 +349,13 @@ public class WorkflowServiceImpl implements WorkflowService {
     }
 
     /**
-     * Resets callback times of all in_progress tasks to 0.
+     * Resets callback times of all non-terminal SIMPLE tasks to 0.
      *
      * @param workflowId WorkflowId of the workflow.
      */
     @Service
     public void resetWorkflow(String workflowId) {
-        workflowExecutor.resetCallbacksForInProgressTasks(workflowId);
+        workflowExecutor.resetCallbacksForWorkflow(workflowId);
     }
 
     /**

@@ -10,15 +10,11 @@
         }
     },
     "testCompile": {
-        "ch.vorburger.mariaDB4j:mariaDB4j": {
-            "locked": "2.2.3",
-            "requested": "2.2.3"
-        },
         "com.amazonaws:aws-java-sdk-core": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-client"
             ],
-            "locked": "1.11.700"
+            "locked": "1.11.868"
         },
         "com.amazonaws:aws-java-sdk-s3": {
             "firstLevelTransitive": [
@@ -30,7 +26,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
             ],
-            "locked": "1.11.700"
+            "locked": "1.11.868"
         },
         "com.datastax.cassandra:cassandra-driver-core": {
             "firstLevelTransitive": [
@@ -150,6 +146,7 @@
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-es6-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-client",
                 "com.netflix.conductor:conductor-grpc-server",
@@ -164,6 +161,12 @@
             "project": true
         },
         "com.netflix.conductor:conductor-es5-persistence": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-server"
+            ],
+            "project": true
+        },
+        "com.netflix.conductor:conductor-es6-persistence": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-server"
             ],
@@ -236,6 +239,10 @@
             ],
             "locked": "1.8.7"
         },
+        "com.netflix.governator:governator-test-spock": {
+            "locked": "1.17.10",
+            "requested": "latest.release"
+        },
         "com.netflix.runtime:health-api": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-grpc",
@@ -262,9 +269,17 @@
             ],
             "locked": "0.68.0"
         },
-        "com.opentable.components:otj-pg-embedded": {
-            "locked": "0.13.1",
-            "requested": "0.13.1"
+        "com.netflix.spectator:spectator-reg-metrics3": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-contribs"
+            ],
+            "locked": "0.68.0"
+        },
+        "com.rabbitmq:amqp-client": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-contribs"
+            ],
+            "locked": "5.8.0"
         },
         "com.spotify:completable-futures": {
             "firstLevelTransitive": [
@@ -314,6 +329,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-client",
                 "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-es6-persistence",
                 "com.netflix.conductor:conductor-mysql-persistence",
                 "com.netflix.conductor:conductor-postgres-persistence"
             ],
@@ -370,13 +386,6 @@
             "locked": "1.5.9",
             "requested": "1.5.0"
         },
-        "javax.el:javax.el-api": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ],
-            "locked": "3.0.0"
-        },
         "javax.inject:javax.inject": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
@@ -388,6 +397,14 @@
                 "com.netflix.conductor:conductor-server"
             ],
             "locked": "3.1.0"
+        },
+        "javax.validation:validation-api": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core",
+                "com.netflix.conductor:conductor-jersey"
+            ],
+            "locked": "2.0.1.Final"
         },
         "javax.ws.rs:jsr311-api": {
             "firstLevelTransitive": [
@@ -416,14 +433,22 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
             ],
-            "locked": "0.0.11"
+            "locked": "0.0.12"
+        },
+        "org.apache.bval:bval-jsr": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core",
+                "com.netflix.conductor:conductor-jersey"
+            ],
+            "locked": "2.0.3"
         },
         "org.apache.commons:commons-lang3": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "3.7"
+            "locked": "3.6"
         },
         "org.apache.curator:curator-recipes": {
             "firstLevelTransitive": [
@@ -439,19 +464,25 @@
         },
         "org.apache.logging.log4j:log4j-api": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es5-persistence"
+                "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-es6-persistence"
             ],
             "locked": "2.9.1"
         },
         "org.apache.logging.log4j:log4j-core": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es5-persistence"
+                "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-es6-persistence"
             ],
             "locked": "2.9.1"
         },
         "org.awaitility:awaitility": {
             "locked": "3.1.2",
             "requested": "3.1.2"
+        },
+        "org.codehaus.groovy:groovy-all": {
+            "locked": "2.4.15",
+            "requested": "2.4.15"
         },
         "org.eclipse.jetty:jetty-jmx": {
             "firstLevelTransitive": [
@@ -477,19 +508,22 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-es5-persistence"
             ],
-            "locked": "5.6.8"
+            "locked": "5.6.8",
+            "requested": "5.6.8"
         },
         "org.elasticsearch.client:elasticsearch-rest-high-level-client": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-es5-persistence"
             ],
-            "locked": "5.6.8"
+            "locked": "5.6.8",
+            "requested": "5.6.8"
         },
         "org.elasticsearch.client:transport": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-es5-persistence"
             ],
-            "locked": "5.6.8"
+            "locked": "5.6.8",
+            "requested": "5.6.8"
         },
         "org.elasticsearch:elasticsearch": {
             "firstLevelTransitive": [
@@ -511,14 +545,6 @@
                 "com.netflix.conductor:conductor-core"
             ],
             "locked": "3.0.0"
-        },
-        "org.hibernate:hibernate-validator": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-jersey"
-            ],
-            "locked": "6.0.13.Final"
         },
         "org.mockito:mockito-core": {
             "locked": "3.1.0",
@@ -547,7 +573,15 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
-            "locked": "1.7.25"
+            "locked": "1.7.29"
+        },
+        "org.spockframework:spock-core": {
+            "locked": "1.3-groovy-2.4",
+            "requested": "1.3-groovy-2.4"
+        },
+        "org.spockframework:spock-guice": {
+            "locked": "1.3-groovy-2.4",
+            "requested": "1.3-groovy-2.4"
         },
         "redis.clients:jedis": {
             "firstLevelTransitive": [
@@ -557,15 +591,11 @@
         }
     },
     "testCompileClasspath": {
-        "ch.vorburger.mariaDB4j:mariaDB4j": {
-            "locked": "2.2.3",
-            "requested": "2.2.3"
-        },
         "com.amazonaws:aws-java-sdk-core": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-client"
             ],
-            "locked": "1.11.700"
+            "locked": "1.11.868"
         },
         "com.amazonaws:aws-java-sdk-s3": {
             "firstLevelTransitive": [
@@ -577,7 +607,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
             ],
-            "locked": "1.11.700"
+            "locked": "1.11.868"
         },
         "com.datastax.cassandra:cassandra-driver-core": {
             "firstLevelTransitive": [
@@ -697,6 +727,7 @@
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-es6-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-client",
                 "com.netflix.conductor:conductor-grpc-server",
@@ -711,6 +742,12 @@
             "project": true
         },
         "com.netflix.conductor:conductor-es5-persistence": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-server"
+            ],
+            "project": true
+        },
+        "com.netflix.conductor:conductor-es6-persistence": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-server"
             ],
@@ -783,6 +820,10 @@
             ],
             "locked": "1.8.7"
         },
+        "com.netflix.governator:governator-test-spock": {
+            "locked": "1.17.10",
+            "requested": "latest.release"
+        },
         "com.netflix.runtime:health-api": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-grpc",
@@ -809,9 +850,17 @@
             ],
             "locked": "0.68.0"
         },
-        "com.opentable.components:otj-pg-embedded": {
-            "locked": "0.13.1",
-            "requested": "0.13.1"
+        "com.netflix.spectator:spectator-reg-metrics3": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-contribs"
+            ],
+            "locked": "0.68.0"
+        },
+        "com.rabbitmq:amqp-client": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-contribs"
+            ],
+            "locked": "5.8.0"
         },
         "com.spotify:completable-futures": {
             "firstLevelTransitive": [
@@ -861,6 +910,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-client",
                 "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-es6-persistence",
                 "com.netflix.conductor:conductor-mysql-persistence",
                 "com.netflix.conductor:conductor-postgres-persistence"
             ],
@@ -917,13 +967,6 @@
             "locked": "1.5.9",
             "requested": "1.5.0"
         },
-        "javax.el:javax.el-api": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ],
-            "locked": "3.0.0"
-        },
         "javax.inject:javax.inject": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
@@ -935,6 +978,14 @@
                 "com.netflix.conductor:conductor-server"
             ],
             "locked": "3.1.0"
+        },
+        "javax.validation:validation-api": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core",
+                "com.netflix.conductor:conductor-jersey"
+            ],
+            "locked": "2.0.1.Final"
         },
         "javax.ws.rs:jsr311-api": {
             "firstLevelTransitive": [
@@ -963,14 +1014,22 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
             ],
-            "locked": "0.0.11"
+            "locked": "0.0.12"
+        },
+        "org.apache.bval:bval-jsr": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core",
+                "com.netflix.conductor:conductor-jersey"
+            ],
+            "locked": "2.0.3"
         },
         "org.apache.commons:commons-lang3": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "3.7"
+            "locked": "3.6"
         },
         "org.apache.curator:curator-recipes": {
             "firstLevelTransitive": [
@@ -986,19 +1045,25 @@
         },
         "org.apache.logging.log4j:log4j-api": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es5-persistence"
+                "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-es6-persistence"
             ],
             "locked": "2.9.1"
         },
         "org.apache.logging.log4j:log4j-core": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es5-persistence"
+                "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-es6-persistence"
             ],
             "locked": "2.9.1"
         },
         "org.awaitility:awaitility": {
             "locked": "3.1.2",
             "requested": "3.1.2"
+        },
+        "org.codehaus.groovy:groovy-all": {
+            "locked": "2.4.15",
+            "requested": "2.4.15"
         },
         "org.eclipse.jetty:jetty-jmx": {
             "firstLevelTransitive": [
@@ -1024,19 +1089,22 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-es5-persistence"
             ],
-            "locked": "5.6.8"
+            "locked": "5.6.8",
+            "requested": "5.6.8"
         },
         "org.elasticsearch.client:elasticsearch-rest-high-level-client": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-es5-persistence"
             ],
-            "locked": "5.6.8"
+            "locked": "5.6.8",
+            "requested": "5.6.8"
         },
         "org.elasticsearch.client:transport": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-es5-persistence"
             ],
-            "locked": "5.6.8"
+            "locked": "5.6.8",
+            "requested": "5.6.8"
         },
         "org.elasticsearch:elasticsearch": {
             "firstLevelTransitive": [
@@ -1058,14 +1126,6 @@
                 "com.netflix.conductor:conductor-core"
             ],
             "locked": "3.0.0"
-        },
-        "org.hibernate:hibernate-validator": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-jersey"
-            ],
-            "locked": "6.0.13.Final"
         },
         "org.mockito:mockito-core": {
             "locked": "3.1.0",
@@ -1094,7 +1154,15 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
-            "locked": "1.7.25"
+            "locked": "1.7.29"
+        },
+        "org.spockframework:spock-core": {
+            "locked": "1.3-groovy-2.4",
+            "requested": "1.3-groovy-2.4"
+        },
+        "org.spockframework:spock-guice": {
+            "locked": "1.3-groovy-2.4",
+            "requested": "1.3-groovy-2.4"
         },
         "redis.clients:jedis": {
             "firstLevelTransitive": [
@@ -1104,15 +1172,11 @@
         }
     },
     "testRuntime": {
-        "ch.vorburger.mariaDB4j:mariaDB4j": {
-            "locked": "2.2.3",
-            "requested": "2.2.3"
-        },
         "com.amazonaws:aws-java-sdk-core": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-client"
             ],
-            "locked": "1.11.700"
+            "locked": "1.11.868"
         },
         "com.amazonaws:aws-java-sdk-s3": {
             "firstLevelTransitive": [
@@ -1124,7 +1188,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
             ],
-            "locked": "1.11.700"
+            "locked": "1.11.868"
         },
         "com.datastax.cassandra:cassandra-driver-core": {
             "firstLevelTransitive": [
@@ -1244,6 +1308,7 @@
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-es6-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-client",
                 "com.netflix.conductor:conductor-grpc-server",
@@ -1258,6 +1323,12 @@
             "project": true
         },
         "com.netflix.conductor:conductor-es5-persistence": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-server"
+            ],
+            "project": true
+        },
+        "com.netflix.conductor:conductor-es6-persistence": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-server"
             ],
@@ -1330,6 +1401,10 @@
             ],
             "locked": "1.8.7"
         },
+        "com.netflix.governator:governator-test-spock": {
+            "locked": "1.17.10",
+            "requested": "latest.release"
+        },
         "com.netflix.runtime:health-api": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-grpc",
@@ -1356,9 +1431,17 @@
             ],
             "locked": "0.68.0"
         },
-        "com.opentable.components:otj-pg-embedded": {
-            "locked": "0.13.1",
-            "requested": "0.13.1"
+        "com.netflix.spectator:spectator-reg-metrics3": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-contribs"
+            ],
+            "locked": "0.68.0"
+        },
+        "com.rabbitmq:amqp-client": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-contribs"
+            ],
+            "locked": "5.8.0"
         },
         "com.spotify:completable-futures": {
             "firstLevelTransitive": [
@@ -1408,6 +1491,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-client",
                 "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-es6-persistence",
                 "com.netflix.conductor:conductor-mysql-persistence",
                 "com.netflix.conductor:conductor-postgres-persistence"
             ],
@@ -1464,13 +1548,6 @@
             "locked": "1.5.9",
             "requested": "1.5.0"
         },
-        "javax.el:javax.el-api": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ],
-            "locked": "3.0.0"
-        },
         "javax.inject:javax.inject": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
@@ -1482,6 +1559,14 @@
                 "com.netflix.conductor:conductor-server"
             ],
             "locked": "3.1.0"
+        },
+        "javax.validation:validation-api": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core",
+                "com.netflix.conductor:conductor-jersey"
+            ],
+            "locked": "2.0.1.Final"
         },
         "javax.ws.rs:jsr311-api": {
             "firstLevelTransitive": [
@@ -1510,14 +1595,22 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
             ],
-            "locked": "0.0.11"
+            "locked": "0.0.12"
+        },
+        "org.apache.bval:bval-jsr": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core",
+                "com.netflix.conductor:conductor-jersey"
+            ],
+            "locked": "2.0.3"
         },
         "org.apache.commons:commons-lang3": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "3.7"
+            "locked": "3.6"
         },
         "org.apache.curator:curator-recipes": {
             "firstLevelTransitive": [
@@ -1533,19 +1626,25 @@
         },
         "org.apache.logging.log4j:log4j-api": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es5-persistence"
+                "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-es6-persistence"
             ],
             "locked": "2.9.1"
         },
         "org.apache.logging.log4j:log4j-core": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es5-persistence"
+                "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-es6-persistence"
             ],
             "locked": "2.9.1"
         },
         "org.awaitility:awaitility": {
             "locked": "3.1.2",
             "requested": "3.1.2"
+        },
+        "org.codehaus.groovy:groovy-all": {
+            "locked": "2.4.15",
+            "requested": "2.4.15"
         },
         "org.eclipse.jetty:jetty-jmx": {
             "firstLevelTransitive": [
@@ -1571,19 +1670,22 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-es5-persistence"
             ],
-            "locked": "5.6.8"
+            "locked": "5.6.8",
+            "requested": "5.6.8"
         },
         "org.elasticsearch.client:elasticsearch-rest-high-level-client": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-es5-persistence"
             ],
-            "locked": "5.6.8"
+            "locked": "5.6.8",
+            "requested": "5.6.8"
         },
         "org.elasticsearch.client:transport": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-es5-persistence"
             ],
-            "locked": "5.6.8"
+            "locked": "5.6.8",
+            "requested": "5.6.8"
         },
         "org.elasticsearch:elasticsearch": {
             "firstLevelTransitive": [
@@ -1605,14 +1707,6 @@
                 "com.netflix.conductor:conductor-core"
             ],
             "locked": "3.0.0"
-        },
-        "org.hibernate:hibernate-validator": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-jersey"
-            ],
-            "locked": "6.0.13.Final"
         },
         "org.mockito:mockito-core": {
             "locked": "3.1.0",
@@ -1641,7 +1735,15 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
-            "locked": "1.7.25"
+            "locked": "1.7.29"
+        },
+        "org.spockframework:spock-core": {
+            "locked": "1.3-groovy-2.4",
+            "requested": "1.3-groovy-2.4"
+        },
+        "org.spockframework:spock-guice": {
+            "locked": "1.3-groovy-2.4",
+            "requested": "1.3-groovy-2.4"
         },
         "redis.clients:jedis": {
             "firstLevelTransitive": [
@@ -1651,15 +1753,11 @@
         }
     },
     "testRuntimeClasspath": {
-        "ch.vorburger.mariaDB4j:mariaDB4j": {
-            "locked": "2.2.3",
-            "requested": "2.2.3"
-        },
         "com.amazonaws:aws-java-sdk-core": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-client"
             ],
-            "locked": "1.11.700"
+            "locked": "1.11.868"
         },
         "com.amazonaws:aws-java-sdk-s3": {
             "firstLevelTransitive": [
@@ -1671,7 +1769,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
             ],
-            "locked": "1.11.700"
+            "locked": "1.11.868"
         },
         "com.datastax.cassandra:cassandra-driver-core": {
             "firstLevelTransitive": [
@@ -1791,6 +1889,7 @@
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-es6-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-client",
                 "com.netflix.conductor:conductor-grpc-server",
@@ -1805,6 +1904,12 @@
             "project": true
         },
         "com.netflix.conductor:conductor-es5-persistence": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-server"
+            ],
+            "project": true
+        },
+        "com.netflix.conductor:conductor-es6-persistence": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-server"
             ],
@@ -1877,6 +1982,10 @@
             ],
             "locked": "1.8.7"
         },
+        "com.netflix.governator:governator-test-spock": {
+            "locked": "1.17.10",
+            "requested": "latest.release"
+        },
         "com.netflix.runtime:health-api": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-grpc",
@@ -1903,9 +2012,17 @@
             ],
             "locked": "0.68.0"
         },
-        "com.opentable.components:otj-pg-embedded": {
-            "locked": "0.13.1",
-            "requested": "0.13.1"
+        "com.netflix.spectator:spectator-reg-metrics3": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-contribs"
+            ],
+            "locked": "0.68.0"
+        },
+        "com.rabbitmq:amqp-client": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-contribs"
+            ],
+            "locked": "5.8.0"
         },
         "com.spotify:completable-futures": {
             "firstLevelTransitive": [
@@ -1955,6 +2072,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-client",
                 "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-es6-persistence",
                 "com.netflix.conductor:conductor-mysql-persistence",
                 "com.netflix.conductor:conductor-postgres-persistence"
             ],
@@ -2011,13 +2129,6 @@
             "locked": "1.5.9",
             "requested": "1.5.0"
         },
-        "javax.el:javax.el-api": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ],
-            "locked": "3.0.0"
-        },
         "javax.inject:javax.inject": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
@@ -2029,6 +2140,14 @@
                 "com.netflix.conductor:conductor-server"
             ],
             "locked": "3.1.0"
+        },
+        "javax.validation:validation-api": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core",
+                "com.netflix.conductor:conductor-jersey"
+            ],
+            "locked": "2.0.1.Final"
         },
         "javax.ws.rs:jsr311-api": {
             "firstLevelTransitive": [
@@ -2057,14 +2176,22 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
             ],
-            "locked": "0.0.11"
+            "locked": "0.0.12"
+        },
+        "org.apache.bval:bval-jsr": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core",
+                "com.netflix.conductor:conductor-jersey"
+            ],
+            "locked": "2.0.3"
         },
         "org.apache.commons:commons-lang3": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "3.7"
+            "locked": "3.6"
         },
         "org.apache.curator:curator-recipes": {
             "firstLevelTransitive": [
@@ -2080,19 +2207,25 @@
         },
         "org.apache.logging.log4j:log4j-api": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es5-persistence"
+                "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-es6-persistence"
             ],
             "locked": "2.9.1"
         },
         "org.apache.logging.log4j:log4j-core": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es5-persistence"
+                "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-es6-persistence"
             ],
             "locked": "2.9.1"
         },
         "org.awaitility:awaitility": {
             "locked": "3.1.2",
             "requested": "3.1.2"
+        },
+        "org.codehaus.groovy:groovy-all": {
+            "locked": "2.4.15",
+            "requested": "2.4.15"
         },
         "org.eclipse.jetty:jetty-jmx": {
             "firstLevelTransitive": [
@@ -2118,19 +2251,22 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-es5-persistence"
             ],
-            "locked": "5.6.8"
+            "locked": "5.6.8",
+            "requested": "5.6.8"
         },
         "org.elasticsearch.client:elasticsearch-rest-high-level-client": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-es5-persistence"
             ],
-            "locked": "5.6.8"
+            "locked": "5.6.8",
+            "requested": "5.6.8"
         },
         "org.elasticsearch.client:transport": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-es5-persistence"
             ],
-            "locked": "5.6.8"
+            "locked": "5.6.8",
+            "requested": "5.6.8"
         },
         "org.elasticsearch:elasticsearch": {
             "firstLevelTransitive": [
@@ -2152,14 +2288,6 @@
                 "com.netflix.conductor:conductor-core"
             ],
             "locked": "3.0.0"
-        },
-        "org.hibernate:hibernate-validator": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-jersey"
-            ],
-            "locked": "6.0.13.Final"
         },
         "org.mockito:mockito-core": {
             "locked": "3.1.0",
@@ -2188,7 +2316,15 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
-            "locked": "1.7.25"
+            "locked": "1.7.29"
+        },
+        "org.spockframework:spock-core": {
+            "locked": "1.3-groovy-2.4",
+            "requested": "1.3-groovy-2.4"
+        },
+        "org.spockframework:spock-guice": {
+            "locked": "1.3-groovy-2.4",
+            "requested": "1.3-groovy-2.4"
         },
         "redis.clients:jedis": {
             "firstLevelTransitive": [

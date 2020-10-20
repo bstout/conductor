@@ -65,8 +65,8 @@ public class PostgresMetadataDAOTest {
         def.setName("testDuplicate");
         def.setVersion(1);
 
-        dao.create(def);
-        dao.create(def);
+        dao.createWorkflowDef(def);
+        dao.createWorkflowDef(def);
     }
 
     @Test
@@ -81,36 +81,36 @@ public class PostgresMetadataDAOTest {
         def.setUpdatedBy("unit_test2");
         def.setUpdateTime(2L);
 
-        dao.create(def);
+        dao.createWorkflowDef(def);
 
-        List<WorkflowDef> all = dao.getAll();
+        List<WorkflowDef> all = dao.getAllWorkflowDefs();
         assertNotNull(all);
         assertEquals(1, all.size());
         assertEquals("test", all.get(0).getName());
         assertEquals(1, all.get(0).getVersion());
 
-        WorkflowDef found = dao.get("test", 1).get();
+        WorkflowDef found = dao.getWorkflowDef("test", 1).get();
         assertTrue(EqualsBuilder.reflectionEquals(def, found));
 
-        def.setVersion(2);
-        dao.create(def);
+        def.setVersion(3);
+        dao.createWorkflowDef(def);
 
-        all = dao.getAll();
+        all = dao.getAllWorkflowDefs();
         assertNotNull(all);
         assertEquals(2, all.size());
         assertEquals("test", all.get(0).getName());
         assertEquals(1, all.get(0).getVersion());
 
-        found = dao.getLatest(def.getName()).get();
+        found = dao.getLatestWorkflowDef(def.getName()).get();
         assertEquals(def.getName(), found.getName());
         assertEquals(def.getVersion(), found.getVersion());
-        assertEquals(2, found.getVersion());
+        assertEquals(3, found.getVersion());
 
         all = dao.getAllLatest();
         assertNotNull(all);
         assertEquals(1, all.size());
         assertEquals("test", all.get(0).getName());
-        assertEquals(2, all.get(0).getVersion());
+        assertEquals(3, all.get(0).getVersion());
 
         all = dao.getAllVersions(def.getName());
         assertNotNull(all);
@@ -118,11 +118,11 @@ public class PostgresMetadataDAOTest {
         assertEquals("test", all.get(0).getName());
         assertEquals("test", all.get(1).getName());
         assertEquals(1, all.get(0).getVersion());
-        assertEquals(2, all.get(1).getVersion());
+        assertEquals(3, all.get(1).getVersion());
 
         def.setDescription("updated");
-        dao.update(def);
-        found = dao.get(def.getName(), def.getVersion()).get();
+        dao.updateWorkflowDef(def);
+        found = dao.getWorkflowDef(def.getName(), def.getVersion()).get();
         assertEquals(def.getDescription(), found.getDescription());
 
         List<String> allnames = dao.findAll();
@@ -130,9 +130,28 @@ public class PostgresMetadataDAOTest {
         assertEquals(1, allnames.size());
         assertEquals(def.getName(), allnames.get(0));
 
-        dao.removeWorkflowDef("test", 1);
-        Optional<WorkflowDef> deleted = dao.get("test", 1);
+        def.setVersion(2);
+        dao.createWorkflowDef(def);
+
+        found = dao.getLatestWorkflowDef(def.getName()).get();
+        assertEquals(def.getName(), found.getName());
+        assertEquals(3, found.getVersion());
+
+        dao.removeWorkflowDef("test", 3);
+        Optional<WorkflowDef> deleted = dao.getWorkflowDef("test", 3);
         assertFalse(deleted.isPresent());
+
+        found = dao.getLatestWorkflowDef(def.getName()).get();
+        assertEquals(def.getName(), found.getName());
+        assertEquals(2, found.getVersion());
+
+        dao.removeWorkflowDef("test", 1);
+        deleted = dao.getWorkflowDef("test", 1);
+        assertFalse(deleted.isPresent());
+
+        found = dao.getLatestWorkflowDef(def.getName()).get();
+        assertEquals(def.getName(), found.getName());
+        assertEquals(2, found.getVersion());
     }
 
     @Test
@@ -209,7 +228,7 @@ public class PostgresMetadataDAOTest {
         eh.setEvent(event1);
 
         dao.addEventHandler(eh);
-        List<EventHandler> all = dao.getEventHandlers();
+        List<EventHandler> all = dao.getAllEventHandlers();
         assertNotNull(all);
         assertEquals(1, all.size());
         assertEquals(eh.getName(), all.get(0).getName());
@@ -223,7 +242,7 @@ public class PostgresMetadataDAOTest {
         eh.setEvent(event2);
         dao.updateEventHandler(eh);
 
-        all = dao.getEventHandlers();
+        all = dao.getAllEventHandlers();
         assertNotNull(all);
         assertEquals(1, all.size());
 
