@@ -31,7 +31,8 @@ Workflows are defined using a JSON based DSL.
   "failureWorkflow": "cleanup_encode_resources",
   "restartable": true,
   "workflowStatusListenerEnabled": true,
-  "schemaVersion": 2
+  "schemaVersion": 2,
+  "ownerEmail": "encode_admin@test.com"
 }
 ```
 
@@ -47,6 +48,14 @@ Workflows are defined using a JSON based DSL.
 |schemaVersion|Current Conductor Schema version. schemaVersion 1 is discontinued.|Must be 2|
 |restartable|Boolean flag to allow Workflow restarts|defaults to true|
 |workflowStatusListenerEnabled|If true, every workflow that gets terminated or completed will send a notification. See [below](#workflow-notifications)|optional (false by default)|
+|ownerEmail|A String that contains the workflow owner's email.|mandatory unless disabled|
+|timeoutSeconds|Time in seconds, after which the workflow is timed out|No timeouts if set to 0 (defaults to 0)|
+|timeoutPolicy|Workflow's timeout policy|see possible values below (defaults to ALERT_ONLY)|
+
+### Timeout Policy
+
+* TIME_OUT_WF : Workflow is marked as TIMED_OUT and terminated.
+* ALERT_ONLY : The timeout is logged but the workflow is not terminated.
 
 ### Tasks within Workflow
 ```tasks``` property in a workflow execution defines an array of tasks to be executed in that order.
@@ -59,9 +68,9 @@ Workflows are defined using a JSON based DSL.
 |description|Description of the task|optional|
 |optional|true  or false.  When set to true - workflow continues even if the task fails.  The status of the task is reflected as `COMPLETED_WITH_ERRORS`|Defaults to `false`|
 |inputParameters|JSON template that defines the input given to the task|See [Wiring Inputs and Outputs](#wiring-inputs-and-outputs) for details|
-|domain|See [Task Domains](/configuration/taskdomains) for more information.|optional|
+|domain|See [Task Domains](/conductor/configuration/taskdomains) for more information.|optional|
 
-In addition to these parameters, System Tasks have their own parameters. Checkout [System Tasks](/configuration/systask) for more information.
+In addition to these parameters, System Tasks have their own parameters. Checkout [System Tasks](/conductor/configuration/systask/) for more information.
 
 ### Wiring Inputs and Outputs
 

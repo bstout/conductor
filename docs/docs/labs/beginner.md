@@ -22,12 +22,12 @@ The workflow in this lab will look like this:
 This workflow contains the following:
 
 * Worker Task `verify_if_idents_are_added` to verify if Idents are already added.
-* [Decision Task](/configuration/systask/#decision) that takes output from the previous task, and decides whether to schedule the `add_idents` task.
+* [Decision Task](../../configuration/systask/#decision) that takes output from the previous task, and decides whether to schedule the `add_idents` task.
 * `add_idents` task which is another worker Task.
 
 ### Creating Task definitions
 
-Let's create the [task definition](/configuration/taskdef) for `verify_if_idents_are_added` in JSON. This task will be a *SIMPLE* task which is supposed to be executed by an Idents microservice. We'll be mocking the Idents microservice part.
+Let's create the [task definition](../../configuration/taskdef) for `verify_if_idents_are_added` in JSON. This task will be a *SIMPLE* task which is supposed to be executed by an Idents microservice. We'll be mocking the Idents microservice part.
 
 **Note** that at this point, we don't have to specify whether it is a System task or Worker task. We are only specifying the required configurations for the task, like number of times it should be retried, timeouts etc. We shall start by using `name` parameter for task name.
 ```json
@@ -61,7 +61,7 @@ i.e. if the task doesn't finish execution within this time limit after transitio
 }
 ```
 
-And a [responseTimeout](/tasklifecycle/#response-timeout-seconds) of 180 seconds.
+And a [responseTimeout](../../tasklifecycle/#response-timeout-seconds) of 180 seconds.
 
 ```json
 {
@@ -75,7 +75,7 @@ And a [responseTimeout](/tasklifecycle/#response-timeout-seconds) of 180 seconds
 }
 ```
 
-We can define several other fields defined [here](/configuration/taskdef), but this is a good place to start with.
+We can define several other fields defined [here](../../configuration/taskdef), but this is a good place to start with.
 
 Similarly, create another task definition: `add_idents`.
 
@@ -113,7 +113,8 @@ curl -X POST \
 	  "retryDelaySeconds": 10,
 	  "timeoutSeconds": 300,
 	  "timeoutPolicy": "TIME_OUT_WF",
-	  "responseTimeoutSeconds": 180
+	  "responseTimeoutSeconds": 180,
+	  "ownerEmail": "type your email here"
 	},
 	{
 	  "name": "add_idents",
@@ -122,7 +123,8 @@ curl -X POST \
 	  "retryDelaySeconds": 10,
 	  "timeoutSeconds": 300,
 	  "timeoutPolicy": "TIME_OUT_WF",
-	  "responseTimeoutSeconds": 180
+	  "responseTimeoutSeconds": 180,
+	  "ownerEmail": "type your email here"
 	}
 ]'
 ```
@@ -168,9 +170,9 @@ Add the first task that this workflow has to execute. All the tasks must be adde
 Notice how we were using `${workflow.input.contentId}` to pass inputs to this task. Conductor can wire inputs between workflow and tasks, and between tasks.  
 i.e The task `verify_if_idents_are_added` is wired to accept inputs from the workflow input using JSONPath expression `${workflow.input.param}`.
 
-Learn more about wiring inputs and outputs [here](/configuration/workflowdef/#wiring-inputs-and-outputs).
+Learn more about wiring inputs and outputs [here](../../configuration/workflowdef/#wiring-inputs-and-outputs).
 
-Let's define `decisionCases` now. Checkout the Decision task structure [here](/configuration/systask/#decision).
+Let's define `decisionCases` now. Checkout the Decision task structure [here](../../configuration/systask/#decision).
 
 A Decision task is specified by `type:"DECISION"`, `caseValueParam` and `decisionCases` which lists all the branches of Decision task. This is similar to a `switch..case` but written in Conductor JSON DSL.
 
@@ -260,6 +262,7 @@ curl -X POST \
     "description": "Adds Netflix Identation to video files.",
     "version": 2,
     "schemaVersion": 2,
+    "ownerEmail": "type your email here",
     "tasks": [
     	{
     		"name": "verify_if_idents_are_added",
@@ -340,7 +343,7 @@ Feel free to explore the various functionalities that the UI exposes. To elabora
 
 Now that `verify_if_idents_are_added` task is in `SCHEDULED` state, it is the worker's turn to fetch the task, execute it and update Conductor with final status of the task.
 
-Ideally, the workers implementing the [Client](/gettingstarted/client/#worker) interface would do this process, executing the tasks on real microservices. But, let's mock this part.
+Ideally, the workers implementing the [Client](../../gettingstarted/client/#worker) interface would do this process, executing the tasks on real microservices. But, let's mock this part.
 
 Send a `GET` request to `/poll` endpoint with your task type.
 
@@ -351,21 +354,6 @@ curl -X GET \
     http://localhost:8080/api/tasks/poll/verify_if_idents_are_added
 ```
 
-
-### Ack the Task
-
-Let's notify the Conductor server that we have successfully received the task by sending an ACK request with `taskId` received in the previous step.  
-Otherwise, Conductor would assume that the worker did not receive the task, and requeue it.
-
-Send a POST request to `/tasks/{taskId}/ack` endpoint.
-
-Example:
-
-```
-curl -X POST \
-  http://localhost:8080/api/tasks/{taskId}/ack \
-  -H 'Content-Type: application/json'
-```
 
 ### Return response, add logs
 
@@ -425,9 +413,9 @@ You will notice that Workflow is in the state as below after sending the POST re
 
 ![img](img/bgnr_systask_state.png)
 
-Conductor has executed `is_idents_added` all through it's lifecycle, without us polling, acking, or returning the status of Task. If it is still unclear, `is_idents_added` is a System task, and System tasks are executed by Conductor Server.
+Conductor has executed `is_idents_added` all through it's lifecycle, without us polling, or returning the status of Task. If it is still unclear, `is_idents_added` is a System task, and System tasks are executed by Conductor Server.
 
-But, `add_idents` is a SIMPLE task. So, the complete lifecyle of this task (Poll, Ack, Update) should be handled by a worker to continue with W\workflow execution. When Conductor has finished executing all the tasks in given flow, the workflow will reach Terminal state (COMPLETED, FAILED, TIMED_OUT etc.)
+But, `add_idents` is a SIMPLE task. So, the complete lifecyle of this task (Poll, Update) should be handled by a worker to continue with W\workflow execution. When Conductor has finished executing all the tasks in given flow, the workflow will reach Terminal state (COMPLETED, FAILED, TIMED_OUT etc.)
 
 ## Next steps
 

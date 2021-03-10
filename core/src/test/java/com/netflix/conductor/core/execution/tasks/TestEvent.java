@@ -34,12 +34,14 @@ import com.netflix.conductor.dao.QueueDAO;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.stubbing.Answer;
+import rx.schedulers.Schedulers;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -163,7 +165,7 @@ public class TestEvent {
 
     @SuppressWarnings("unchecked")
     @Test
-    public void test() throws Exception {
+    public void test() {
         Workflow workflow = new Workflow();
         workflow.setWorkflowDefinition(testWorkflowDefinition);
 
@@ -185,17 +187,17 @@ public class TestEvent {
             return null;
         }).when(dao).push(any(), any());
 
-        doAnswer((Answer<List<String>>) invocation -> {
+        doAnswer((Answer<Boolean>) invocation -> {
             String messageId = invocation.getArgument(1, String.class);
             if(publishedMessages.get(0).getId().equals(messageId)) {
                 publishedMessages.remove(0);
-                return Collections.singletonList(messageId);
+                return true;
             }
             return null;
-        }).when(dao).remove(any(), any());
+        }).when(dao).ack(any(), any());
 
         Map<String, EventQueueProvider> providers = new HashMap<>();
-        providers.put("conductor", new DynoEventQueueProvider(dao, new TestConfiguration()));
+        providers.put("conductor", new DynoEventQueueProvider(dao, new TestConfiguration(), Schedulers.from(Executors.newSingleThreadExecutor())));
         eventQueues = new EventQueues(providers, parametersUtils);
         Event event = new Event(eventQueues, parametersUtils, objectMapper);
         event.start(workflow, task, null);
@@ -225,7 +227,7 @@ public class TestEvent {
 
         event.start(workflow, task, null);
         assertEquals(Task.Status.FAILED, task.getStatus());
-        assertTrue(task.getReasonForIncompletion() != null);
+        assertNotNull(task.getReasonForIncompletion());
         System.out.println(task.getReasonForIncompletion());
 
         task.getInputData().put("sink", "bad_sink");
@@ -233,7 +235,7 @@ public class TestEvent {
 
         event.start(workflow, task, null);
         assertEquals(Task.Status.FAILED, task.getStatus());
-        assertTrue(task.getReasonForIncompletion() != null);
+        assertNotNull(task.getReasonForIncompletion());
         System.out.println(task.getReasonForIncompletion());
 
         task.setStatus(Status.SCHEDULED);
@@ -320,7 +322,7 @@ public class TestEvent {
         }).when(dao).remove(any(), any());
 
         Map<String, EventQueueProvider> providers = new HashMap<>();
-        providers.put("conductor", new DynoEventQueueProvider(dao, new TestConfiguration()));
+        providers.put("conductor", new DynoEventQueueProvider(dao, new TestConfiguration(), Schedulers.from(Executors.newSingleThreadExecutor())));
         eventQueues = new EventQueues(providers, parametersUtils);
         Event event = new Event(eventQueues, parametersUtils, objectMapper);
         event.start(workflow, task, null);

@@ -6,6 +6,7 @@ buildscript {
 
 plugins {
     id 'com.github.johnrengelman.shadow' version '2.0.4'
+    id "com.github.ManifestClasspath" version "0.1.0-RELEASE"
 }
 
 configurations.all {
@@ -30,6 +31,7 @@ dependencies {
     compile project(':conductor-cassandra-persistence')
     compile project(':conductor-contribs')
     compile project(':conductor-es5-persistence')
+    compile project(':conductor-es6-persistence')
     compile project(':conductor-grpc-server')
     compile project(':conductor-zookeeper-lock')
     compile project(':conductor-redis-lock')
@@ -51,6 +53,7 @@ dependencies {
 }
 
 shadowJar {
+    zip64 true
     mergeServiceFiles()
     configurations = [project.configurations.compile]
     manifest {

@@ -464,6 +464,9 @@ public abstract class AbstractProtoMapper {
             to.setVersion( from.getVersion() );
         }
         to.putAllTaskToDomain( from.getTaskToDomain() );
+        if (from.getWorkflowDefinition() != null) {
+            to.setWorkflowDefinition( toProto( from.getWorkflowDefinition() ) );
+        }
         return to.build();
     }
 
@@ -472,6 +475,9 @@ public abstract class AbstractProtoMapper {
         to.setName( from.getName() );
         to.setVersion( from.getVersion() );
         to.setTaskToDomain( from.getTaskToDomainMap() );
+        if (from.hasWorkflowDefinition()) {
+            to.setWorkflowDefinition( fromProto( from.getWorkflowDefinition() ) );
+        }
         return to;
     }
 
@@ -557,6 +563,9 @@ public abstract class AbstractProtoMapper {
             to.setIsolationGroupId( from.getIsolationGroupId() );
         }
         to.setIteration( from.getIteration() );
+        if (from.getSubWorkflowId() != null) {
+            to.setSubWorkflowId( from.getSubWorkflowId() );
+        }
         return to.build();
     }
 
@@ -614,6 +623,7 @@ public abstract class AbstractProtoMapper {
         to.setExecutionNameSpace( from.getExecutionNameSpace() );
         to.setIsolationGroupId( from.getIsolationGroupId() );
         to.setIteration( from.getIteration() );
+        to.setSubWorkflowId( from.getSubWorkflowId() );
         return to;
     }
 
@@ -689,6 +699,12 @@ public abstract class AbstractProtoMapper {
         if (from.getExecutionNameSpace() != null) {
             to.setExecutionNameSpace( from.getExecutionNameSpace() );
         }
+        if (from.getOwnerEmail() != null) {
+            to.setOwnerEmail( from.getOwnerEmail() );
+        }
+        if (from.getPollTimeoutSeconds() != null) {
+            to.setPollTimeoutSeconds( from.getPollTimeoutSeconds() );
+        }
         return to.build();
     }
 
@@ -714,6 +730,8 @@ public abstract class AbstractProtoMapper {
         to.setRateLimitFrequencyInSeconds( from.getRateLimitFrequencyInSeconds() );
         to.setIsolationGroupId( from.getIsolationGroupId() );
         to.setExecutionNameSpace( from.getExecutionNameSpace() );
+        to.setOwnerEmail( from.getOwnerEmail() );
+        to.setPollTimeoutSeconds( from.getPollTimeoutSeconds() );
         return to;
     }
 
@@ -958,6 +976,10 @@ public abstract class AbstractProtoMapper {
             to.setExternalOutputPayloadStoragePath( from.getExternalOutputPayloadStoragePath() );
         }
         to.setPriority( from.getPriority() );
+        for (Map.Entry<String, Object> pair : from.getVariables().entrySet()) {
+            to.putVariables( pair.getKey(), toProto( pair.getValue() ) );
+        }
+        to.setLastRetriedTime( from.getLastRetriedTime() );
         return to.build();
     }
 
@@ -994,6 +1016,12 @@ public abstract class AbstractProtoMapper {
         to.setExternalInputPayloadStoragePath( from.getExternalInputPayloadStoragePath() );
         to.setExternalOutputPayloadStoragePath( from.getExternalOutputPayloadStoragePath() );
         to.setPriority( from.getPriority() );
+        Map<String, Object> variablesMap = new HashMap<String, Object>();
+        for (Map.Entry<String, Value> pair : from.getVariablesMap().entrySet()) {
+            variablesMap.put( pair.getKey(), fromProto( pair.getValue() ) );
+        }
+        to.setVariables(variablesMap);
+        to.setLastRetriedTime( from.getLastRetriedTime() );
         return to;
     }
 
@@ -1047,6 +1075,16 @@ public abstract class AbstractProtoMapper {
         to.setSchemaVersion( from.getSchemaVersion() );
         to.setRestartable( from.isRestartable() );
         to.setWorkflowStatusListenerEnabled( from.isWorkflowStatusListenerEnabled() );
+        if (from.getOwnerEmail() != null) {
+            to.setOwnerEmail( from.getOwnerEmail() );
+        }
+        if (from.getTimeoutPolicy() != null) {
+            to.setTimeoutPolicy( toProto( from.getTimeoutPolicy() ) );
+        }
+        to.setTimeoutSeconds( from.getTimeoutSeconds() );
+        for (Map.Entry<String, Object> pair : from.getVariables().entrySet()) {
+            to.putVariables( pair.getKey(), toProto( pair.getValue() ) );
+        }
         return to.build();
     }
 
@@ -1066,6 +1104,34 @@ public abstract class AbstractProtoMapper {
         to.setSchemaVersion( from.getSchemaVersion() );
         to.setRestartable( from.getRestartable() );
         to.setWorkflowStatusListenerEnabled( from.getWorkflowStatusListenerEnabled() );
+        to.setOwnerEmail( from.getOwnerEmail() );
+        to.setTimeoutPolicy( fromProto( from.getTimeoutPolicy() ) );
+        to.setTimeoutSeconds( from.getTimeoutSeconds() );
+        Map<String, Object> variablesMap = new HashMap<String, Object>();
+        for (Map.Entry<String, Value> pair : from.getVariablesMap().entrySet()) {
+            variablesMap.put( pair.getKey(), fromProto( pair.getValue() ) );
+        }
+        to.setVariables(variablesMap);
+        return to;
+    }
+
+    public WorkflowDefPb.WorkflowDef.TimeoutPolicy toProto(WorkflowDef.TimeoutPolicy from) {
+        WorkflowDefPb.WorkflowDef.TimeoutPolicy to;
+        switch (from) {
+            case TIME_OUT_WF: to = WorkflowDefPb.WorkflowDef.TimeoutPolicy.TIME_OUT_WF; break;
+            case ALERT_ONLY: to = WorkflowDefPb.WorkflowDef.TimeoutPolicy.ALERT_ONLY; break;
+            default: throw new IllegalArgumentException("Unexpected enum constant: " + from);
+        }
+        return to;
+    }
+
+    public WorkflowDef.TimeoutPolicy fromProto(WorkflowDefPb.WorkflowDef.TimeoutPolicy from) {
+        WorkflowDef.TimeoutPolicy to;
+        switch (from) {
+            case TIME_OUT_WF: to = WorkflowDef.TimeoutPolicy.TIME_OUT_WF; break;
+            case ALERT_ONLY: to = WorkflowDef.TimeoutPolicy.ALERT_ONLY; break;
+            default: throw new IllegalArgumentException("Unexpected enum constant: " + from);
+        }
         return to;
     }
 
@@ -1210,6 +1276,9 @@ public abstract class AbstractProtoMapper {
         for (WorkflowTask elem : from.getLoopOver()) {
             to.addLoopOver( toProto(elem) );
         }
+        if (from.getRetryCount() != null) {
+            to.setRetryCount( from.getRetryCount() );
+        }
         return to.build();
     }
 
@@ -1252,6 +1321,7 @@ public abstract class AbstractProtoMapper {
         to.setAsyncComplete( from.getAsyncComplete() );
         to.setLoopCondition( from.getLoopCondition() );
         to.setLoopOver( from.getLoopOverList().stream().map(this::fromProto).collect(Collectors.toCollection(ArrayList::new)) );
+        to.setRetryCount( from.getRetryCount() );
         return to;
     }
 

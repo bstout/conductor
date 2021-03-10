@@ -15,6 +15,20 @@
  */
 package com.netflix.conductor.core.execution.mapper;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.annotations.VisibleForTesting;
@@ -29,18 +43,6 @@ import com.netflix.conductor.core.execution.SystemTaskType;
 import com.netflix.conductor.core.execution.TerminateWorkflowException;
 import com.netflix.conductor.core.utils.IDGenerator;
 import com.netflix.conductor.dao.MetadataDAO;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * An implementation of {@link TaskMapper} to map a {@link WorkflowTask} of type {@link TaskType#FORK_JOIN_DYNAMIC}
@@ -67,7 +69,7 @@ public class ForkJoinDynamicTaskMapper implements TaskMapper {
     }
 
     /**
-     * This method gets the list of tasks that need to scheduled when the the task to scheduled is of type {@link TaskType#FORK_JOIN_DYNAMIC}.
+     * This method gets the list of tasks that need to scheduled when the task to scheduled is of type {@link TaskType#FORK_JOIN_DYNAMIC}.
      * Creates a Fork Task, followed by the Dynamic tasks and a final JOIN task.
      * <p>The definitions of the dynamic forks that need to be scheduled are available in the {@link WorkflowTask#getInputParameters()}
      * which are accessed using the {@link TaskMapperContext#getTaskToSchedule()}. The dynamic fork task definitions are referred by a key value either by
@@ -241,6 +243,9 @@ public class ForkJoinDynamicTaskMapper implements TaskMapper {
         Map<String, Object> input = parametersUtils.getTaskInput(taskToSchedule.getInputParameters(), workflowInstance, null, null);
         Object dynamicForkTasksJson = input.get(dynamicForkTaskParam);
         List<WorkflowTask> dynamicForkWorkflowTasks = objectMapper.convertValue(dynamicForkTasksJson, ListOfWorkflowTasks);
+		if(dynamicForkWorkflowTasks == null) {
+			dynamicForkWorkflowTasks = new ArrayList<WorkflowTask>();
+		}
         for (WorkflowTask workflowTask : dynamicForkWorkflowTasks) {
             if ((workflowTask.getTaskDefinition() == null) && StringUtils.isNotBlank(workflowTask.getName())) {
                 workflowTask.setTaskDefinition(metadataDAO.getTaskDef(workflowTask.getName()));

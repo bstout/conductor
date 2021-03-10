@@ -189,13 +189,13 @@ public class WorkflowResource {
     @Path("/{workflowId}/retry")
     @ApiOperation("Retries the last failed task")
     @Consumes(MediaType.WILDCARD)
-    public void retry(@PathParam("workflowId") String workflowId) {
-        workflowService.retryWorkflow(workflowId);
+    public void retry(@PathParam("workflowId") String workflowId,@QueryParam("resumeSubworkflowTasks") @DefaultValue("false") boolean resumeSubworkflowTasks) {
+        workflowService.retryWorkflow(workflowId, resumeSubworkflowTasks);
     }
 
     @POST
     @Path("/{workflowId}/resetcallbacks")
-    @ApiOperation("Resets callback times of all in_progress tasks to 0")
+    @ApiOperation("Resets callback times of all non-terminal SIMPLE tasks to 0")
     @Consumes(MediaType.WILDCARD)
     public void resetWorkflow(@PathParam("workflowId") String workflowId) {
         workflowService.resetWorkflow(workflowId);

@@ -21,7 +21,6 @@ import com.google.common.base.Preconditions;
 import com.google.inject.Singleton;
 import com.netflix.conductor.annotations.Trace;
 import com.netflix.conductor.common.metadata.events.EventExecution;
-import com.netflix.conductor.common.metadata.tasks.PollData;
 import com.netflix.conductor.common.metadata.tasks.Task;
 import com.netflix.conductor.common.metadata.tasks.Task.Status;
 import com.netflix.conductor.common.metadata.tasks.TaskDef;
@@ -32,7 +31,6 @@ import com.netflix.conductor.core.execution.ApplicationException.Code;
 import com.netflix.conductor.dao.ExecutionDAO;
 import com.netflix.conductor.dyno.DynoProxy;
 import com.netflix.conductor.metrics.Monitors;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +43,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -68,13 +65,16 @@ public class RedisExecutionDAO extends BaseDynoDAO implements ExecutionDAO {
 	private final static String PENDING_WORKFLOWS = "PENDING_WORKFLOWS";
 	private final static String WORKFLOW_DEF_TO_WORKFLOWS = "WORKFLOW_DEF_TO_WORKFLOWS";
 	private final static String CORR_ID_TO_WORKFLOWS = "CORR_ID_TO_WORKFLOWS";
-	private final static String POLL_DATA = "POLL_DATA";
+
+	private final int ttlEventExecutionSeconds;
 
 	private final static String EVENT_EXECUTION = "EVENT_EXECUTION";
 
 	@Inject
 	public RedisExecutionDAO(DynoProxy dynoClient, ObjectMapper objectMapper, Configuration config) {
 		super(dynoClient, objectMapper, config);
+
+		ttlEventExecutionSeconds = config.getEventExecutionPersistenceTTL();
 	}
 
 	@Override
@@ -234,6 +234,17 @@ public class RedisExecutionDAO extends BaseDynoDAO implements ExecutionDAO {
 		return rateLimited;
 	}
 
+	private void removeTaskMappings(Task task)
+	{
+		String taskKey = task.getReferenceTaskName() + "" + task.getRetryCount();
+
+		dynoClient.hdel(nsKey(SCHEDULED_TASKS, task.getWorkflowInstanceId()), taskKey);
+		dynoClient.srem(nsKey(IN_PROGRESS_TASKS, task.getTaskDefName()), task.getTaskId());
+		dynoClient.srem(nsKey(WORKFLOW_TO_TASKS, task.getWorkflowInstanceId()), task.getTaskId());
+		dynoClient.srem(nsKey(TASKS_IN_PROGRESS_STATUS, task.getTaskDefName()), task.getTaskId());
+		dynoClient.zrem(nsKey(TASK_LIMIT_BUCKET, task.getTaskDefName()), task.getTaskId());
+	}
+
 	@Override
 	public boolean removeTask(String taskId) {
 		Task task = getTask(taskId);
@@ -241,14 +252,22 @@ public class RedisExecutionDAO extends BaseDynoDAO implements ExecutionDAO {
 			logger.warn("No such task found by id {}", taskId);
 			return false;
 		}
-		String taskKey = task.getReferenceTaskName() + "" + task.getRetryCount();
+		removeTaskMappings(task);
 
-		dynoClient.hdel(nsKey(SCHEDULED_TASKS, task.getWorkflowInstanceId()), taskKey);
-		dynoClient.srem(nsKey(IN_PROGRESS_TASKS, task.getTaskDefName()), task.getTaskId());
-		dynoClient.srem(nsKey(WORKFLOW_TO_TASKS, task.getWorkflowInstanceId()), task.getTaskId());
-		dynoClient.srem(nsKey(TASKS_IN_PROGRESS_STATUS, task.getTaskDefName()), task.getTaskId());
 		dynoClient.del(nsKey(TASK, task.getTaskId()));
-		dynoClient.zrem(nsKey(TASK_LIMIT_BUCKET, task.getTaskDefName()), task.getTaskId());
+		recordRedisDaoRequests("removeTask", task.getTaskType(), task.getWorkflowType());
+		return true;
+	}
+
+	private boolean removeTaskWithExpiry(String taskId, int ttlSeconds) {
+		Task task = getTask(taskId);
+		if(task == null) {
+			logger.warn("No such task found by id {}", taskId);
+			return false;
+		}
+		removeTaskMappings(task);
+
+		dynoClient.expire(nsKey(TASK, task.getTaskId()), ttlSeconds);
 		recordRedisDaoRequests("removeTask", task.getTaskType(), task.getWorkflowType());
 		return true;
 	}
@@ -328,6 +347,29 @@ public class RedisExecutionDAO extends BaseDynoDAO implements ExecutionDAO {
 		}
 		return false;
 	}
+
+	public boolean removeWorkflowWithExpiry(String workflowId, int ttlSeconds)
+	{
+		Workflow workflow = getWorkflow(workflowId, true);
+		if (workflow != null) {
+			recordRedisDaoRequests("removeWorkflow");
+
+			// Remove from lists
+			String key = nsKey(WORKFLOW_DEF_TO_WORKFLOWS, workflow.getWorkflowName(), dateStr(workflow.getCreateTime()));
+			dynoClient.srem(key, workflowId);
+			dynoClient.srem(nsKey(CORR_ID_TO_WORKFLOWS, workflow.getCorrelationId()), workflowId);
+			dynoClient.srem(nsKey(PENDING_WORKFLOWS, workflow.getWorkflowName()), workflowId);
+
+			// Remove the object
+			dynoClient.expire(nsKey(WORKFLOW, workflowId), ttlSeconds);
+			for (Task task : workflow.getTasks()) {
+				removeTaskWithExpiry(task.getTaskId(), ttlSeconds);
+			}
+			return true;
+		}
+		return false;
+	}
+
 
 	@Override
 	public void removeFromPendingWorkflow(String workflowType, String workflowId) {
@@ -419,7 +461,7 @@ public class RedisExecutionDAO extends BaseDynoDAO implements ExecutionDAO {
 	}
 
 	@Override
-	public List<Workflow> getWorkflowsByCorrelationId(String correlationId, boolean includeTasks) {
+	public List<Workflow> getWorkflowsByCorrelationId(String workflowName, String correlationId, boolean includeTasks) {
 		throw new UnsupportedOperationException("This method is not implemented in RedisExecutionDAO. Please use ExecutionDAOFacade instead.");
 	}
 
@@ -525,7 +567,13 @@ public class RedisExecutionDAO extends BaseDynoDAO implements ExecutionDAO {
 			String json = objectMapper.writeValueAsString(eventExecution);
 			recordRedisDaoEventRequests("addEventExecution", eventExecution.getEvent());
 			recordRedisDaoPayloadSize("addEventExecution", json.length(), eventExecution.getEvent(), "n/a");
-            return dynoClient.hsetnx(key, eventExecution.getId(), json) == 1L;
+            boolean added =  dynoClient.hsetnx(key, eventExecution.getId(), json) == 1L;
+
+			if (ttlEventExecutionSeconds > 0) {
+				dynoClient.expire(key, ttlEventExecutionSeconds);
+			}
+
+            return added;
 		} catch (Exception e) {
 			throw new ApplicationException(Code.BACKEND_ERROR, "Unable to add event execution for " + eventExecution.getId(), e);
 		}
@@ -558,7 +606,6 @@ public class RedisExecutionDAO extends BaseDynoDAO implements ExecutionDAO {
 		}
 	}
 
-	@Override
 	public List<EventExecution> getEventExecutions(String eventHandlerName, String eventName, String messageId, int max) {
 		try {
 			String key = nsKey(EVENT_EXECUTION, eventHandlerName, eventName, messageId);
@@ -580,56 +627,6 @@ public class RedisExecutionDAO extends BaseDynoDAO implements ExecutionDAO {
 		} catch (Exception e) {
 			throw new ApplicationException(Code.BACKEND_ERROR, "Unable to get event executions for " + eventHandlerName, e);
 		}
-	}
-
-	@Override
-	public void updateLastPoll(String taskDefName, String domain, String workerId) {
-		Preconditions.checkNotNull(taskDefName, "taskDefName name cannot be null");
-		PollData pollData = new PollData(taskDefName, domain, workerId, System.currentTimeMillis());
-
-		String key = nsKey(POLL_DATA, pollData.getQueueName());
-		String field = (domain == null)?"DEFAULT":domain;
-
-		String payload = toJson(pollData);
-		recordRedisDaoRequests("updatePollData");
-		recordRedisDaoPayloadSize("updatePollData", payload.length(),"n/a","n/a");
-		dynoClient.hset(key, field, payload);
-	}
-
-	@Override
-	public PollData getPollData(String taskDefName, String domain) {
-		Preconditions.checkNotNull(taskDefName, "taskDefName name cannot be null");
-
-		String key = nsKey(POLL_DATA, taskDefName);
-		String field = (domain == null)?"DEFAULT":domain;
-
-		String pollDataJsonString = dynoClient.hget(key, field);
-		recordRedisDaoRequests("getPollData");
-		recordRedisDaoPayloadSize("getPollData", StringUtils.length(pollDataJsonString), "n/a", "n/a");
-
-		PollData pollData = null;
-		if (pollDataJsonString != null) {
-			pollData = readValue(pollDataJsonString, PollData.class);
-		}
-		return pollData;
-	}
-
-	@Override
-	public List<PollData> getPollData(String taskDefName) {
-		Preconditions.checkNotNull(taskDefName, "taskDefName name cannot be null");
-
-		String key = nsKey(POLL_DATA, taskDefName);
-
-		Map<String, String> pMapdata = dynoClient.hgetAll(key);
-		List<PollData> pollData = new ArrayList<PollData>();
-		if(pMapdata != null){
-			pMapdata.values().forEach(pollDataJsonString -> {
-				pollData.add(readValue(pollDataJsonString, PollData.class));
-				recordRedisDaoRequests("getPollData");
-				recordRedisDaoPayloadSize("getPollData", pollDataJsonString.length(), "n/a", "n/a");
-			});
-		}
-		return pollData;
 	}
 
     /**
