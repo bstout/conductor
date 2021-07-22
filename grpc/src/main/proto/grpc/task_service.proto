@@ -3,7 +3,9 @@ package conductor.grpc.tasks;
 
 import "model/taskexeclog.proto";
 import "model/taskresult.proto";
+import "model/tasksummary.proto";
 import "model/task.proto";
+import "grpc/search.proto";
 
 option java_package = "com.netflix.conductor.grpc";
 option java_outer_classname = "TaskServicePb";
@@ -16,17 +18,8 @@ service TaskService {
     // /poll/batch/{tasktype}
     rpc BatchPoll(BatchPollRequest) returns (stream conductor.proto.Task);
 
-    // GET /in_progress/{tasktype}
-    rpc GetTasksInProgress(TasksInProgressRequest) returns (TasksInProgressResponse);
-
-    // GET /in_progress/{workflowId}/{taskRefName}
-    rpc GetPendingTaskForWorkflow(PendingTaskRequest) returns (PendingTaskResponse);
-
     // POST /
     rpc UpdateTask(UpdateTaskRequest) returns (UpdateTaskResponse);
-
-    // POST /{taskId}/ack
-    rpc AckTask(AckTaskRequest) returns (AckTaskResponse);
 
     // POST /{taskId}/log
     rpc AddLog(AddLogRequest) returns (AddLogResponse);
@@ -37,9 +30,6 @@ service TaskService {
     // GET /{taskId}
     rpc GetTask(GetTaskRequest) returns (GetTaskResponse);
 
-    // DELETE /queue/{taskType}/{taskId}
-    rpc RemoveTaskFromQueue(RemoveTaskRequest) returns (RemoveTaskResponse);
-
     // GET /queue/sizes
     rpc GetQueueSizesForTasks(QueueSizesRequest) returns (QueueSizesResponse);
 
@@ -48,6 +38,12 @@ service TaskService {
 
     // GET /queue/all/verbose
     rpc GetQueueAllInfo(QueueAllInfoRequest) returns (QueueAllInfoResponse);
+
+    // GET /search
+    rpc Search(conductor.grpc.search.Request) returns (TaskSummarySearchResult);
+
+    // GET /searchV2
+    rpc SearchV2(conductor.grpc.search.Request) returns (TaskSearchResult);
 }
 
 message PollRequest {
@@ -68,40 +64,12 @@ message BatchPollRequest {
     int32 timeout = 5;
 }
 
-message TasksInProgressRequest {
-    string task_type = 1;
-    string start_key = 2;
-    int32 count = 3;
-}
-
-message TasksInProgressResponse {
-    repeated conductor.proto.Task tasks = 1;
-}
-
-message PendingTaskRequest {
-    string workflow_id = 1;
-    string task_ref_name = 2;
-}
-
-message PendingTaskResponse {
-    conductor.proto.Task task = 1;
-}
-
 message UpdateTaskRequest {
     conductor.proto.TaskResult result = 1;
 }
 
 message UpdateTaskResponse {
     string task_id = 1;
-}
-
-message AckTaskRequest {
-    string task_id = 1;
-    string worker_id = 2;
-}
-
-message AckTaskResponse {
-    bool ack = 1;
 }
 
 message AddLogRequest {
@@ -126,13 +94,6 @@ message GetTaskRequest {
 message GetTaskResponse {
     conductor.proto.Task task = 1;
 }
-
-message RemoveTaskRequest {
-    string task_type = 1;
-    string task_id = 2;
-}
-
-message RemoveTaskResponse {}
 
 message QueueSizesRequest {
     repeated string task_types = 1;
@@ -159,4 +120,14 @@ message QueueAllInfoResponse {
         map<string, ShardInfo> shards = 1;
     }
     map<string, QueueInfo> queues = 1;
+}
+
+message TaskSummarySearchResult {
+    int64 total_hits = 1;
+    repeated conductor.proto.TaskSummary results = 2;
+}
+
+message TaskSearchResult {
+    int64 total_hits = 1;
+    repeated conductor.proto.Task results = 2;
 }

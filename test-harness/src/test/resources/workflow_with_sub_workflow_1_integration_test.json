@@ -27,18 +27,21 @@
       "taskReferenceName": "t2",
       "inputParameters": {
         "param1": "${workflow.input.param1}",
-        "param2": "${workflow.input.param2}"
+        "param2": "${workflow.input.param2}",
+        "subwf": "${workflow.input.nextSubwf}"
       },
       "type": "SUB_WORKFLOW",
       "subWorkflowParam": {
-        "name": "sub_workflow"
+        "name": "${workflow.input.subwf}",
+        "version": 1
       },
       "startDelay": 0,
       "joinOn": [],
       "optional": false,
       "defaultExclusiveJoinTask": [],
       "asyncComplete": false,
-      "loopOver": []
+      "loopOver": [],
+      "retryCount": 0
     }
   ],
   "inputParameters": [
@@ -50,5 +53,6 @@
   "restartable": true,
   "workflowStatusListenerEnabled": false,
   "timeoutPolicy": "ALERT_ONLY",
-  "timeoutSeconds": 0
+  "timeoutSeconds": 0,
+  "ownerEmail": "test@harness.com"
 }

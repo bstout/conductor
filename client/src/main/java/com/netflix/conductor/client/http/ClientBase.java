@@ -1,19 +1,15 @@
 /*
- * Copyright 2016 Netflix, Inc.
+ * Copyright 2020 Netflix, Inc.
  * <p>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
  * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
  * <p>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
  */
-
 package com.netflix.conductor.client.http;
 
 import com.fasterxml.jackson.core.Version;
@@ -23,10 +19,11 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.google.common.base.Preconditions;
 import com.netflix.conductor.client.config.ConductorClientConfiguration;
 import com.netflix.conductor.client.config.DefaultConductorClientConfiguration;
-import com.netflix.conductor.client.exceptions.ConductorClientException;
+import com.netflix.conductor.client.exception.ConductorClientException;
+import com.netflix.conductor.common.config.ObjectMapperProvider;
+import com.netflix.conductor.common.model.BulkResponse;
 import com.netflix.conductor.common.run.ExternalStorageLocation;
 import com.netflix.conductor.common.utils.ExternalPayloadStorage;
-import com.netflix.conductor.common.utils.JsonMapperProvider;
 import com.netflix.conductor.common.validation.ErrorResponse;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientHandler;
@@ -56,7 +53,7 @@ import java.util.function.Function;
  */
 public abstract class ClientBase {
 
-    private static Logger logger = LoggerFactory.getLogger(ClientBase.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClientBase.class);
 
     protected final Client client;
 
@@ -81,7 +78,7 @@ public abstract class ClientBase {
     }
 
     protected ClientBase(ClientConfig config, ConductorClientConfiguration clientConfiguration, ClientHandler handler) {
-        objectMapper = new JsonMapperProvider().get();
+        objectMapper = new ObjectMapperProvider().getObjectMapper();
 
         // https://github.com/FasterXML/jackson-databind/issues/2683
         if (isNewerJacksonVersion()) {
@@ -111,19 +108,34 @@ public abstract class ClientBase {
     }
 
     protected void delete(String url, Object... uriVariables) {
-        delete(null, url, uriVariables);
+        deleteWithUriVariables(null, url, uriVariables);
     }
 
-    protected void delete(Object[] queryParams, String url, Object... uriVariables) {
+    protected void deleteWithUriVariables(Object[] queryParams, String url, Object... uriVariables) {
+        delete(queryParams, url, uriVariables, null);
+    }
+
+    protected BulkResponse deleteWithRequestBody(Object[] queryParams, String url, Object body) {
+        return delete(queryParams, url, null, body);
+    }
+
+    private BulkResponse delete(Object[] queryParams, String url, Object[] uriVariables, Object body) {
         URI uri = null;
         try {
             uri = getURIBuilder(root + url, queryParams).build(uriVariables);
             client.resource(uri).delete();
+            if (body != null) {
+                return client.resource(uri).type(MediaType.APPLICATION_JSON_TYPE).delete(BulkResponse.class, body);
+            } else {
+                client.resource(uri).delete();
+            }
         } catch (UniformInterfaceException e) {
             handleUniformInterfaceException(e, uri);
         } catch (RuntimeException e) {
             handleRuntimeException(e, uri);
         }
+
+        return null;
     }
 
     protected void put(String url, Object[] queryParams, Object request, Object... uriVariables) {
@@ -147,15 +159,20 @@ public abstract class ClientBase {
     }
 
 
-    protected <T> T postForEntity(String url, Object request, Object[] queryParams, Class<T> responseType, Object... uriVariables) {
-        return postForEntity(url, request, queryParams, responseType, builder -> builder.post(responseType), uriVariables);
+    protected <T> T postForEntity(String url, Object request, Object[] queryParams, Class<T> responseType,
+        Object... uriVariables) {
+        return postForEntity(url, request, queryParams, responseType, builder -> builder.post(responseType),
+            uriVariables);
     }
 
-    protected <T> T postForEntity(String url, Object request, Object[] queryParams, GenericType<T> responseType, Object... uriVariables) {
-        return postForEntity(url, request, queryParams, responseType, builder -> builder.post(responseType), uriVariables);
+    protected <T> T postForEntity(String url, Object request, Object[] queryParams, GenericType<T> responseType,
+        Object... uriVariables) {
+        return postForEntity(url, request, queryParams, responseType, builder -> builder.post(responseType),
+            uriVariables);
     }
 
-    private <T> T postForEntity(String url, Object request, Object[] queryParams, Object responseType, Function<Builder, T> postWithEntity, Object... uriVariables) {
+    private <T> T postForEntity(String url, Object request, Object[] queryParams, Object responseType,
+        Function<Builder, T> postWithEntity, Object... uriVariables) {
         URI uri = null;
         try {
             uri = getURIBuilder(root + url, queryParams).build(uriVariables);
@@ -177,18 +194,20 @@ public abstract class ClientBase {
         return getForEntity(url, queryParams, response -> response.getEntity(responseType), uriVariables);
     }
 
-    protected <T> T getForEntity(String url, Object[] queryParams, GenericType<T> responseType, Object... uriVariables) {
+    protected <T> T getForEntity(String url, Object[] queryParams, GenericType<T> responseType,
+        Object... uriVariables) {
         return getForEntity(url, queryParams, response -> response.getEntity(responseType), uriVariables);
     }
 
-    private <T> T getForEntity(String url, Object[] queryParams, Function<ClientResponse, T> entityProvider, Object... uriVariables) {
+    private <T> T getForEntity(String url, Object[] queryParams, Function<ClientResponse, T> entityProvider,
+        Object... uriVariables) {
         URI uri = null;
         ClientResponse clientResponse;
         try {
             uri = getURIBuilder(root + url, queryParams).build(uriVariables);
             clientResponse = client.resource(uri)
-                    .accept(MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN)
-                    .get(ClientResponse.class);
+                .accept(MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN)
+                .get(ClientResponse.class);
             if (clientResponse.getStatus() < 300) {
                 return entityProvider.apply(clientResponse);
             } else {
@@ -203,56 +222,66 @@ public abstract class ClientBase {
     }
 
     /**
-     * Uses the {@link PayloadStorage} for storing large payloads.
-     * Gets the uri for storing the payload from the server and then uploads to this location.
+     * Uses the {@link PayloadStorage} for storing large payloads. Gets the uri for storing the payload from the server
+     * and then uploads to this location.
      *
-     * @param payloadType  the {@link com.netflix.conductor.common.utils.ExternalPayloadStorage.PayloadType} to be uploaded
+     * @param payloadType  the {@link com.netflix.conductor.common.utils.ExternalPayloadStorage.PayloadType} to be
+     *                     uploaded
      * @param payloadBytes the byte array containing the payload
      * @param payloadSize  the size of the payload
      * @return the path where the payload is stored in external storage
      */
-    protected String uploadToExternalPayloadStorage(ExternalPayloadStorage.PayloadType payloadType, byte[] payloadBytes, long payloadSize) {
-        Preconditions.checkArgument(payloadType.equals(ExternalPayloadStorage.PayloadType.WORKFLOW_INPUT) || payloadType.equals(ExternalPayloadStorage.PayloadType.TASK_OUTPUT),
-                "Payload type must be workflow input or task output");
-        ExternalStorageLocation externalStorageLocation = payloadStorage.getLocation(ExternalPayloadStorage.Operation.WRITE, payloadType, "");
+    protected String uploadToExternalPayloadStorage(ExternalPayloadStorage.PayloadType payloadType, byte[] payloadBytes,
+        long payloadSize) {
+        Preconditions.checkArgument(payloadType.equals(ExternalPayloadStorage.PayloadType.WORKFLOW_INPUT) || payloadType
+                .equals(ExternalPayloadStorage.PayloadType.TASK_OUTPUT),
+            "Payload type must be workflow input or task output");
+        ExternalStorageLocation externalStorageLocation = payloadStorage
+            .getLocation(ExternalPayloadStorage.Operation.WRITE, payloadType, "");
         payloadStorage.upload(externalStorageLocation.getUri(), new ByteArrayInputStream(payloadBytes), payloadSize);
         return externalStorageLocation.getPath();
     }
 
     /**
-     * Uses the {@link PayloadStorage} for downloading large payloads to be used by the client.
-     * Gets the uri of the payload fom the server and then downloads from this location.
+     * Uses the {@link PayloadStorage} for downloading large payloads to be used by the client. Gets the uri of the
+     * payload fom the server and then downloads from this location.
      *
-     * @param payloadType the {@link com.netflix.conductor.common.utils.ExternalPayloadStorage.PayloadType} to be downloaded
+     * @param payloadType the {@link com.netflix.conductor.common.utils.ExternalPayloadStorage.PayloadType} to be
+     *                    downloaded
      * @param path        the relative of the payload in external storage
      * @return the payload object that is stored in external storage
      */
     @SuppressWarnings("unchecked")
-    protected Map<String, Object> downloadFromExternalStorage(ExternalPayloadStorage.PayloadType payloadType, String path) {
+    protected Map<String, Object> downloadFromExternalStorage(ExternalPayloadStorage.PayloadType payloadType,
+        String path) {
         Preconditions.checkArgument(StringUtils.isNotBlank(path), "uri cannot be blank");
-        ExternalStorageLocation externalStorageLocation = payloadStorage.getLocation(ExternalPayloadStorage.Operation.READ, payloadType, path);
+        ExternalStorageLocation externalStorageLocation = payloadStorage
+            .getLocation(ExternalPayloadStorage.Operation.READ, payloadType, path);
         try (InputStream inputStream = payloadStorage.download(externalStorageLocation.getUri())) {
             return objectMapper.readValue(inputStream, Map.class);
         } catch (IOException e) {
             String errorMsg = String.format("Unable to download payload from external storage location: %s", path);
-            logger.error(errorMsg, e);
+            LOGGER.error(errorMsg, e);
             throw new ConductorClientException(errorMsg, e);
         }
     }
 
     private Builder getWebResourceBuilder(URI URI, Object entity) {
-        return client.resource(URI).type(MediaType.APPLICATION_JSON).entity(entity).accept(MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON);
+        return client.resource(URI).type(MediaType.APPLICATION_JSON).entity(entity)
+            .accept(MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON);
     }
 
     private void handleClientHandlerException(ClientHandlerException exception, URI uri) {
-        String errorMessage = String.format("Unable to invoke Conductor API with uri: %s, failure to process request or response", uri);
-        logger.error(errorMessage, exception);
+        String errorMessage = String
+            .format("Unable to invoke Conductor API with uri: %s, failure to process request or response", uri);
+        LOGGER.error(errorMessage, exception);
         throw new ConductorClientException(errorMessage, exception);
     }
 
     private void handleRuntimeException(RuntimeException exception, URI uri) {
-        String errorMessage = String.format("Unable to invoke Conductor API with uri: %s, runtime exception occurred", uri);
-        logger.error(errorMessage, exception);
+        String errorMessage = String
+            .format("Unable to invoke Conductor API with uri: %s, runtime exception occurred", uri);
+        LOGGER.error(errorMessage, exception);
         throw new ConductorClientException(errorMessage, exception);
     }
 
@@ -266,7 +295,9 @@ public abstract class ClientBase {
                 return;
             }
             String errorMessage = clientResponse.getEntity(String.class);
-            logger.error("Unable to invoke Conductor API with uri: {}, unexpected response from server: statusCode={}, responseBody='{}'.", uri, clientResponse.getStatus(), errorMessage);
+            LOGGER.error(
+                "Unable to invoke Conductor API with uri: {}, unexpected response from server: statusCode={}, responseBody='{}'.",
+                uri, clientResponse.getStatus(), errorMessage);
             ErrorResponse errorResponse;
             try {
                 errorResponse = objectMapper.readValue(errorMessage, ErrorResponse.class);

@@ -1,56 +1,35 @@
 /*
- * Copyright 2020 Netflix, Inc.
- * <p>
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations under the License.
+ *  Copyright 2021 Netflix, Inc.
+ *  <p>
+ *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ *  the License. You may obtain a copy of the License at
+ *  <p>
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *  <p>
+ *  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ *  an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ *  specific language governing permissions and limitations under the License.
  */
 package com.netflix.conductor.test.integration
 
 import com.netflix.conductor.common.metadata.tasks.Task
 import com.netflix.conductor.common.metadata.tasks.TaskDef
-import com.netflix.conductor.common.metadata.workflow.TaskType
+import com.netflix.conductor.common.metadata.tasks.TaskType
 import com.netflix.conductor.common.run.Workflow
-import com.netflix.conductor.core.execution.WorkflowExecutor
 import com.netflix.conductor.core.execution.tasks.SubWorkflow
-import com.netflix.conductor.dao.QueueDAO
-import com.netflix.conductor.service.ExecutionService
-import com.netflix.conductor.service.MetadataService
-import com.netflix.conductor.test.util.WorkflowTestUtil
-import com.netflix.conductor.tests.utils.TestModule
-import com.netflix.conductor.tests.utils.UserTask
-import com.netflix.governator.guice.test.ModulesForTesting
+import com.netflix.conductor.test.base.AbstractSpecification
+import com.netflix.conductor.test.utils.UserTask
+import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.Shared
-import spock.lang.Specification
-
-import javax.inject.Inject
 
 import static com.netflix.conductor.test.util.WorkflowTestUtil.verifyPolledAndAcknowledgedLargePayloadTask
 import static com.netflix.conductor.test.util.WorkflowTestUtil.verifyPolledAndAcknowledgedTask
-import static com.netflix.conductor.tests.utils.MockExternalPayloadStorage.*
+import static com.netflix.conductor.test.utils.MockExternalPayloadStorage.INITIAL_WORKFLOW_INPUT_PATH
+import static com.netflix.conductor.test.utils.MockExternalPayloadStorage.INPUT_PAYLOAD_PATH
+import static com.netflix.conductor.test.utils.MockExternalPayloadStorage.TASK_OUTPUT_PATH
+import static com.netflix.conductor.test.utils.MockExternalPayloadStorage.WORKFLOW_OUTPUT_PATH
 
-@ModulesForTesting([TestModule.class])
-class ExternalPayloadStorageSpec extends Specification {
-
-    @Inject
-    ExecutionService workflowExecutionService
-
-    @Inject
-    MetadataService metadataService
-
-    @Inject
-    WorkflowExecutor workflowExecutor
-
-    @Inject
-    WorkflowTestUtil workflowTestUtil
-
-    @Inject
-    UserTask userTask
+class ExternalPayloadStorageSpec extends AbstractSpecification {
 
     @Shared
     def LINEAR_WORKFLOW_T1_T2 = 'integration_test_wf'
@@ -62,20 +41,24 @@ class ExternalPayloadStorageSpec extends Specification {
     def FORK_JOIN_WF = 'FanInOutTest'
 
     @Shared
-    def WORKFLOW_WITH_INLINE_SUB_WF = "WorkflowWithInlineSubWorkflow"
+    def WORKFLOW_WITH_INLINE_SUB_WF = 'WorkflowWithInlineSubWorkflow'
 
-    @Inject
-    QueueDAO queueDAO
+    @Shared
+    def WORKFLOW_WITH_DECISION_AND_TERMINATE = 'ConditionalTerminateWorkflow'
+
+    @Autowired
+    UserTask userTask
+
+    @Autowired
+    SubWorkflow subWorkflowTask
 
     def setup() {
         workflowTestUtil.registerWorkflows('simple_workflow_1_integration_test.json',
                 'conditional_system_task_workflow_integration_test.json',
                 'fork_join_integration_test.json',
-                'simple_workflow_with_sub_workflow_inline_def_integration_test.json')
-    }
-
-    def cleanup() {
-        workflowTestUtil.clearWorkflows()
+                'simple_workflow_with_sub_workflow_inline_def_integration_test.json',
+                'decision_and_terminate_integration_test.json'
+        )
     }
 
     def "Test simple workflow using external payload storage"() {
@@ -195,8 +178,8 @@ class ExternalPayloadStorageSpec extends Specification {
 
         when: "the system task 'USER_TASK' is started by issuing a system task call"
         def workflow = workflowExecutionService.getExecutionStatus(workflowInstanceId, true)
-        def taskId = workflow.getTaskByRefName('user_task').getTaskId()
-        workflowExecutor.executeSystemTask(userTask, taskId, 1)
+        def taskId = workflow.getTaskByRefName('user_task').taskId
+        asyncSystemTaskExecutor.execute(userTask, taskId)
 
         then: "verify that the user task is in a COMPLETED state"
         with(workflowExecutionService.getExecutionStatus(workflowInstanceId, true)) {
@@ -440,7 +423,7 @@ class ExternalPayloadStorageSpec extends Specification {
         when: "the subworkflow is started by issuing a system task call"
         def workflow = workflowExecutionService.getExecutionStatus(workflowInstanceId, true)
         def subWorkflowTaskId = workflow.getTaskByRefName('swt').taskId
-        workflowExecutor.executeSystemTask(new SubWorkflow(), subWorkflowTaskId, 1)
+        asyncSystemTaskExecutor.execute(subWorkflowTask, subWorkflowTaskId)
 
         then: "verify that the sub workflow task is in a IN_PROGRESS state"
         with(workflowExecutionService.getExecutionStatus(workflowInstanceId, true)) {
@@ -493,6 +476,7 @@ class ExternalPayloadStorageSpec extends Specification {
         }
 
         and: "the subworkflow task is completed and the workflow is in running state"
+        sweep(workflowInstanceId)
         with(workflowExecutionService.getExecutionStatus(workflowInstanceId, true)) {
             status == Workflow.WorkflowStatus.RUNNING
             input.isEmpty()
@@ -552,7 +536,8 @@ class ExternalPayloadStorageSpec extends Specification {
         setup: "Modify the task definition"
         def persistedTask2Definition = workflowTestUtil.getPersistedTaskDefinition('integration_task_2').get()
         def modifiedTask2Definition = new TaskDef(persistedTask2Definition.name, persistedTask2Definition.description,
-                2, persistedTask2Definition.timeoutSeconds)
+                persistedTask2Definition.ownerEmail, 2, persistedTask2Definition.timeoutSeconds,
+                persistedTask2Definition.responseTimeoutSeconds)
         modifiedTask2Definition.setRetryDelaySeconds(0)
         metadataService.updateTaskDef(modifiedTask2Definition)
 
@@ -654,5 +639,62 @@ class ExternalPayloadStorageSpec extends Specification {
 
         cleanup:
         metadataService.updateTaskDef(persistedTask2Definition)
+    }
+
+    def "Test workflow with terminate in decision branch using external payload storage"() {
+
+        given: "An existing workflow definition"
+        metadataService.getWorkflowDef(WORKFLOW_WITH_DECISION_AND_TERMINATE,1)
+
+        and: "input required to start large payload workflow"
+        def workflowInputPath = INITIAL_WORKFLOW_INPUT_PATH
+        def correlationId = "decision_terminate_external_storage"
+
+        when: "the workflow is started"
+        def workflowInstanceId = workflowExecutor.startWorkflow(WORKFLOW_WITH_DECISION_AND_TERMINATE, 1, correlationId, null, workflowInputPath, null, null)
+
+        then: "verify that the workflow is in RUNNING state"
+        with (workflowExecutionService.getExecutionStatus(workflowInstanceId, true)) {
+            status == Workflow.WorkflowStatus.RUNNING
+            input.isEmpty()
+            externalInputPayloadStoragePath == workflowInputPath
+            tasks.size() == 1
+            tasks[0].taskType == 'integration_task_1'
+            tasks[0].status == Task.Status.SCHEDULED
+            tasks[0].seq == 1
+        }
+
+        when: "poll and complete the 'integration_task_1' with external payload storage"
+        def taskOutputPath = TASK_OUTPUT_PATH
+        def pollAndCompleteLargePayloadTask = workflowTestUtil.pollAndCompleteLargePayloadTask('integration_task_1', 'task1.integration.worker', taskOutputPath)
+
+        then: "verify that the 'integration_task_1' was polled and acknowledged"
+        verifyPolledAndAcknowledgedLargePayloadTask(pollAndCompleteLargePayloadTask)
+
+        and: "verify that the 'integration_task_1' is COMPLETED and the workflow has FAILED due to terminate task"
+        with(workflowExecutionService.getExecutionStatus(workflowInstanceId, true)) {
+            status == Workflow.WorkflowStatus.FAILED
+            input.isEmpty()
+            externalInputPayloadStoragePath == workflowInputPath
+            tasks.size() == 3
+            output.isEmpty()
+            externalOutputPayloadStoragePath == WORKFLOW_OUTPUT_PATH
+            reasonForIncompletion.contains('Workflow is FAILED by TERMINATE task')
+            tasks[0].taskType == 'integration_task_1'
+            tasks[0].status == Task.Status.COMPLETED
+            tasks[0].outputData.isEmpty()
+            tasks[0].externalOutputPayloadStoragePath == taskOutputPath
+            tasks[0].seq == 1
+            tasks[1].taskType == 'DECISION'
+            tasks[1].status == Task.Status.COMPLETED
+            tasks[1].seq == 2
+            tasks[2].taskType == 'TERMINATE'
+            tasks[2].status == Task.Status.COMPLETED
+            tasks[2].inputData.isEmpty()
+            tasks[2].externalInputPayloadStoragePath == INPUT_PAYLOAD_PATH
+            tasks[2].seq == 3
+            tasks[2].outputData.isEmpty()
+            tasks[2].externalOutputPayloadStoragePath == TASK_OUTPUT_PATH
+        }
     }
 }

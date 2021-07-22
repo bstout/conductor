@@ -1,17 +1,14 @@
 /*
- * Copyright 2020 Netflix, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Copyright 2021 Netflix, Inc.
+ *  <p>
+ *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ *  the License. You may obtain a copy of the License at
+ *  <p>
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *  <p>
+ *  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ *  an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ *  specific language governing permissions and limitations under the License.
  */
 package com.netflix.conductor.test.resiliency
 
@@ -20,16 +17,12 @@ import com.netflix.conductor.common.metadata.tasks.TaskResult
 import com.netflix.conductor.common.metadata.workflow.RerunWorkflowRequest
 import com.netflix.conductor.common.metadata.workflow.StartWorkflowRequest
 import com.netflix.conductor.common.run.Workflow
-import com.netflix.conductor.core.execution.ApplicationException
-import com.netflix.conductor.dao.QueueDAO
-import com.netflix.conductor.server.resources.TaskResource
-import com.netflix.conductor.server.resources.WorkflowResource
-import com.netflix.conductor.test.util.MockQueueDAOModule
-import com.netflix.conductor.test.util.WorkflowTestUtil
-import spock.guice.UseModules
-import spock.lang.Specification
-
-import javax.inject.Inject
+import com.netflix.conductor.core.exception.ApplicationException
+import com.netflix.conductor.rest.controllers.TaskResource
+import com.netflix.conductor.rest.controllers.WorkflowResource
+import com.netflix.conductor.test.base.AbstractResiliencySpecification
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus
 
 /**
  * When QueueDAO is unavailable,
@@ -38,19 +31,12 @@ import javax.inject.Inject
  * 2. Succeeds
  * 3. Doesn't involve QueueDAO
  */
-@UseModules(MockQueueDAOModule)
-class QueueResiliencySpec extends Specification {
+class QueueResiliencySpec extends AbstractResiliencySpecification {
 
-    @Inject
-    WorkflowTestUtil workflowTestUtil
-
-    @Inject
-    QueueDAO queueDAO
-
-    @Inject
+    @Autowired
     WorkflowResource workflowResource
 
-    @Inject
+    @Autowired
     TaskResource taskResource
 
     def SIMPLE_TWO_TASK_WORKFLOW = 'integration_test_wf'
@@ -60,10 +46,6 @@ class QueueResiliencySpec extends Specification {
         workflowTestUtil.registerWorkflows(
                 'simple_workflow_1_integration_test.json'
         )
-    }
-
-    def cleanup() {
-        workflowTestUtil.clearWorkflows()
     }
 
     /// Workflow Resource endpoints
@@ -194,7 +176,7 @@ class QueueResiliencySpec extends Specification {
         }
 
         when: "workflow is restarted when QueueDAO is unavailable"
-        workflowResource.retry(workflowInstanceId,false)
+        workflowResource.retry(workflowInstanceId, false)
 
         then: "Verify retry fails"
         1 * queueDAO.push(*_) >> { throw new ApplicationException(ApplicationException.Code.BACKEND_ERROR, "Queue push failed from Spy") }
@@ -269,8 +251,8 @@ class QueueResiliencySpec extends Specification {
         when: "We get a workflow when QueueDAO is unavailable"
         workflowResource.delete(workflowInstanceId, false)
 
-        then: "Verify queueDAO is not involved"
-        0 * queueDAO._
+        then: "Verify queueDAO is called to remove from _deciderQueue"
+        1 * queueDAO._
 
         when: "We try to get deleted workflow"
         workflowResource.getExecutionStatus(workflowInstanceId, true)
@@ -318,6 +300,7 @@ class QueueResiliencySpec extends Specification {
         workflowResource.pauseWorkflow(workflowInstanceId)
 
         then: "Verify workflow is paused without any exceptions"
+        1 * queueDAO.remove(*_) >> { throw new IllegalStateException("Queue remove failed from Spy") }
         0 * queueDAO._
         with(workflowResource.getExecutionStatus(workflowInstanceId, true)) {
             status == Workflow.WorkflowStatus.PAUSED
@@ -327,7 +310,7 @@ class QueueResiliencySpec extends Specification {
         }
     }
 
-    def "Verify resume succeeds when QueueDAO is unavailable"() {
+    def "Verify resume fails when QueueDAO is unavailable"() {
         when: "Start a simple workflow"
         def workflowInstanceId = workflowResource.startWorkflow(new StartWorkflowRequest()
                 .withName(SIMPLE_TWO_TASK_WORKFLOW)
@@ -355,10 +338,11 @@ class QueueResiliencySpec extends Specification {
         when: "Workflow is resumed when QueueDAO is unavailable"
         workflowResource.resumeWorkflow(workflowInstanceId)
 
-        then: "Verify QueueDAO is not involved and Workflow is resumed successfully"
-        0 * queueDAO._
+        then: "exception is thrown"
+        1 * queueDAO.push(*_) >> { throw new ApplicationException(ApplicationException.Code.BACKEND_ERROR, "Queue push failed from Spy") }
+        thrown(ApplicationException)
         with(workflowResource.getExecutionStatus(workflowInstanceId, true)) {
-            status == Workflow.WorkflowStatus.RUNNING
+            status == Workflow.WorkflowStatus.PAUSED
             tasks.size() == 1
             tasks[0].taskType == 'integration_task_1'
             tasks[0].status == Task.Status.SCHEDULED
@@ -423,13 +407,13 @@ class QueueResiliencySpec extends Specification {
 
     def "Verify polls return with no result when QueueDAO is unavailable"() {
         when: "Some task 'integration_task_1' is polled"
-        def pollResult = taskResource.poll("integration_task_1", "test", "")
+        def responseEntity = taskResource.poll("integration_task_1", "test", "")
 
         then:
         1 * queueDAO.pop(*_) >> { throw new IllegalStateException("Queue pop failed from Spy") }
         0 * queueDAO._
         notThrown(Exception)
-        pollResult == null
+        responseEntity && responseEntity.statusCode == HttpStatus.NO_CONTENT && !responseEntity.body
     }
 
     def "Verify updateTask with COMPLETE status succeeds when QueueDAO is unavailable"() {
@@ -447,21 +431,21 @@ class QueueResiliencySpec extends Specification {
         }
 
         when: "The first task 'integration_task_1' is polled"
-        def task = taskResource.poll("integration_task_1", "test", null)
+        def responseEntity = taskResource.poll("integration_task_1", "test", null)
 
         then: "Verify task is returned successfully"
-        task
-        task.status == Task.Status.IN_PROGRESS
-        task.taskType == 'integration_task_1'
+        responseEntity && responseEntity.statusCode == HttpStatus.OK && responseEntity.body
+        responseEntity.body.status == Task.Status.IN_PROGRESS
+        responseEntity.body.taskType == 'integration_task_1'
 
         when: "the above task is updated, while QueueDAO is unavailable"
-        def taskResult = new TaskResult(task)
+        def taskResult = new TaskResult(responseEntity.body)
         taskResult.setStatus(TaskResult.Status.COMPLETED)
         def result = taskResource.updateTask(taskResult)
 
         then: "updateTask returns successfully without any exceptions"
         1 * queueDAO.remove(*_) >> { throw new IllegalStateException("Queue remove failed from Spy") }
-        result == task.getTaskId()
+        result == responseEntity.body.taskId
         notThrown(Exception)
     }
 
@@ -480,37 +464,21 @@ class QueueResiliencySpec extends Specification {
         }
 
         when: "The first task 'integration_task_1' is polled"
-        def task = taskResource.poll("integration_task_1", "test", null)
+        def responseEntity = taskResource.poll("integration_task_1", "test", null)
 
         then: "Verify task is returned successfully"
-        task
-        task.status == Task.Status.IN_PROGRESS
-        task.taskType == 'integration_task_1'
+        responseEntity && responseEntity.statusCode == HttpStatus.OK
+        responseEntity.body.status == Task.Status.IN_PROGRESS
+        responseEntity.body.taskType == 'integration_task_1'
 
         when: "the above task is updated, while QueueDAO is unavailable"
-        def taskResult = new TaskResult(task)
+        def taskResult = new TaskResult(responseEntity.body)
         taskResult.setStatus(TaskResult.Status.IN_PROGRESS)
         taskResult.setCallbackAfterSeconds(120)
         def result = taskResource.updateTask(taskResult)
 
         then: "updateTask fails with an exception"
         2 * queueDAO.postpone(*_) >> { throw new IllegalStateException("Queue postpone failed from Spy") }
-        thrown(Exception)
-    }
-
-    def "verify removeTaskFromQueue fail when QueueDAO is unavailable"() {
-        when: "Start a simple workflow"
-        def workflowInstanceId = workflowResource.startWorkflow(new StartWorkflowRequest()
-                .withName(SIMPLE_TWO_TASK_WORKFLOW)
-                .withVersion(1))
-        def workflow = workflowResource.getExecutionStatus(workflowInstanceId, true)
-
-        and: "Task is removed from the queue"
-        def task = workflow.getTasks().get(0)
-        taskResource.removeTaskFromQueue(task.getTaskType(), task.getTaskId())
-
-        then: "Verify an exception is thrown"
-        1 * queueDAO.remove(*_) >> { throw new IllegalStateException("Queue remove failed from Spy") }
         thrown(Exception)
     }
 
@@ -570,20 +538,6 @@ class QueueResiliencySpec extends Specification {
 
         then:
         1 * queueDAO.queuesDetail() >> { throw new IllegalStateException("Queue queuesDetail failed from Spy") }
-        thrown(Exception)
-    }
-
-    def "Verify requeue fails when QueueDAO is unavailable"() {
-        when: "Start a simple workflow"
-        def workflowInstanceId = workflowResource.startWorkflow(new StartWorkflowRequest()
-                .withName(SIMPLE_TWO_TASK_WORKFLOW)
-                .withVersion(1))
-
-        and:
-        taskResource.requeue()
-
-        then:
-        1 * queueDAO.pushIfNotExists(*_) >> { throw new IllegalStateException("Queue pushIfNotExists failed from Spy") }
         thrown(Exception)
     }
 

@@ -5,94 +5,85 @@
 Conductor is an _orchestration_ engine that runs in the cloud.
 
 
-
-[![Download](https://api.bintray.com/packages/netflixoss/maven/conductor/images/download.svg)](https://bintray.com/netflixoss/maven/conductor/_latestVersion)
+[![Github release](https://img.shields.io/github/v/release/Netflix/conductor.svg)](https://GitHub.com/Netflix/conductor/releases)
+[![CI](https://github.com/Netflix/conductor/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Netflix/conductor/actions/workflows/ci.yml)
 [![License](https://img.shields.io/github/license/Netflix/conductor.svg)](http://www.apache.org/licenses/LICENSE-2.0)
-[![Issues](https://img.shields.io/github/issues/Netflix/conductor.svg)](https://github.com/Netflix/conductor/issues)
 [![NetflixOSS Lifecycle](https://img.shields.io/osslifecycle/Netflix/conductor.svg)]()
 
 ## Community
-[![Gitter](https://badges.gitter.im/netflix-conductor/community.svg)](https://gitter.im/netflix-conductor/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) Please feel free to join our Gitter for questions and interacting with the community.
+[Discussion Forum](https://github.com/Netflix/conductor/discussions) Please use the forum for questions and discussing ideas and join the community.
 
 [Access here other Conductor related projects made by the community!](/RELATED.md) - Backup tool, Cron like workflow starter, Docker containers...
 
 ## Builds
-Conductor builds are run on Travis CI [here](https://travis-ci.org/Netflix/conductor).
+| Branch |                                                     Build                                                     |
+|:------:|:-------------------------------------------------------------------------------------------------------------:|
+| main | [![CI](https://github.com/Netflix/conductor/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Netflix/conductor/actions/workflows/ci.yml) |
+| 2.31 | [![Build Status](https://travis-ci.com/Netflix/conductor.svg?branch=2.31)](https://travis-ci.com/Netflix/conductor) |
 
-| Branch |                                                     Build                                                     |                                                                 Coverage (coveralls.io)                                                                |                                                        Coverage (codecov.io)                                                       |
-|:------:|:-------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------:|
-| master | [![Build Status](https://travis-ci.org/Netflix/conductor.svg?branch=master)](https://travis-ci.org/Netflix/conductor) | [![Coverage Status](https://coveralls.io/repos/github/Netflix/conductor/badge.svg?branch=master)](https://coveralls.io/github/Netflix/conductor?branch=master) | [![codecov](https://codecov.io/gh/Netflix/conductor/branch/master/graph/badge.svg)](https://codecov.io/gh/Netflix/conductor/branch/master) |
-| dev | [![Build Status](https://travis-ci.org/Netflix/conductor.svg?branch=dev)](https://travis-ci.org/Netflix/conductor) | [![Coverage Status](https://coveralls.io/repos/github/Netflix/conductor/badge.svg?branch=dev)](https://coveralls.io/github/Netflix/conductor?branch=dev) | [![codecov](https://codecov.io/gh/Netflix/conductor/branch/dev/graph/badge.svg)](https://codecov.io/gh/Netflix/conductor/branch/dev) |
+
+## Running Conductor
+The latest version is [![Github release](https://img.shields.io/github/v/release/Netflix/conductor.svg)](https://GitHub.com/Netflix/conductor/releases). Conductor can be started up with an in-memory persistence and queue implementation. It is not recommended for production use but can come in handy for quickly evaluating what Conductor's all about. For actual production use-cases, please use one of the supported persistence and queue implementations.
+
+If Docker is installed, please follow the instructions [here](https://github.com/Netflix/conductor/tree/main/docker). 
+
+If Java 11 or above is installed, Conductor [publishes](https://artifacts.netflix.net/netflixoss/com/netflix/conductor/conductor-server/) an executable jar that can be run using,
+
+`java -jar conductor-server-*-boot.jar`
 
 ## Documentation & Getting Started
-[http://netflix.github.io/conductor/](http://netflix.github.io/conductor/)
+[Documentation](http://netflix.github.io/conductor/)  
+[Roadmap](https://github.com/Netflix/conductor/wiki/Roadmap)
 
 [Getting Started](https://netflix.github.io/conductor/gettingstarted/basicconcepts/) guide.
 
 ## Get Conductor
-Binaries are available from Maven Central and jcenter.
+Binaries are available from [Netflix OSS Maven](https://artifacts.netflix.net/netflixoss/com/netflix/conductor/) repository.
 
 Below are the various artifacts published:
 
-|Artifact|Description|
-|-----------|---------------|
-|conductor-common|Common models used by various conductor modules|
-|conductor-core|Core Conductor module|
-|conductor-redis-persistence|Persistence using Redis/Dynomite|
-|conductor-es5-persistence|Indexing using Elasticsearch 5.X|
-|conductor-jersey|Jersey JAX-RS resources for the core services|
-|conductor-ui|node.js based UI for Conductor|
-|conductor-contribs|Optional contrib package that holds extended workflow tasks and support for SQS|
-|conductor-client|Java client for Conductor that includes helpers for running a worker tasks|
-|conductor-server|Self contained Jetty server|
-|conductor-test-harness|Used for building test harness and an in-memory kitchensink demo|
+| Artifact | Description |
+| ----------- | --------------- |
+| conductor-common | Common models used by various conductor modules |
+| conductor-core | Core Conductor module |
+| conductor-redis-persistence | Persistence and queue using Redis/Dynomite |
+| conductor-cassandra-persistence | Persistence using Cassandra |
+| conductor-mysql-persistence | Persistence and queue using MySQL |
+| conductor-postgres-persistence | Persistence and queue using Postgres |
+| conductor-es6-persistence | Indexing using Elasticsearch 6.X |
+| conductor-rest | Spring MVC resources for the core services |
+| conductor-ui | node.js based UI for Conductor |
+| conductor-contribs | Optional contrib package that holds extended workflow tasks and support for SQS, AMQP, etc|
+| conductor-client | Java client for Conductor that includes helpers for running worker tasks |
+| conductor-client-spring | Client starter kit for Spring |
+| conductor-server | Spring Boot Web Application |
+| conductor-azureblob-storage | External payload storage implementation using AzureBlob |
+| conductor-redis-lock | Workflow execution lock implementation using Redis |
+| conductor-zookeeper-lock | Workflow execution lock implementation using Zookeeper |
+| conductor-grpc | Protobuf models used by the server and client |
+| conductor-grpc-client | gRPC server Application |
+| conductor-grpc-server | gRPC client to interact with the gRPC server |
+| conductor-test-harness | Integration and regression tests |
 
-## Building
-To build the server, use the following dependencies in your classpath:
-
-* conductor-common
-* conductor-core
-* conductor-jersey
-* conductor-redis-persistence (_unless using your own persistence module_)
-* conductor-es5-persistence (_unless using your own index module_)
-* conductor-contribs (_optional_)
-
-
-### Deploying Jersey JAX-RS resources
-Add the following packages to classpath scan:
-
-```java
-com.netflix.conductor.server.resources
-com.netflix.workflow.contribs.queue
-```
-Conductor relies on the guice (4.0+) for the dependency injection.
-Persistence has a guice module to wire up appropriate interfaces:
-
-```java
-com.netflix.conductor.dao.RedisWorkflowModule
-```
 ## Database Requirements
 
 * The default persistence used is [Dynomite](https://github.com/Netflix/dynomite)
 * For queues, we are relying on [dyno-queues](https://github.com/Netflix/dyno-queues)
-* The indexing backend is [Elasticsearch](https://www.elastic.co/) (5.x)
+* The indexing backend is [Elasticsearch](https://www.elastic.co/) (6.x)
 
 ## Other Requirements
-* JDK 1.8+
-* Servlet Container
+* JDK 11+
 
 ## Get Support
-Conductor is maintained by Media Workflow Infrastructure team at Netflix.  Use github issue tracking for any support request. 
+Conductor is maintained by Media Workflow Infrastructure team at Netflix.  Use github issue tracking for filing issues and [Discussion Forum](https://github.com/Netflix/conductor/discussions) for any other questions, ideas or support requests. 
 
 ## Contributions
-Whether it is a small doc correction, bug fix or adding new module to support some crazy feature, contributions are highly appreciated. We just ask to follow standard oss guidelines. And to reiterate, please check with us before spending too much time, only to find later that someone else is already working on similar feature. 
+Whether it is a small documentation correction, bug fix or new features, contributions are highly appreciated. We just ask to follow standard oss guidelines. [Discussion Forum](https://github.com/Netflix/conductor/discussions) is a good place to ask questions, discuss new features and explore ideas. Please check with us before spending too much time, only to find later that someone else is already working on a similar feature.
 
-`dev` branch is the current working branch, while `master` branch is current stable branch. Please send your PR's to `dev` branch, making sure that it builds on your local system successfully. Also, please make sure all the conflicts are resolved.
-
-Feel free to create an issue with a label: question, with any questions or requests for help.
+`main` branch is the current working branch, while `2.31` branch is the latest stable 2.x branch. Please send your PR's to `main` branch, making sure that it builds on your local system successfully. Also, please make sure all the conflicts are resolved.
 
 ## License
-Copyright 2018 Netflix, Inc.
+Copyright 2021 Netflix, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

@@ -1,50 +1,26 @@
-/**
- * Copyright 2020 Netflix, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+/*
+ *  Copyright 2021 Netflix, Inc.
+ *  <p>
+ *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ *  the License. You may obtain a copy of the License at
+ *  <p>
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *  <p>
+ *  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ *  an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ *  specific language governing permissions and limitations under the License.
  */
 package com.netflix.conductor.test.integration
-
 
 import com.netflix.conductor.common.metadata.tasks.Task
 import com.netflix.conductor.common.metadata.tasks.TaskDef
 import com.netflix.conductor.common.run.Workflow
-import com.netflix.conductor.core.execution.WorkflowExecutor
 import com.netflix.conductor.core.execution.tasks.SubWorkflow
-import com.netflix.conductor.service.ExecutionService
-import com.netflix.conductor.service.MetadataService
-import com.netflix.conductor.test.util.WorkflowTestUtil
-import com.netflix.conductor.tests.utils.TestModule
-import com.netflix.governator.guice.test.ModulesForTesting
+import com.netflix.conductor.test.base.AbstractSpecification
+import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.Shared
-import spock.lang.Specification
 
-import javax.inject.Inject
-
-@ModulesForTesting([TestModule.class])
-class ForkJoinSpec extends Specification {
-
-    @Inject
-    ExecutionService workflowExecutionService
-
-    @Inject
-    MetadataService metadataService
-
-    @Inject
-    WorkflowExecutor workflowExecutor
-
-    @Inject
-    WorkflowTestUtil workflowTestUtil
+class ForkJoinSpec extends AbstractSpecification {
 
     @Shared
     def FORK_JOIN_WF = 'FanInOutTest'
@@ -61,9 +37,8 @@ class ForkJoinSpec extends Specification {
     @Shared
     def FORK_JOIN_SUB_WORKFLOW = 'integration_test_fork_join_sw'
 
-    def cleanup() {
-        workflowTestUtil.clearWorkflows()
-    }
+    @Autowired
+    SubWorkflow subWorkflowTask
 
     def setup() {
         workflowTestUtil.registerWorkflows('fork_join_integration_test.json',
@@ -78,18 +53,18 @@ class ForkJoinSpec extends Specification {
     }
 
     /**
-     *               start
-     *                 |
-     *               fork
-     *              /    \
+     *             start
+     *              |
+     *             fork
+     *            /     \
      *         task1     task2
-     *          \        /
-     *          task3   /
+     *          |        /
+     *         task3    /
      *           \     /
      *            \  /
      *            join
      *              |
-     *             task4
+     *            task4
      *              |
      *             End
      */
@@ -185,12 +160,12 @@ class ForkJoinSpec extends Specification {
         }
     }
 
-
     def "Test a simple workflow with fork join failure flow"() {
         setup: "Ensure that 'integration_task_2' has a retry count of 0"
         def persistedIntegrationTask2Definition = workflowTestUtil.getPersistedTaskDefinition('integration_task_2').get()
         def modifiedIntegrationTask2Definition = new TaskDef(persistedIntegrationTask2Definition.name,
-                persistedIntegrationTask2Definition.description, 0, 0)
+                persistedIntegrationTask2Definition.description, persistedIntegrationTask2Definition.ownerEmail, 0,
+                0, persistedIntegrationTask2Definition.responseTimeoutSeconds)
         metadataService.updateTaskDef(modifiedIntegrationTask2Definition)
 
         when: "A fork join workflow is started"
@@ -322,7 +297,7 @@ class ForkJoinSpec extends Specification {
         }
 
         when: "The workflow is retried"
-        workflowExecutor.retry(workflowInstanceId,false)
+        workflowExecutor.retry(workflowInstanceId, false)
 
         then: "verify that all the workflow is retried and new tasks are added in place of the failed tasks"
         with(workflowExecutionService.getExecutionStatus(workflowInstanceId, true)) {
@@ -552,7 +527,7 @@ class ForkJoinSpec extends Specification {
                 'fork_join_nested_test', input,
                 null, null, null)
 
-        then: "The workflow is in the running template"
+        then: "The workflow is in the running state"
         with(workflowExecutionService.getExecutionStatus(workflowInstanceId, true)) {
             status == Workflow.WorkflowStatus.RUNNING
             tasks.size() == 8
@@ -627,7 +602,7 @@ class ForkJoinSpec extends Specification {
         and: "Get the sub workflow id associated with the SubWorkflow Task sw1 and start the system task"
         def workflow = workflowExecutionService.getExecutionStatus(workflowInstanceId, true)
         def subWorkflowTaskId = workflow.getTaskByRefName("sw1").getTaskId()
-        workflowExecutor.executeSystemTask(new SubWorkflow(), subWorkflowTaskId, 1)
+        asyncSystemTaskExecutor.execute(subWorkflowTask, subWorkflowTaskId)
         def updatedWorkflow = workflowExecutionService.getExecutionStatus(workflowInstanceId, true)
         def subWorkflowInstanceId = updatedWorkflow.getTaskByRefName('sw1').subWorkflowId
 
@@ -783,9 +758,9 @@ class ForkJoinSpec extends Specification {
         when: "both the sub workflows are started by issuing a system task call"
         def workflowWithScheduledSubWorkflows = workflowExecutionService.getExecutionStatus(workflowInstanceId, true)
         def subWorkflowTaskId1 = workflowWithScheduledSubWorkflows.getTaskByRefName('st1').taskId
-        workflowExecutor.executeSystemTask(new SubWorkflow(), subWorkflowTaskId1, 1)
+        asyncSystemTaskExecutor.execute(subWorkflowTask, subWorkflowTaskId1)
         def subWorkflowTaskId2 = workflowWithScheduledSubWorkflows.getTaskByRefName('st2').taskId
-        workflowExecutor.executeSystemTask(new SubWorkflow(), subWorkflowTaskId2, 1)
+        asyncSystemTaskExecutor.execute(subWorkflowTask, subWorkflowTaskId2)
 
         then: "verify that the sub workflow tasks are in a IN PROGRESS state"
         with(workflowExecutionService.getExecutionStatus(workflowInstanceId, true)) {
@@ -842,6 +817,7 @@ class ForkJoinSpec extends Specification {
             tasks[0].status == Task.Status.FAILED
             tasks[0].taskType == 'simple_task_in_sub_wf'
         }
+        sweep(workflowInstanceId)
 
         and: "verify that the workflow is in a COMPLETED state"
         with(workflowExecutionService.getExecutionStatus(workflowInstanceId, true)) {
@@ -886,7 +862,7 @@ class ForkJoinSpec extends Specification {
         when: "the subworkflow is started by issuing a system task call"
         def parentWorkflow = workflowExecutionService.getExecutionStatus(workflowInstanceId, true)
         def subWorkflowTaskId = parentWorkflow.getTaskByRefName('st1').taskId
-        workflowExecutor.executeSystemTask(new SubWorkflow(), subWorkflowTaskId, 1)
+        asyncSystemTaskExecutor.execute(subWorkflowTask, subWorkflowTaskId)
 
         then: "verify that the sub workflow task is in a IN_PROGRESS state"
         with(workflowExecutionService.getExecutionStatus(workflowInstanceId, true)) {
@@ -931,6 +907,7 @@ class ForkJoinSpec extends Specification {
         }
 
         and: "verify that the workflow is in a RUNNING state and sub workflow task is retried"
+        sweep(workflowInstanceId)
         with(workflowExecutionService.getExecutionStatus(workflowInstanceId, true)) {
             status == Workflow.WorkflowStatus.RUNNING
             tasks.size() == 5
@@ -950,7 +927,7 @@ class ForkJoinSpec extends Specification {
         when: "the sub workflow is started by issuing a system task call"
         parentWorkflow = workflowExecutionService.getExecutionStatus(workflowInstanceId, true)
         subWorkflowTaskId = parentWorkflow.getTaskByRefName('st1').taskId
-        workflowExecutor.executeSystemTask(new SubWorkflow(), subWorkflowTaskId, 1)
+        asyncSystemTaskExecutor.execute(subWorkflowTask, subWorkflowTaskId)
 
         then: "verify that the sub workflow task is in a IN PROGRESS state"
         with(workflowExecutionService.getExecutionStatus(workflowInstanceId, true)) {

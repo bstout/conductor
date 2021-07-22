@@ -1,60 +1,37 @@
-buildscript {
-
-    repositories {
-        mavenCentral()
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
-    }
-
-    dependencies {
-        classpath "com.avast.gradle:gradle-docker-compose-plugin:${revDockerCompose}"
-    }
-}
-
-apply plugin: 'docker-compose'
+/*
+ *  Copyright 2021 Netflix, Inc.
+ *  <p>
+ *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ *  the License. You may obtain a copy of the License at
+ *  <p>
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *  <p>
+ *  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ *  an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ *  specific language governing permissions and limitations under the License.
+ */
 
 dependencies {
-    compile project(':conductor-core')
-    compile "com.google.inject:guice:${revGuice}"
+    implementation project(':conductor-common')
+    implementation project(':conductor-core')
+    compileOnly 'org.springframework.boot:spring-boot-starter'
 
-    compile "commons-io:commons-io:${revCommonsIo}"
-    compile "org.postgresql:postgresql:${revPostgres}"
-    compile "com.zaxxer:HikariCP:${revHikariCP}"
-    compile "org.flywaydb:flyway-core:${revFlywayCore}"
+    // SBMTODO: remove guava dep
+    implementation "com.google.guava:guava:${revGuava}"
 
-    testCompile project(':conductor-core').sourceSets.test.output
-    testCompile "org.slf4j:slf4j-log4j12:${revSlf4jlog4j}"
-    testCompile "org.testinfected.hamcrest-matchers:all-matchers:${revHamcrestAllMatchers}"
+    implementation "com.fasterxml.jackson.core:jackson-databind"
+    implementation "com.fasterxml.jackson.core:jackson-core"
+
+    implementation "org.apache.commons:commons-lang3"
+    implementation "org.postgresql:postgresql"
+    implementation "org.springframework.boot:spring-boot-starter-jdbc"
+    implementation "org.flywaydb:flyway-core"
+
+    testImplementation "org.testcontainers:postgresql:${revTestContainer}"
+
+    testImplementation project(':conductor-core').sourceSets.test.output
+    testImplementation project(':conductor-common').sourceSets.test.output
 }
-
-dockerCompose{
-    integrationTestDocker{
-        useComposeFiles = ["./docker-compose.yml"]
-        startedServices = ["postgresdb"]
-        waitForTcpPorts = true
-        isRequiredBy(tasks.test)
-        projectName = project.name
-    }
-}
-
-task intDockerStart() {
-    group = "Postgres data access based Integration Test"
-    description "Starts a local db container for postgres data access integration tests."
-    dependsOn integrationTestDockerComposeDownForced
-    dependsOn integrationTestDockerComposeUp
-}
-
-task intDockerDown(dependsOn: integrationTestDockerComposeDownForced) {
-    group = "Postgres data access based Integration Test"
-    description "Stops a local db container for postgres data access integration tests."
-}
-
-test.doFirst {
-    dockerCompose.exposeAsSystemProperties(test)
-}
-
-test.finalizedBy("intDockerDown")
 
 test {
     //the SQL unit tests must run within the same JVM to share the same embedded DB

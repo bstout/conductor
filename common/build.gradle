@@ -7,26 +7,45 @@ buildscript {
     }
     dependencies {
         classpath "com.github.vmg.protogen:protogen-codegen:${revProtogenCodegen}"
+        classpath "javax.annotation:javax.annotation-api:1.3.2"
     }
 }
 
 dependencies {
-    compile "com.github.rholder:guava-retrying:${revGuavaRetrying}"
-    compile "org.slf4j:slf4j-api:${revSlf4j}"
-    compile "com.google.protobuf:protobuf-java:${revProtoBuf}"
-    compile "com.fasterxml.jackson.core:jackson-databind:${revJacksonDatabind}"
-    compile "com.fasterxml.jackson.core:jackson-core:${revJacksonCore}"
-    compile "javax.inject:javax.inject:${revJavaxInject}"
-    compile "com.github.vmg.protogen:protogen-annotations:${revProtogenAnnotations}"
-    compile "org.apache.bval:bval-jsr:${revBval}"
-    compile "javax.validation:validation-api:${revValidationApi}"
-    compile "org.apache.commons:commons-lang3:${revCommonsLang3}"
-    // https://mvnrepository.com/artifact/org.glassfish/javax.el
-    compile group: 'org.glassfish', name: 'javax.el', version: "${revJavaElApi}"
-    compile 'commons-lang:commons-lang:2.6'
+    compileOnly 'org.springframework.boot:spring-boot-starter'
+    compileOnly 'org.springframework.boot:spring-boot-starter-validation'
+
+    compileOnly "org.springdoc:springdoc-openapi-ui:${revOpenapi}"
+
+    implementation "org.apache.commons:commons-lang3"
+
+    implementation "com.github.rholder:guava-retrying:${revGuavaRetrying}"
+
+    implementation "org.apache.bval:bval-jsr:${revBval}"
+
+    implementation "com.google.protobuf:protobuf-java:${revProtoBuf}"
+    implementation "com.github.vmg.protogen:protogen-annotations:${revProtogenAnnotations}"
+
+    implementation "com.fasterxml.jackson.core:jackson-databind"
+    implementation "com.fasterxml.jackson.core:jackson-core"
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-validation'
 }
 
-import com.github.vmg.protogen.ProtoGenTask;
+/*
+ *  Copyright 2021 Netflix, Inc.
+ *  <p>
+ *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ *  the License. You may obtain a copy of the License at
+ *  <p>
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *  <p>
+ *  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ *  an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ *  specific language governing permissions and limitations under the License.
+ */
+
+import com.github.vmg.protogen.ProtoGenTask
 
 task protogen(dependsOn: jar, type: ProtoGenTask) {
     protoPackage = "conductor.proto"

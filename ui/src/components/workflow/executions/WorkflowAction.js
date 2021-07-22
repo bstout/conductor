@@ -70,9 +70,9 @@ class WorkflowAction extends React.Component {
     );
 
     const ttResumeSubworkflowTasks = (
-        <Popover id="popover-trigger-hover-focus" title="Resume Subworkflow Task">
-          Resume subworkflow from its last failed task.
-        </Popover>
+      <Popover id="popover-trigger-hover-focus" title="Resume Subworkflow Task">
+        Resume subworkflow from its last failed task.
+      </Popover>
     );
 
     const ttPause = (
@@ -131,7 +131,7 @@ class WorkflowAction extends React.Component {
           </OverlayTrigger>
           <OverlayTrigger placement="bottom" overlay={ttResumeSubworkflowTasks}>
             <Button bsStyle="default" bsSize="xsmall" disabled={retrying} onClick={!retrying ? this.resumeSubworkflowTasks : null}>
-              {retrying ? <i className="fa fa-spinner fa-spin" /> : 'Resume Failed Subworkflow'}
+               {retrying ? <i className="fa fa-spinner fa-spin" /> : 'Resume Failed Subworkflow'}
             </Button>
           </OverlayTrigger>
         </ButtonGroup>

@@ -1,23 +1,21 @@
 /*
- * Copyright 2020 Netflix, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Copyright 2021 Netflix, Inc.
+ *  <p>
+ *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ *  the License. You may obtain a copy of the License at
+ *  <p>
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *  <p>
+ *  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ *  an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ *  specific language governing permissions and limitations under the License.
  */
 package com.netflix.conductor.core.execution.tasks;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.netflix.conductor.core.config.Configuration;
-import com.netflix.conductor.core.execution.WorkflowExecutor;
+import com.netflix.conductor.core.LifecycleAwareComponent;
+import com.netflix.conductor.core.config.ConductorProperties;
+import com.netflix.conductor.core.execution.AsyncSystemTaskExecutor;
 import com.netflix.conductor.core.utils.QueueUtils;
 import com.netflix.conductor.dao.QueueDAO;
 import com.netflix.conductor.metrics.Monitors;
@@ -25,9 +23,11 @@ import com.netflix.conductor.service.ExecutionService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
@@ -38,43 +38,59 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-@Singleton
-public class SystemTaskWorkerCoordinator {
+@Component
+@ConditionalOnProperty(name = "conductor.system-task-workers.enabled", havingValue = "true", matchIfMissing = true)
+public class SystemTaskWorkerCoordinator extends LifecycleAwareComponent {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SystemTaskWorkerCoordinator.class);
 
-    private SystemTaskExecutor systemTaskExecutor;
-    private final Configuration config;
+    private SystemTaskWorker systemTaskWorker;
+    private final ConductorProperties properties;
 
-    private final int pollInterval;
+    private final long pollInterval;
     private final String executionNameSpace;
 
-    static BlockingQueue<String> queue = new LinkedBlockingQueue<>();
-    private static Set<String> listeningTaskQueues = new HashSet<>();
+    static final BlockingQueue<String> queue = new LinkedBlockingQueue<>();
+    private final Set<String> listeningTaskQueues = new HashSet<>();
     public static Map<String, WorkflowSystemTask> taskNameWorkflowTaskMapping = new ConcurrentHashMap<>();
 
     private static final String CLASS_NAME = SystemTaskWorkerCoordinator.class.getName();
 
-    @Inject
-    public SystemTaskWorkerCoordinator(QueueDAO queueDAO, WorkflowExecutor workflowExecutor, Configuration config, ExecutionService executionService) {
-        this.config = config;
+    private final Set<WorkflowSystemTask> workflowSystemTasks;
+    private final QueueDAO queueDAO;
+    private final AsyncSystemTaskExecutor asyncSystemTaskExecutor;
+    private final ExecutionService executionService;
 
-        this.executionNameSpace = config.getSystemTaskWorkerExecutionNamespace();
-        this.pollInterval = config.getSystemTaskWorkerPollInterval();
-        int threadCount = config.getSystemTaskWorkerThreadCount();
-        if (threadCount > 0) {
-            this.systemTaskExecutor = new SystemTaskExecutor(queueDAO, workflowExecutor, config, executionService);
-            new Thread(this::listen).start();
-            LOGGER.info("System Task Worker Coordinator initialized with poll interval: {}", pollInterval);
-        } else {
-            LOGGER.info("System Task Worker DISABLED");
-        }
+    public SystemTaskWorkerCoordinator(QueueDAO queueDAO, AsyncSystemTaskExecutor asyncSystemTaskExecutor,
+                                       ConductorProperties properties,
+                                       ExecutionService executionService,
+                                       Set<WorkflowSystemTask> workflowSystemTasks) {
+        this.properties = properties;
+        this.workflowSystemTasks = workflowSystemTasks;
+        this.executionNameSpace = properties.getSystemTaskWorkerExecutionNamespace();
+        this.pollInterval = properties.getSystemTaskWorkerPollInterval().toMillis();
+        this.queueDAO = queueDAO;
+        this.asyncSystemTaskExecutor = asyncSystemTaskExecutor;
+        this.executionService = executionService;
     }
 
-    static synchronized void add(WorkflowSystemTask systemTask) {
-        LOGGER.info("Adding the queue for system task: {}", systemTask.getName());
-        taskNameWorkflowTaskMapping.put(systemTask.getName(), systemTask);
-        queue.add(systemTask.getName());
+    @EventListener(ApplicationReadyEvent.class)
+    public void initSystemTaskExecutor() {
+        int threadCount = properties.getSystemTaskWorkerThreadCount();
+        if (threadCount <= 0) {
+            throw new IllegalStateException("Cannot set system task worker thread count to <=0. To disable system "
+                + "task workers, set conductor.system-task-workers.enabled=false.");
+        }
+        this.workflowSystemTasks.forEach(this::add);
+        this.systemTaskWorker = new SystemTaskWorker(queueDAO, asyncSystemTaskExecutor, properties, executionService);
+        new Thread(this::listen).start();
+        LOGGER.info("System Task Worker Coordinator initialized with poll interval: {}", pollInterval);
+    }
+
+    private void add(WorkflowSystemTask systemTask) {
+        LOGGER.info("Adding the queue for system task: {}", systemTask.getTaskType());
+        taskNameWorkflowTaskMapping.put(systemTask.getTaskType(), systemTask);
+        queue.add(systemTask.getTaskType());
     }
 
     private void listen() {
@@ -100,11 +116,11 @@ public class SystemTaskWorkerCoordinator {
     }
 
     private void pollAndExecute(String queueName) {
-        if (config.disableAsyncWorkers()) {
-            LOGGER.warn("System Task Worker is DISABLED.  Not polling for system task in queue : {}", queueName);
+        if (!isRunning()) {
+            LOGGER.debug("Component stopped. Not polling for system task in queue : {}", queueName);
             return;
         }
-        systemTaskExecutor.pollAndExecute(queueName);
+        systemTaskWorker.pollAndExecute(queueName);
     }
 
     @VisibleForTesting
@@ -127,4 +143,4 @@ public class SystemTaskWorkerCoordinator {
         }
         return false;
     }
-}	
+}

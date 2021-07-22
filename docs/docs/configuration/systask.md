@@ -143,34 +143,14 @@ An HTTP task is used to make calls to another microservice over HTTP.
 | connectionTimeOut | Integer | Connection Time Out in milliseconds. If set to 0, equivalent to infinity. Default: 100. |
 | readTimeOut | Integer | Read Time Out in milliseconds. If set to 0, equivalent to infinity. Default: 150. |
 
-**Output: (output.response)**
+**Output:**
 
 |name|type|description|
 |---|---|---|
-| body | Map |  JSON body containing the response if one is present |
+| response | Map |  JSON body containing the response if one is present |
 | headers | Map[String, Any] | Response Headers |
-| statusCode (in response object) | Integer | [Http Status Code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) |
+| statusCode | Integer | [Http Status Code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) |
 | reasonPhrase | String | Http Status Code's reason phrase |
-
-
-**Response**
-```json
-{
-  "response": {
-    "headers": {
-      "Content-Type": [
-        "application/json"
-      ]
-    },
-    "reasonPhrase": "OK",
-    "body": {
-      "status": "success"
-    },
-    "statusCode": 200
-  }
-}
-
-```
 
 **Example**
 
@@ -212,7 +192,6 @@ Sub Workflow task allows for nesting a workflow within another workflow.
 |name|type|description|
 |---|---|---|
 | subWorkflowParam | Map[String, Any] | See below |
-| inputParameters | Map[String, Any] | `input` of the sub workflow |
 
 **subWorkflowParam**
 
@@ -220,8 +199,8 @@ Sub Workflow task allows for nesting a workflow within another workflow.
 |---|---|---|
 | name | String | Name of the workflow to execute |
 | version | Integer | Version of the workflow to execute |
-| taskToDomain | Map[String, String] | Allows scheduling the sub workflow's tasks per given mappings. See [Task Domains](configuration/taskdomains/) for instructions to configure taskDomains. |
-| workflowDefinition | [WorkflowDefinition](configuration/workflowdef/) | Allows starting a subworkflow with a dynamic workflow definition. |
+| taskToDomain | Map[String, String] | Allows scheduling the sub workflow's tasks per given mappings. See [Task Domains](conductor/configuration/taskdomains/) for instructions to configure taskDomains. |
+| workflowDefinition | [WorkflowDefinition](conductor/configuration/workflowdef/) | Allows starting a subworkflow with a dynamic workflow definition. |
 
 **Outputs:**
 
@@ -237,34 +216,34 @@ Sub Workflow task allows for nesting a workflow within another workflow.
 	"taskReferenceName": "sub1",
 	"type": "SUB_WORKFLOW",
 	"inputParameters": {
-		"anything": "${workflow.input.anythingValue}"
-	},
-	"subWorkflowParam": {
-		"name": "deployment_workflow",
-		"version": 1,
-		"taskToDomain": {
-			"*": "mydomain"
-		},
-		"workflowDefinition": {
+		"subWorkflowParam": {
 			"name": "deployment_workflow",
-			"description": "Deploys to CDN",
 			"version": 1,
-			"tasks": [{
-				"name": "deploy",
-				"taskReferenceName": "d1",
-				"type": "SIMPLE",
-				"inputParameters": {
-					"fileLocation": "${workflow.input.encodeLocation}"
-				}
-			}],
-			"outputParameters": {
-				"cdn_url": "${d1.output.location}"
+			"taskToDomain": {
+				"*": "mydomain"
 			},
-			"failureWorkflow": "cleanup_encode_resources",
-			"restartable": true,
-			"workflowStatusListenerEnabled": true,
-			"schemaVersion": 2
-		}
+			"workflowDefinition": {
+				"name": "deployment_workflow",
+				"description": "Deploys to CDN",
+				"version": 1,
+				"tasks": [{
+					"name": "deploy",
+					"taskReferenceName": "d1",
+					"type": "SIMPLE",
+					"inputParameters": {
+						"fileLocation": "${workflow.input.encodeLocation}"
+					}
+				}],
+				"outputParameters": {
+					"cdn_url": "${d1.output.location}"
+				},
+				"failureWorkflow": "cleanup_encode_resources",
+				"restartable": true,
+				"workflowStatusListenerEnabled": true,
+				"schemaVersion": 2
+			}
+		},
+		"anythingelse": "value"
 	}
 }
 ```
@@ -603,16 +582,11 @@ For example, if you have a decision where the first condition is met, you want t
 
 ## Kafka Publish Task
 
-A kafka Publish task is used to push messages to another microservice via kafka.
+A kafka Publish task is used to push messages to another microservice via kafka
 
 **Parameters:**
 
-|name|type|description|
-|---|---|---|
-| kafka_request | kafkaRequest | JSON object (see below) |
-| asyncComplete | Boolean | ```false``` to mark status COMPLETED upon execution ; ```true``` to keep it IN_PROGRESS, wait for an external event (via Conductor or SQS or EventHandler) to complete it. |
-
-```kafkaRequest``` JSON object:
+The task expects an input parameter named ```kafka_request``` as part of the task's input with the following details:
 
 |name|description|
 |---|---|
@@ -627,6 +601,10 @@ A kafka Publish task is used to push messages to another microservice via kafka.
 
 The producer created in the kafka task is cached. By default the cache size is 10 and expiry time is 120000 ms. To change the defaults following can be modified kafka.publish.producer.cache.size,kafka.publish.producer.cache.time.ms respectively.  
 
+**Kafka Task Output**
+
+Task status transitions to COMPLETED
+
 **Example**
 
 Task sample
@@ -636,7 +614,6 @@ Task sample
   "name": "call_kafka",
   "taskReferenceName": "call_kafka",
   "inputParameters": {
-    "asyncComplete": false,
     "kafka_request": {
       "topic": "userTopic",
       "value": "Message to publish",

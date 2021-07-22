@@ -1,421 +1,29 @@
 {
-    "compile": {
-        "aopalliance:aopalliance": {
-            "locked": "1.0",
-            "transitive": [
-                "com.google.inject:guice"
-            ]
-        },
-        "com.amazonaws:aws-java-sdk-core": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-kms",
-                "com.amazonaws:aws-java-sdk-s3"
-            ]
-        },
-        "com.amazonaws:aws-java-sdk-kms": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-s3"
-            ]
-        },
-        "com.amazonaws:aws-java-sdk-s3": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.amazonaws:jmespath-java": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-kms",
-                "com.amazonaws:aws-java-sdk-s3"
-            ]
-        },
-        "com.datastax.cassandra:cassandra-driver-core": {
-            "locked": "3.6.0",
-            "requested": "3.6.0"
-        },
-        "com.fasterxml.jackson.core:jackson-annotations": {
-            "locked": "2.10.0",
-            "transitive": [
-                "com.fasterxml.jackson.core:jackson-databind"
-            ]
-        },
-        "com.fasterxml.jackson.core:jackson-core": {
-            "locked": "2.10.0",
-            "transitive": [
-                "com.fasterxml.jackson.core:jackson-databind",
-                "com.fasterxml.jackson.dataformat:jackson-dataformat-cbor",
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.fasterxml.jackson.core:jackson-databind": {
-            "locked": "2.10.0",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core",
-                "com.amazonaws:jmespath-java",
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.fasterxml.jackson.dataformat:jackson-dataformat-cbor": {
-            "locked": "2.6.6",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
-            ]
-        },
-        "com.github.jnr:jffi": {
-            "locked": "1.2.16",
-            "transitive": [
-                "com.github.jnr:jnr-ffi"
-            ]
-        },
-        "com.github.jnr:jnr-constants": {
-            "locked": "0.9.9",
-            "transitive": [
-                "com.github.jnr:jnr-posix"
-            ]
-        },
-        "com.github.jnr:jnr-ffi": {
-            "locked": "2.1.7",
-            "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core",
-                "com.github.jnr:jnr-posix"
-            ]
-        },
-        "com.github.jnr:jnr-posix": {
-            "locked": "3.0.44",
-            "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core"
-            ]
-        },
-        "com.github.jnr:jnr-x86asm": {
-            "locked": "1.0.2",
-            "transitive": [
-                "com.github.jnr:jnr-ffi"
-            ]
-        },
-        "com.github.rholder:guava-retrying": {
-            "locked": "2.0.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
-        "com.github.vmg.protogen:protogen-annotations": {
-            "locked": "1.0.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
-        "com.google.code.findbugs:jsr305": {
-            "locked": "2.0.2",
-            "transitive": [
-                "com.github.rholder:guava-retrying"
-            ]
-        },
-        "com.google.guava:guava": {
-            "locked": "19.0",
-            "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core",
-                "com.github.rholder:guava-retrying",
-                "com.google.inject:guice",
-                "com.netflix.servo:servo-core"
-            ]
-        },
-        "com.google.inject.extensions:guice-multibindings": {
-            "locked": "4.1.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.google.inject:guice": {
-            "locked": "4.1.0",
-            "transitive": [
-                "com.google.inject.extensions:guice-multibindings",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.google.protobuf:protobuf-java": {
-            "locked": "3.5.1",
-            "transitive": [
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
-        "com.jayway.jsonpath:json-path": {
-            "locked": "2.2.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.netflix.conductor:conductor-common": {
-            "project": true,
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.netflix.conductor:conductor-core": {
-            "project": true
-        },
-        "com.netflix.servo:servo-core": {
-            "locked": "0.12.17",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.netflix.spectator:spectator-api": {
-            "locked": "0.68.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.spotify:completable-futures": {
-            "locked": "0.3.1",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "commons-codec:commons-codec": {
-            "locked": "1.9",
-            "transitive": [
-                "org.apache.httpcomponents:httpclient"
-            ]
-        },
-        "commons-logging:commons-logging": {
-            "locked": "1.2",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core",
-                "org.apache.httpcomponents:httpclient"
-            ]
-        },
-        "io.dropwizard.metrics:metrics-core": {
-            "locked": "3.2.2",
-            "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core"
-            ]
-        },
-        "io.netty:netty-buffer": {
-            "locked": "4.0.56.Final",
-            "transitive": [
-                "io.netty:netty-handler",
-                "io.netty:netty-transport"
-            ]
-        },
-        "io.netty:netty-codec": {
-            "locked": "4.0.56.Final",
-            "transitive": [
-                "io.netty:netty-handler"
-            ]
-        },
-        "io.netty:netty-common": {
-            "locked": "4.0.56.Final",
-            "transitive": [
-                "io.netty:netty-buffer"
-            ]
-        },
-        "io.netty:netty-handler": {
-            "locked": "4.0.56.Final",
-            "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core"
-            ]
-        },
-        "io.netty:netty-transport": {
-            "locked": "4.0.56.Final",
-            "transitive": [
-                "io.netty:netty-codec",
-                "io.netty:netty-handler"
-            ]
-        },
-        "io.reactivex:rxjava": {
-            "locked": "1.2.2",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "javax.inject:javax.inject": {
-            "locked": "1",
-            "transitive": [
-                "com.google.inject:guice",
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
-        "javax.validation:validation-api": {
-            "locked": "2.0.1.Final",
-            "transitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "joda-time:joda-time": {
-            "locked": "2.8.1",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
-            ]
-        },
-        "net.minidev:accessors-smart": {
-            "locked": "1.1",
-            "transitive": [
-                "net.minidev:json-smart"
-            ]
-        },
-        "net.minidev:json-smart": {
-            "locked": "2.2.1",
-            "transitive": [
-                "com.jayway.jsonpath:json-path"
-            ]
-        },
-        "org.apache.bval:bval-jsr": {
-            "locked": "2.0.3",
-            "transitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "org.apache.commons:commons-lang3": {
-            "locked": "3.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "org.apache.httpcomponents:httpclient": {
-            "locked": "4.5.2",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
-            ]
-        },
-        "org.apache.httpcomponents:httpcore": {
-            "locked": "4.4.4",
-            "transitive": [
-                "org.apache.httpcomponents:httpclient"
-            ]
-        },
-        "org.glassfish:javax.el": {
-            "locked": "3.0.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "org.ow2.asm:asm": {
-            "locked": "5.0.3",
-            "transitive": [
-                "com.github.jnr:jnr-ffi",
-                "net.minidev:accessors-smart",
-                "org.ow2.asm:asm-tree"
-            ]
-        },
-        "org.ow2.asm:asm-analysis": {
-            "locked": "5.0.3",
-            "transitive": [
-                "com.github.jnr:jnr-ffi"
-            ]
-        },
-        "org.ow2.asm:asm-commons": {
-            "locked": "5.0.3",
-            "transitive": [
-                "com.github.jnr:jnr-ffi"
-            ]
-        },
-        "org.ow2.asm:asm-tree": {
-            "locked": "5.0.3",
-            "transitive": [
-                "com.github.jnr:jnr-ffi",
-                "org.ow2.asm:asm-analysis",
-                "org.ow2.asm:asm-commons",
-                "org.ow2.asm:asm-util"
-            ]
-        },
-        "org.ow2.asm:asm-util": {
-            "locked": "5.0.3",
-            "transitive": [
-                "com.github.jnr:jnr-ffi"
-            ]
-        },
-        "org.slf4j:slf4j-api": {
-            "locked": "1.7.25",
-            "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core",
-                "com.jayway.jsonpath:json-path",
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.servo:servo-core",
-                "com.netflix.spectator:spectator-api",
-                "io.dropwizard.metrics:metrics-core"
-            ]
-        },
-        "software.amazon.ion:ion-java": {
-            "locked": "1.0.1",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
-            ]
+    "annotationProcessor": {
+        "org.springframework.boot:spring-boot-configuration-processor": {
+            "locked": "2.3.12.RELEASE"
         }
     },
     "compileClasspath": {
-        "aopalliance:aopalliance": {
-            "locked": "1.0",
-            "transitive": [
-                "com.google.inject:guice"
-            ]
-        },
-        "com.amazonaws:aws-java-sdk-core": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-kms",
-                "com.amazonaws:aws-java-sdk-s3"
-            ]
-        },
-        "com.amazonaws:aws-java-sdk-kms": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-s3"
-            ]
-        },
-        "com.amazonaws:aws-java-sdk-s3": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.amazonaws:jmespath-java": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-kms",
-                "com.amazonaws:aws-java-sdk-s3"
-            ]
-        },
         "com.datastax.cassandra:cassandra-driver-core": {
-            "locked": "3.6.0",
-            "requested": "3.6.0"
+            "locked": "3.10.2"
         },
         "com.fasterxml.jackson.core:jackson-annotations": {
-            "locked": "2.10.0",
+            "locked": "2.11.4",
             "transitive": [
                 "com.fasterxml.jackson.core:jackson-databind"
             ]
         },
         "com.fasterxml.jackson.core:jackson-core": {
-            "locked": "2.10.0",
+            "locked": "2.11.4",
             "transitive": [
-                "com.fasterxml.jackson.core:jackson-databind",
-                "com.fasterxml.jackson.dataformat:jackson-dataformat-cbor",
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
+                "com.fasterxml.jackson.core:jackson-databind"
             ]
         },
         "com.fasterxml.jackson.core:jackson-databind": {
-            "locked": "2.10.0",
+            "locked": "2.11.4",
             "transitive": [
-                "com.amazonaws:aws-java-sdk-core",
-                "com.amazonaws:jmespath-java",
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.fasterxml.jackson.dataformat:jackson-dataformat-cbor": {
-            "locked": "2.6.6",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
+                "com.datastax.cassandra:cassandra-driver-core"
             ]
         },
         "com.github.jnr:jffi": {
@@ -449,564 +57,97 @@
                 "com.github.jnr:jnr-ffi"
             ]
         },
-        "com.github.rholder:guava-retrying": {
-            "locked": "2.0.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
-        "com.github.vmg.protogen:protogen-annotations": {
-            "locked": "1.0.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
-        "com.google.code.findbugs:jsr305": {
-            "locked": "2.0.2",
-            "transitive": [
-                "com.github.rholder:guava-retrying"
-            ]
-        },
         "com.google.guava:guava": {
             "locked": "19.0",
             "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core",
-                "com.github.rholder:guava-retrying",
-                "com.google.inject:guice",
-                "com.netflix.servo:servo-core"
-            ]
-        },
-        "com.google.inject.extensions:guice-multibindings": {
-            "locked": "4.1.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.google.inject:guice": {
-            "locked": "4.1.0",
-            "transitive": [
-                "com.google.inject.extensions:guice-multibindings",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.google.protobuf:protobuf-java": {
-            "locked": "3.5.1",
-            "transitive": [
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
-        "com.jayway.jsonpath:json-path": {
-            "locked": "2.2.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
+                "com.datastax.cassandra:cassandra-driver-core"
             ]
         },
         "com.netflix.conductor:conductor-common": {
-            "project": true,
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
+            "project": true
         },
         "com.netflix.conductor:conductor-core": {
             "project": true
         },
-        "com.netflix.servo:servo-core": {
-            "locked": "0.12.17",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.netflix.spectator:spectator-api": {
-            "locked": "0.68.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.spotify:completable-futures": {
-            "locked": "0.3.1",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "commons-codec:commons-codec": {
-            "locked": "1.9",
-            "transitive": [
-                "org.apache.httpcomponents:httpclient"
-            ]
-        },
-        "commons-logging:commons-logging": {
-            "locked": "1.2",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core",
-                "org.apache.httpcomponents:httpclient"
-            ]
-        },
         "io.dropwizard.metrics:metrics-core": {
-            "locked": "3.2.2",
+            "locked": "4.1.22",
             "transitive": [
                 "com.datastax.cassandra:cassandra-driver-core"
             ]
         },
         "io.netty:netty-buffer": {
-            "locked": "4.0.56.Final",
+            "locked": "4.1.65.Final",
             "transitive": [
+                "io.netty:netty-codec",
                 "io.netty:netty-handler",
                 "io.netty:netty-transport"
             ]
         },
         "io.netty:netty-codec": {
-            "locked": "4.0.56.Final",
+            "locked": "4.1.65.Final",
             "transitive": [
                 "io.netty:netty-handler"
             ]
         },
         "io.netty:netty-common": {
-            "locked": "4.0.56.Final",
+            "locked": "4.1.65.Final",
             "transitive": [
-                "io.netty:netty-buffer"
+                "io.netty:netty-buffer",
+                "io.netty:netty-codec",
+                "io.netty:netty-handler",
+                "io.netty:netty-resolver",
+                "io.netty:netty-transport"
             ]
         },
         "io.netty:netty-handler": {
-            "locked": "4.0.56.Final",
+            "locked": "4.1.65.Final",
             "transitive": [
                 "com.datastax.cassandra:cassandra-driver-core"
             ]
         },
-        "io.netty:netty-transport": {
-            "locked": "4.0.56.Final",
-            "transitive": [
-                "io.netty:netty-codec",
-                "io.netty:netty-handler"
-            ]
-        },
-        "io.reactivex:rxjava": {
-            "locked": "1.2.2",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "javax.inject:javax.inject": {
-            "locked": "1",
-            "transitive": [
-                "com.google.inject:guice",
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
-        "javax.validation:validation-api": {
-            "locked": "2.0.1.Final",
-            "transitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "joda-time:joda-time": {
-            "locked": "2.8.1",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
-            ]
-        },
-        "net.minidev:accessors-smart": {
-            "locked": "1.1",
-            "transitive": [
-                "net.minidev:json-smart"
-            ]
-        },
-        "net.minidev:json-smart": {
-            "locked": "2.2.1",
-            "transitive": [
-                "com.jayway.jsonpath:json-path"
-            ]
-        },
-        "org.apache.bval:bval-jsr": {
-            "locked": "2.0.3",
-            "transitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "org.apache.commons:commons-lang3": {
-            "locked": "3.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "org.apache.httpcomponents:httpclient": {
-            "locked": "4.5.2",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
-            ]
-        },
-        "org.apache.httpcomponents:httpcore": {
-            "locked": "4.4.4",
-            "transitive": [
-                "org.apache.httpcomponents:httpclient"
-            ]
-        },
-        "org.glassfish:javax.el": {
-            "locked": "3.0.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "org.ow2.asm:asm": {
-            "locked": "5.0.3",
-            "transitive": [
-                "com.github.jnr:jnr-ffi",
-                "net.minidev:accessors-smart",
-                "org.ow2.asm:asm-tree"
-            ]
-        },
-        "org.ow2.asm:asm-analysis": {
-            "locked": "5.0.3",
-            "transitive": [
-                "com.github.jnr:jnr-ffi"
-            ]
-        },
-        "org.ow2.asm:asm-commons": {
-            "locked": "5.0.3",
-            "transitive": [
-                "com.github.jnr:jnr-ffi"
-            ]
-        },
-        "org.ow2.asm:asm-tree": {
-            "locked": "5.0.3",
-            "transitive": [
-                "com.github.jnr:jnr-ffi",
-                "org.ow2.asm:asm-analysis",
-                "org.ow2.asm:asm-commons",
-                "org.ow2.asm:asm-util"
-            ]
-        },
-        "org.ow2.asm:asm-util": {
-            "locked": "5.0.3",
-            "transitive": [
-                "com.github.jnr:jnr-ffi"
-            ]
-        },
-        "org.slf4j:slf4j-api": {
-            "locked": "1.7.25",
-            "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core",
-                "com.jayway.jsonpath:json-path",
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.servo:servo-core",
-                "com.netflix.spectator:spectator-api",
-                "io.dropwizard.metrics:metrics-core"
-            ]
-        },
-        "software.amazon.ion:ion-java": {
-            "locked": "1.0.1",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
-            ]
-        }
-    },
-    "default": {
-        "aopalliance:aopalliance": {
-            "locked": "1.0",
-            "transitive": [
-                "com.google.inject:guice"
-            ]
-        },
-        "com.amazonaws:aws-java-sdk-core": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-kms",
-                "com.amazonaws:aws-java-sdk-s3"
-            ]
-        },
-        "com.amazonaws:aws-java-sdk-kms": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-s3"
-            ]
-        },
-        "com.amazonaws:aws-java-sdk-s3": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.amazonaws:jmespath-java": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-kms",
-                "com.amazonaws:aws-java-sdk-s3"
-            ]
-        },
-        "com.datastax.cassandra:cassandra-driver-core": {
-            "locked": "3.6.0",
-            "requested": "3.6.0"
-        },
-        "com.fasterxml.jackson.core:jackson-annotations": {
-            "locked": "2.10.0",
-            "transitive": [
-                "com.fasterxml.jackson.core:jackson-databind"
-            ]
-        },
-        "com.fasterxml.jackson.core:jackson-core": {
-            "locked": "2.10.0",
-            "transitive": [
-                "com.fasterxml.jackson.core:jackson-databind",
-                "com.fasterxml.jackson.dataformat:jackson-dataformat-cbor",
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.fasterxml.jackson.core:jackson-databind": {
-            "locked": "2.10.0",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core",
-                "com.amazonaws:jmespath-java",
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.fasterxml.jackson.dataformat:jackson-dataformat-cbor": {
-            "locked": "2.6.6",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
-            ]
-        },
-        "com.github.jnr:jffi": {
-            "locked": "1.2.16",
-            "transitive": [
-                "com.github.jnr:jnr-ffi"
-            ]
-        },
-        "com.github.jnr:jnr-constants": {
-            "locked": "0.9.9",
-            "transitive": [
-                "com.github.jnr:jnr-posix"
-            ]
-        },
-        "com.github.jnr:jnr-ffi": {
-            "locked": "2.1.7",
-            "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core",
-                "com.github.jnr:jnr-posix"
-            ]
-        },
-        "com.github.jnr:jnr-posix": {
-            "locked": "3.0.44",
-            "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core"
-            ]
-        },
-        "com.github.jnr:jnr-x86asm": {
-            "locked": "1.0.2",
-            "transitive": [
-                "com.github.jnr:jnr-ffi"
-            ]
-        },
-        "com.github.rholder:guava-retrying": {
-            "locked": "2.0.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
-        "com.github.vmg.protogen:protogen-annotations": {
-            "locked": "1.0.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
-        "com.google.code.findbugs:jsr305": {
-            "locked": "2.0.2",
-            "transitive": [
-                "com.github.rholder:guava-retrying"
-            ]
-        },
-        "com.google.guava:guava": {
-            "locked": "19.0",
-            "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core",
-                "com.github.rholder:guava-retrying",
-                "com.google.inject:guice",
-                "com.netflix.servo:servo-core"
-            ]
-        },
-        "com.google.inject.extensions:guice-multibindings": {
-            "locked": "4.1.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.google.inject:guice": {
-            "locked": "4.1.0",
-            "transitive": [
-                "com.google.inject.extensions:guice-multibindings",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.google.protobuf:protobuf-java": {
-            "locked": "3.5.1",
-            "transitive": [
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
-        "com.jayway.jsonpath:json-path": {
-            "locked": "2.2.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.netflix.conductor:conductor-common": {
-            "project": true,
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.netflix.conductor:conductor-core": {
-            "project": true
-        },
-        "com.netflix.servo:servo-core": {
-            "locked": "0.12.17",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.netflix.spectator:spectator-api": {
-            "locked": "0.68.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.spotify:completable-futures": {
-            "locked": "0.3.1",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "commons-codec:commons-codec": {
-            "locked": "1.9",
-            "transitive": [
-                "org.apache.httpcomponents:httpclient"
-            ]
-        },
-        "commons-logging:commons-logging": {
-            "locked": "1.2",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core",
-                "org.apache.httpcomponents:httpclient"
-            ]
-        },
-        "io.dropwizard.metrics:metrics-core": {
-            "locked": "3.2.2",
-            "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core"
-            ]
-        },
-        "io.netty:netty-buffer": {
-            "locked": "4.0.56.Final",
+        "io.netty:netty-resolver": {
+            "locked": "4.1.65.Final",
             "transitive": [
                 "io.netty:netty-handler",
                 "io.netty:netty-transport"
             ]
         },
-        "io.netty:netty-codec": {
-            "locked": "4.0.56.Final",
-            "transitive": [
-                "io.netty:netty-handler"
-            ]
-        },
-        "io.netty:netty-common": {
-            "locked": "4.0.56.Final",
-            "transitive": [
-                "io.netty:netty-buffer"
-            ]
-        },
-        "io.netty:netty-handler": {
-            "locked": "4.0.56.Final",
-            "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core"
-            ]
-        },
         "io.netty:netty-transport": {
-            "locked": "4.0.56.Final",
+            "locked": "4.1.65.Final",
             "transitive": [
                 "io.netty:netty-codec",
                 "io.netty:netty-handler"
             ]
         },
-        "io.reactivex:rxjava": {
-            "locked": "1.2.2",
+        "jakarta.annotation:jakarta.annotation-api": {
+            "locked": "1.3.5",
             "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "javax.inject:javax.inject": {
-            "locked": "1",
-            "transitive": [
-                "com.google.inject:guice",
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
-        "javax.validation:validation-api": {
-            "locked": "2.0.1.Final",
-            "transitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "joda-time:joda-time": {
-            "locked": "2.8.1",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
-            ]
-        },
-        "net.minidev:accessors-smart": {
-            "locked": "1.1",
-            "transitive": [
-                "net.minidev:json-smart"
-            ]
-        },
-        "net.minidev:json-smart": {
-            "locked": "2.2.1",
-            "transitive": [
-                "com.jayway.jsonpath:json-path"
-            ]
-        },
-        "org.apache.bval:bval-jsr": {
-            "locked": "2.0.3",
-            "transitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
+                "org.springframework.boot:spring-boot-starter"
             ]
         },
         "org.apache.commons:commons-lang3": {
-            "locked": "3.0",
+            "locked": "3.10"
+        },
+        "org.apache.logging.log4j:log4j-api": {
+            "locked": "2.13.3",
             "transitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
+                "org.apache.logging.log4j:log4j-core",
+                "org.apache.logging.log4j:log4j-web"
             ]
         },
-        "org.apache.httpcomponents:httpclient": {
-            "locked": "4.5.2",
+        "org.apache.logging.log4j:log4j-core": {
+            "locked": "2.13.3",
             "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
+                "org.apache.logging.log4j:log4j-web"
             ]
         },
-        "org.apache.httpcomponents:httpcore": {
-            "locked": "4.4.4",
-            "transitive": [
-                "org.apache.httpcomponents:httpclient"
-            ]
-        },
-        "org.glassfish:javax.el": {
-            "locked": "3.0.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
+        "org.apache.logging.log4j:log4j-web": {
+            "locked": "2.13.3"
         },
         "org.ow2.asm:asm": {
             "locked": "5.0.3",
             "transitive": [
                 "com.github.jnr:jnr-ffi",
-                "net.minidev:accessors-smart",
                 "org.ow2.asm:asm-tree"
             ]
         },
@@ -1035,506 +176,118 @@
             "locked": "5.0.3",
             "transitive": [
                 "com.github.jnr:jnr-ffi"
+            ]
+        },
+        "org.slf4j:jul-to-slf4j": {
+            "locked": "1.7.30",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter-logging"
             ]
         },
         "org.slf4j:slf4j-api": {
-            "locked": "1.7.25",
+            "locked": "1.7.30",
             "transitive": [
                 "com.datastax.cassandra:cassandra-driver-core",
-                "com.jayway.jsonpath:json-path",
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.servo:servo-core",
-                "com.netflix.spectator:spectator-api",
-                "io.dropwizard.metrics:metrics-core"
+                "io.dropwizard.metrics:metrics-core",
+                "org.slf4j:jul-to-slf4j"
             ]
         },
-        "software.amazon.ion:ion-java": {
-            "locked": "1.0.1",
+        "org.springframework.boot:spring-boot": {
+            "locked": "2.3.12.RELEASE",
             "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
-            ]
-        }
-    },
-    "jacocoAgent": {
-        "org.jacoco:org.jacoco.agent": {
-            "locked": "0.8.1"
-        }
-    },
-    "jacocoAnt": {
-        "org.jacoco:org.jacoco.agent": {
-            "locked": "0.8.1",
-            "transitive": [
-                "org.jacoco:org.jacoco.ant"
+                "org.springframework.boot:spring-boot-autoconfigure",
+                "org.springframework.boot:spring-boot-starter"
             ]
         },
-        "org.jacoco:org.jacoco.ant": {
-            "locked": "0.8.1"
-        },
-        "org.jacoco:org.jacoco.core": {
-            "locked": "0.8.1",
+        "org.springframework.boot:spring-boot-autoconfigure": {
+            "locked": "2.3.12.RELEASE",
             "transitive": [
-                "org.jacoco:org.jacoco.ant",
-                "org.jacoco:org.jacoco.report"
+                "org.springframework.boot:spring-boot-starter"
             ]
         },
-        "org.jacoco:org.jacoco.report": {
-            "locked": "0.8.1",
+        "org.springframework.boot:spring-boot-starter": {
+            "locked": "2.3.12.RELEASE"
+        },
+        "org.springframework.boot:spring-boot-starter-logging": {
+            "locked": "2.3.12.RELEASE",
             "transitive": [
-                "org.jacoco:org.jacoco.ant"
+                "org.springframework.boot:spring-boot-starter"
             ]
         },
-        "org.ow2.asm:asm": {
-            "locked": "6.0",
+        "org.springframework:spring-aop": {
+            "locked": "5.2.15.RELEASE",
             "transitive": [
-                "org.jacoco:org.jacoco.core",
-                "org.ow2.asm:asm-tree"
+                "org.springframework:spring-context"
             ]
         },
-        "org.ow2.asm:asm-analysis": {
-            "locked": "6.0",
+        "org.springframework:spring-beans": {
+            "locked": "5.2.15.RELEASE",
             "transitive": [
-                "org.jacoco:org.jacoco.core"
+                "org.springframework:spring-aop",
+                "org.springframework:spring-context"
             ]
         },
-        "org.ow2.asm:asm-commons": {
-            "locked": "6.0",
+        "org.springframework:spring-context": {
+            "locked": "5.2.15.RELEASE",
             "transitive": [
-                "org.jacoco:org.jacoco.core"
+                "org.springframework.boot:spring-boot"
             ]
         },
-        "org.ow2.asm:asm-tree": {
-            "locked": "6.0",
+        "org.springframework:spring-core": {
+            "locked": "5.2.15.RELEASE",
             "transitive": [
-                "org.jacoco:org.jacoco.core",
-                "org.ow2.asm:asm-analysis",
-                "org.ow2.asm:asm-commons",
-                "org.ow2.asm:asm-util"
+                "org.springframework.boot:spring-boot",
+                "org.springframework.boot:spring-boot-starter",
+                "org.springframework:spring-aop",
+                "org.springframework:spring-beans",
+                "org.springframework:spring-context",
+                "org.springframework:spring-expression"
             ]
         },
-        "org.ow2.asm:asm-util": {
-            "locked": "6.0",
+        "org.springframework:spring-expression": {
+            "locked": "5.2.15.RELEASE",
             "transitive": [
-                "org.jacoco:org.jacoco.core"
-            ]
-        }
-    },
-    "runtime": {
-        "aopalliance:aopalliance": {
-            "locked": "1.0",
-            "transitive": [
-                "com.google.inject:guice"
+                "org.springframework:spring-context"
             ]
         },
-        "com.amazonaws:aws-java-sdk-core": {
-            "locked": "1.11.86",
+        "org.springframework:spring-jcl": {
+            "locked": "5.2.15.RELEASE",
             "transitive": [
-                "com.amazonaws:aws-java-sdk-kms",
-                "com.amazonaws:aws-java-sdk-s3"
+                "org.springframework:spring-core"
             ]
         },
-        "com.amazonaws:aws-java-sdk-kms": {
-            "locked": "1.11.86",
+        "org.yaml:snakeyaml": {
+            "locked": "1.26",
             "transitive": [
-                "com.amazonaws:aws-java-sdk-s3"
-            ]
-        },
-        "com.amazonaws:aws-java-sdk-s3": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.amazonaws:jmespath-java": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-kms",
-                "com.amazonaws:aws-java-sdk-s3"
-            ]
-        },
-        "com.datastax.cassandra:cassandra-driver-core": {
-            "locked": "3.6.0",
-            "requested": "3.6.0"
-        },
-        "com.fasterxml.jackson.core:jackson-annotations": {
-            "locked": "2.10.0",
-            "transitive": [
-                "com.fasterxml.jackson.core:jackson-databind"
-            ]
-        },
-        "com.fasterxml.jackson.core:jackson-core": {
-            "locked": "2.10.0",
-            "transitive": [
-                "com.fasterxml.jackson.core:jackson-databind",
-                "com.fasterxml.jackson.dataformat:jackson-dataformat-cbor",
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.fasterxml.jackson.core:jackson-databind": {
-            "locked": "2.10.0",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core",
-                "com.amazonaws:jmespath-java",
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.fasterxml.jackson.dataformat:jackson-dataformat-cbor": {
-            "locked": "2.6.6",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
-            ]
-        },
-        "com.github.jnr:jffi": {
-            "locked": "1.2.16",
-            "transitive": [
-                "com.github.jnr:jnr-ffi"
-            ]
-        },
-        "com.github.jnr:jnr-constants": {
-            "locked": "0.9.9",
-            "transitive": [
-                "com.github.jnr:jnr-posix"
-            ]
-        },
-        "com.github.jnr:jnr-ffi": {
-            "locked": "2.1.7",
-            "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core",
-                "com.github.jnr:jnr-posix"
-            ]
-        },
-        "com.github.jnr:jnr-posix": {
-            "locked": "3.0.44",
-            "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core"
-            ]
-        },
-        "com.github.jnr:jnr-x86asm": {
-            "locked": "1.0.2",
-            "transitive": [
-                "com.github.jnr:jnr-ffi"
-            ]
-        },
-        "com.github.rholder:guava-retrying": {
-            "locked": "2.0.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
-        "com.github.vmg.protogen:protogen-annotations": {
-            "locked": "1.0.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
-        "com.google.code.findbugs:jsr305": {
-            "locked": "2.0.2",
-            "transitive": [
-                "com.github.rholder:guava-retrying"
-            ]
-        },
-        "com.google.guava:guava": {
-            "locked": "19.0",
-            "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core",
-                "com.github.rholder:guava-retrying",
-                "com.google.inject:guice",
-                "com.netflix.servo:servo-core"
-            ]
-        },
-        "com.google.inject.extensions:guice-multibindings": {
-            "locked": "4.1.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.google.inject:guice": {
-            "locked": "4.1.0",
-            "transitive": [
-                "com.google.inject.extensions:guice-multibindings",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.google.protobuf:protobuf-java": {
-            "locked": "3.5.1",
-            "transitive": [
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
-        "com.jayway.jsonpath:json-path": {
-            "locked": "2.2.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.netflix.conductor:conductor-common": {
-            "project": true,
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.netflix.conductor:conductor-core": {
-            "project": true
-        },
-        "com.netflix.servo:servo-core": {
-            "locked": "0.12.17",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.netflix.spectator:spectator-api": {
-            "locked": "0.68.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.spotify:completable-futures": {
-            "locked": "0.3.1",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "commons-codec:commons-codec": {
-            "locked": "1.9",
-            "transitive": [
-                "org.apache.httpcomponents:httpclient"
-            ]
-        },
-        "commons-logging:commons-logging": {
-            "locked": "1.2",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core",
-                "org.apache.httpcomponents:httpclient"
-            ]
-        },
-        "io.dropwizard.metrics:metrics-core": {
-            "locked": "3.2.2",
-            "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core"
-            ]
-        },
-        "io.netty:netty-buffer": {
-            "locked": "4.0.56.Final",
-            "transitive": [
-                "io.netty:netty-handler",
-                "io.netty:netty-transport"
-            ]
-        },
-        "io.netty:netty-codec": {
-            "locked": "4.0.56.Final",
-            "transitive": [
-                "io.netty:netty-handler"
-            ]
-        },
-        "io.netty:netty-common": {
-            "locked": "4.0.56.Final",
-            "transitive": [
-                "io.netty:netty-buffer"
-            ]
-        },
-        "io.netty:netty-handler": {
-            "locked": "4.0.56.Final",
-            "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core"
-            ]
-        },
-        "io.netty:netty-transport": {
-            "locked": "4.0.56.Final",
-            "transitive": [
-                "io.netty:netty-codec",
-                "io.netty:netty-handler"
-            ]
-        },
-        "io.reactivex:rxjava": {
-            "locked": "1.2.2",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "javax.inject:javax.inject": {
-            "locked": "1",
-            "transitive": [
-                "com.google.inject:guice",
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
-        "javax.validation:validation-api": {
-            "locked": "2.0.1.Final",
-            "transitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "joda-time:joda-time": {
-            "locked": "2.8.1",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
-            ]
-        },
-        "net.minidev:accessors-smart": {
-            "locked": "1.1",
-            "transitive": [
-                "net.minidev:json-smart"
-            ]
-        },
-        "net.minidev:json-smart": {
-            "locked": "2.2.1",
-            "transitive": [
-                "com.jayway.jsonpath:json-path"
-            ]
-        },
-        "org.apache.bval:bval-jsr": {
-            "locked": "2.0.3",
-            "transitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "org.apache.commons:commons-lang3": {
-            "locked": "3.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "org.apache.httpcomponents:httpclient": {
-            "locked": "4.5.2",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
-            ]
-        },
-        "org.apache.httpcomponents:httpcore": {
-            "locked": "4.4.4",
-            "transitive": [
-                "org.apache.httpcomponents:httpclient"
-            ]
-        },
-        "org.glassfish:javax.el": {
-            "locked": "3.0.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "org.ow2.asm:asm": {
-            "locked": "5.0.3",
-            "transitive": [
-                "com.github.jnr:jnr-ffi",
-                "net.minidev:accessors-smart",
-                "org.ow2.asm:asm-tree"
-            ]
-        },
-        "org.ow2.asm:asm-analysis": {
-            "locked": "5.0.3",
-            "transitive": [
-                "com.github.jnr:jnr-ffi"
-            ]
-        },
-        "org.ow2.asm:asm-commons": {
-            "locked": "5.0.3",
-            "transitive": [
-                "com.github.jnr:jnr-ffi"
-            ]
-        },
-        "org.ow2.asm:asm-tree": {
-            "locked": "5.0.3",
-            "transitive": [
-                "com.github.jnr:jnr-ffi",
-                "org.ow2.asm:asm-analysis",
-                "org.ow2.asm:asm-commons",
-                "org.ow2.asm:asm-util"
-            ]
-        },
-        "org.ow2.asm:asm-util": {
-            "locked": "5.0.3",
-            "transitive": [
-                "com.github.jnr:jnr-ffi"
-            ]
-        },
-        "org.slf4j:slf4j-api": {
-            "locked": "1.7.25",
-            "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core",
-                "com.jayway.jsonpath:json-path",
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.servo:servo-core",
-                "com.netflix.spectator:spectator-api",
-                "io.dropwizard.metrics:metrics-core"
-            ]
-        },
-        "software.amazon.ion:ion-java": {
-            "locked": "1.0.1",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
+                "org.springframework.boot:spring-boot-starter"
             ]
         }
     },
     "runtimeClasspath": {
-        "aopalliance:aopalliance": {
-            "locked": "1.0",
-            "transitive": [
-                "com.google.inject:guice"
-            ]
+        "com.datastax.cassandra:cassandra-driver-core": {
+            "locked": "3.10.2"
         },
-        "com.amazonaws:aws-java-sdk-core": {
-            "locked": "1.11.86",
+        "com.fasterxml.jackson.core:jackson-annotations": {
+            "locked": "2.11.4",
             "transitive": [
-                "com.amazonaws:aws-java-sdk-kms",
-                "com.amazonaws:aws-java-sdk-s3"
-            ]
-        },
-        "com.amazonaws:aws-java-sdk-kms": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-s3"
-            ]
-        },
-        "com.amazonaws:aws-java-sdk-s3": {
-            "locked": "1.11.86",
-            "transitive": [
+                "com.fasterxml.jackson.core:jackson-databind",
                 "com.netflix.conductor:conductor-core"
             ]
         },
-        "com.amazonaws:jmespath-java": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-kms",
-                "com.amazonaws:aws-java-sdk-s3"
-            ]
-        },
-        "com.datastax.cassandra:cassandra-driver-core": {
-            "locked": "3.6.0",
-            "requested": "3.6.0"
-        },
-        "com.fasterxml.jackson.core:jackson-annotations": {
-            "locked": "2.10.0",
-            "transitive": [
-                "com.fasterxml.jackson.core:jackson-databind"
-            ]
-        },
         "com.fasterxml.jackson.core:jackson-core": {
-            "locked": "2.10.0",
+            "locked": "2.11.4",
             "transitive": [
                 "com.fasterxml.jackson.core:jackson-databind",
-                "com.fasterxml.jackson.dataformat:jackson-dataformat-cbor",
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ]
         },
         "com.fasterxml.jackson.core:jackson-databind": {
-            "locked": "2.10.0",
+            "locked": "2.11.4",
             "transitive": [
-                "com.amazonaws:aws-java-sdk-core",
-                "com.amazonaws:jmespath-java",
+                "com.datastax.cassandra:cassandra-driver-core",
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.fasterxml.jackson.dataformat:jackson-dataformat-cbor": {
-            "locked": "2.6.6",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
             ]
         },
         "com.github.jnr:jffi": {
@@ -1591,31 +344,18 @@
             "transitive": [
                 "com.datastax.cassandra:cassandra-driver-core",
                 "com.github.rholder:guava-retrying",
-                "com.google.inject:guice",
                 "com.netflix.servo:servo-core"
             ]
         },
-        "com.google.inject.extensions:guice-multibindings": {
-            "locked": "4.1.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.google.inject:guice": {
-            "locked": "4.1.0",
-            "transitive": [
-                "com.google.inject.extensions:guice-multibindings",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
         "com.google.protobuf:protobuf-java": {
-            "locked": "3.5.1",
+            "locked": "3.13.0",
             "transitive": [
-                "com.netflix.conductor:conductor-common"
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core"
             ]
         },
         "com.jayway.jsonpath:json-path": {
-            "locked": "2.2.0",
+            "locked": "2.4.0",
             "transitive": [
                 "com.netflix.conductor:conductor-core"
             ]
@@ -1630,147 +370,178 @@
             "project": true
         },
         "com.netflix.servo:servo-core": {
-            "locked": "0.12.17",
+            "locked": "0.13.0",
             "transitive": [
                 "com.netflix.conductor:conductor-core"
             ]
         },
         "com.netflix.spectator:spectator-api": {
-            "locked": "0.68.0",
+            "locked": "0.122.0",
             "transitive": [
-                "com.netflix.conductor:conductor-core"
+                "com.netflix.conductor:conductor-core",
+                "com.netflix.servo:servo-core"
             ]
         },
         "com.spotify:completable-futures": {
-            "locked": "0.3.1",
+            "locked": "0.3.3",
             "transitive": [
                 "com.netflix.conductor:conductor-core"
             ]
         },
-        "commons-codec:commons-codec": {
-            "locked": "1.9",
+        "com.sun.activation:jakarta.activation": {
+            "locked": "1.2.2",
             "transitive": [
-                "org.apache.httpcomponents:httpclient"
+                "org.glassfish.jaxb:jaxb-runtime"
             ]
         },
-        "commons-logging:commons-logging": {
-            "locked": "1.2",
+        "com.sun.istack:istack-commons-runtime": {
+            "locked": "3.0.12",
             "transitive": [
-                "com.amazonaws:aws-java-sdk-core",
-                "org.apache.httpcomponents:httpclient"
+                "org.glassfish.jaxb:jaxb-runtime"
+            ]
+        },
+        "commons-io:commons-io": {
+            "locked": "2.7",
+            "transitive": [
+                "com.netflix.conductor:conductor-core"
             ]
         },
         "io.dropwizard.metrics:metrics-core": {
-            "locked": "3.2.2",
+            "locked": "4.1.22",
             "transitive": [
                 "com.datastax.cassandra:cassandra-driver-core"
             ]
         },
         "io.netty:netty-buffer": {
-            "locked": "4.0.56.Final",
+            "locked": "4.1.65.Final",
             "transitive": [
+                "io.netty:netty-codec",
                 "io.netty:netty-handler",
                 "io.netty:netty-transport"
             ]
         },
         "io.netty:netty-codec": {
-            "locked": "4.0.56.Final",
+            "locked": "4.1.65.Final",
             "transitive": [
                 "io.netty:netty-handler"
             ]
         },
         "io.netty:netty-common": {
-            "locked": "4.0.56.Final",
+            "locked": "4.1.65.Final",
             "transitive": [
-                "io.netty:netty-buffer"
+                "io.netty:netty-buffer",
+                "io.netty:netty-codec",
+                "io.netty:netty-handler",
+                "io.netty:netty-resolver",
+                "io.netty:netty-transport"
             ]
         },
         "io.netty:netty-handler": {
-            "locked": "4.0.56.Final",
+            "locked": "4.1.65.Final",
             "transitive": [
                 "com.datastax.cassandra:cassandra-driver-core"
             ]
         },
+        "io.netty:netty-resolver": {
+            "locked": "4.1.65.Final",
+            "transitive": [
+                "io.netty:netty-handler",
+                "io.netty:netty-transport"
+            ]
+        },
         "io.netty:netty-transport": {
-            "locked": "4.0.56.Final",
+            "locked": "4.1.65.Final",
             "transitive": [
                 "io.netty:netty-codec",
                 "io.netty:netty-handler"
             ]
         },
         "io.reactivex:rxjava": {
-            "locked": "1.2.2",
+            "locked": "1.3.8",
             "transitive": [
                 "com.netflix.conductor:conductor-core"
             ]
         },
-        "javax.inject:javax.inject": {
-            "locked": "1",
+        "jakarta.xml.bind:jakarta.xml.bind-api": {
+            "locked": "2.3.3",
             "transitive": [
-                "com.google.inject:guice",
-                "com.netflix.conductor:conductor-common"
+                "org.glassfish.jaxb:jaxb-runtime"
             ]
         },
-        "javax.validation:validation-api": {
-            "locked": "2.0.1.Final",
+        "javax.activation:activation": {
+            "locked": "1.1.1",
             "transitive": [
-                "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ]
         },
-        "joda-time:joda-time": {
-            "locked": "2.8.1",
+        "javax.activation:javax.activation-api": {
+            "locked": "1.2.0",
             "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
+                "javax.xml.bind:jaxb-api"
+            ]
+        },
+        "javax.xml.bind:jaxb-api": {
+            "locked": "2.3.1",
+            "transitive": [
+                "com.netflix.conductor:conductor-core"
             ]
         },
         "net.minidev:accessors-smart": {
-            "locked": "1.1",
+            "locked": "2.3.1",
             "transitive": [
                 "net.minidev:json-smart"
             ]
         },
         "net.minidev:json-smart": {
-            "locked": "2.2.1",
+            "locked": "2.3.1",
             "transitive": [
                 "com.jayway.jsonpath:json-path"
             ]
         },
         "org.apache.bval:bval-jsr": {
-            "locked": "2.0.3",
+            "locked": "2.0.5",
             "transitive": [
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ]
         },
         "org.apache.commons:commons-lang3": {
-            "locked": "3.0",
+            "locked": "3.10",
             "transitive": [
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ]
         },
-        "org.apache.httpcomponents:httpclient": {
-            "locked": "4.5.2",
+        "org.apache.logging.log4j:log4j-api": {
+            "locked": "2.13.3",
             "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
+                "org.apache.logging.log4j:log4j-core",
+                "org.apache.logging.log4j:log4j-web"
             ]
         },
-        "org.apache.httpcomponents:httpcore": {
-            "locked": "4.4.4",
+        "org.apache.logging.log4j:log4j-core": {
+            "locked": "2.13.3",
             "transitive": [
-                "org.apache.httpcomponents:httpclient"
+                "org.apache.logging.log4j:log4j-web"
             ]
         },
-        "org.glassfish:javax.el": {
-            "locked": "3.0.0",
+        "org.apache.logging.log4j:log4j-web": {
+            "locked": "2.13.3"
+        },
+        "org.glassfish.jaxb:jaxb-runtime": {
+            "locked": "2.3.4",
             "transitive": [
-                "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
+            ]
+        },
+        "org.glassfish.jaxb:txw2": {
+            "locked": "2.3.4",
+            "transitive": [
+                "org.glassfish.jaxb:jaxb-runtime"
             ]
         },
         "org.ow2.asm:asm": {
-            "locked": "5.0.3",
+            "locked": "5.0.4",
             "transitive": [
                 "com.github.jnr:jnr-ffi",
                 "net.minidev:accessors-smart",
@@ -1805,723 +576,17 @@
             ]
         },
         "org.slf4j:slf4j-api": {
-            "locked": "1.7.25",
+            "locked": "1.7.30",
             "transitive": [
                 "com.datastax.cassandra:cassandra-driver-core",
                 "com.jayway.jsonpath:json-path",
-                "com.netflix.conductor:conductor-common",
                 "com.netflix.servo:servo-core",
                 "com.netflix.spectator:spectator-api",
                 "io.dropwizard.metrics:metrics-core"
             ]
-        },
-        "software.amazon.ion:ion-java": {
-            "locked": "1.0.1",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
-            ]
-        }
-    },
-    "testCompile": {
-        "aopalliance:aopalliance": {
-            "locked": "1.0",
-            "transitive": [
-                "com.google.inject:guice"
-            ]
-        },
-        "ch.qos.logback:logback-classic": {
-            "locked": "1.1.3",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "ch.qos.logback:logback-core": {
-            "locked": "1.1.3",
-            "transitive": [
-                "ch.qos.logback:logback-classic",
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "com.addthis.metrics:reporter-config-base": {
-            "locked": "3.0.3",
-            "transitive": [
-                "com.addthis.metrics:reporter-config3"
-            ]
-        },
-        "com.addthis.metrics:reporter-config3": {
-            "locked": "3.0.3",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "com.amazonaws:aws-java-sdk-core": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-kms",
-                "com.amazonaws:aws-java-sdk-s3"
-            ]
-        },
-        "com.amazonaws:aws-java-sdk-kms": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-s3"
-            ]
-        },
-        "com.amazonaws:aws-java-sdk-s3": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.amazonaws:jmespath-java": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-kms",
-                "com.amazonaws:aws-java-sdk-s3"
-            ]
-        },
-        "com.boundary:high-scale-lib": {
-            "locked": "1.0.6",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "com.carrotsearch:hppc": {
-            "locked": "0.5.4",
-            "transitive": [
-                "org.apache.cassandra:cassandra-thrift"
-            ]
-        },
-        "com.clearspring.analytics:stream": {
-            "locked": "2.5.2",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "com.datastax.cassandra:cassandra-driver-core": {
-            "locked": "3.6.0",
-            "requested": "3.6.0"
-        },
-        "com.fasterxml.jackson.core:jackson-annotations": {
-            "locked": "2.10.0",
-            "transitive": [
-                "com.fasterxml.jackson.core:jackson-databind"
-            ]
-        },
-        "com.fasterxml.jackson.core:jackson-core": {
-            "locked": "2.10.0",
-            "transitive": [
-                "com.fasterxml.jackson.core:jackson-databind",
-                "com.fasterxml.jackson.dataformat:jackson-dataformat-cbor",
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.fasterxml.jackson.core:jackson-databind": {
-            "locked": "2.10.0",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core",
-                "com.amazonaws:jmespath-java",
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.fasterxml.jackson.dataformat:jackson-dataformat-cbor": {
-            "locked": "2.6.6",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
-            ]
-        },
-        "com.github.ben-manes.caffeine:caffeine": {
-            "locked": "2.2.6",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "com.github.jbellis:jamm": {
-            "locked": "0.3.0",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "com.github.jnr:jffi": {
-            "locked": "1.2.16",
-            "transitive": [
-                "com.github.jnr:jnr-ffi"
-            ]
-        },
-        "com.github.jnr:jnr-constants": {
-            "locked": "0.9.9",
-            "transitive": [
-                "com.github.jnr:jnr-posix"
-            ]
-        },
-        "com.github.jnr:jnr-ffi": {
-            "locked": "2.1.7",
-            "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core",
-                "com.github.jnr:jnr-posix"
-            ]
-        },
-        "com.github.jnr:jnr-posix": {
-            "locked": "3.0.44",
-            "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core"
-            ]
-        },
-        "com.github.jnr:jnr-x86asm": {
-            "locked": "1.0.2",
-            "transitive": [
-                "com.github.jnr:jnr-ffi"
-            ]
-        },
-        "com.github.rholder:guava-retrying": {
-            "locked": "2.0.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
-        "com.github.rholder:snowball-stemmer": {
-            "locked": "1.3.0.581.1",
-            "transitive": [
-                "org.apache.cassandra:cassandra-thrift"
-            ]
-        },
-        "com.github.vmg.protogen:protogen-annotations": {
-            "locked": "1.0.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
-        "com.google.code.findbugs:jsr305": {
-            "locked": "2.0.2",
-            "transitive": [
-                "com.github.rholder:guava-retrying"
-            ]
-        },
-        "com.google.guava:guava": {
-            "locked": "21.0",
-            "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core",
-                "com.github.rholder:guava-retrying",
-                "com.google.inject:guice",
-                "com.netflix.servo:servo-core",
-                "org.apache.cassandra:cassandra-all",
-                "org.caffinitas.ohc:ohc-core",
-                "org.cassandraunit:cassandra-unit"
-            ]
-        },
-        "com.google.inject.extensions:guice-multibindings": {
-            "locked": "4.1.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.google.inject:guice": {
-            "locked": "4.1.0",
-            "transitive": [
-                "com.google.inject.extensions:guice-multibindings",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.google.protobuf:protobuf-java": {
-            "locked": "3.5.1",
-            "transitive": [
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
-        "com.googlecode.concurrent-trees:concurrent-trees": {
-            "locked": "2.4.0",
-            "transitive": [
-                "org.apache.cassandra:cassandra-thrift"
-            ]
-        },
-        "com.googlecode.concurrentlinkedhashmap:concurrentlinkedhashmap-lru": {
-            "locked": "1.4",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "com.googlecode.json-simple:json-simple": {
-            "locked": "1.1",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "com.jayway.jsonpath:json-path": {
-            "locked": "2.2.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.lmax:disruptor": {
-            "locked": "3.0.1",
-            "transitive": [
-                "com.thinkaurelius.thrift:thrift-server"
-            ]
-        },
-        "com.netflix.conductor:conductor-common": {
-            "project": true,
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.netflix.conductor:conductor-core": {
-            "project": true
-        },
-        "com.netflix.servo:servo-core": {
-            "locked": "0.12.17",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.netflix.spectator:spectator-api": {
-            "locked": "0.68.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.ning:compress-lzf": {
-            "locked": "0.8.4",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "com.spotify:completable-futures": {
-            "locked": "0.3.1",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.thinkaurelius.thrift:thrift-server": {
-            "locked": "0.3.7",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "commons-cli:commons-cli": {
-            "locked": "1.1",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "commons-codec:commons-codec": {
-            "locked": "1.9",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all",
-                "org.apache.httpcomponents:httpclient"
-            ]
-        },
-        "commons-logging:commons-logging": {
-            "locked": "1.2",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core",
-                "org.apache.httpcomponents:httpclient"
-            ]
-        },
-        "de.jflex:jflex": {
-            "locked": "1.6.0",
-            "transitive": [
-                "org.apache.cassandra:cassandra-thrift"
-            ]
-        },
-        "io.dropwizard.metrics:metrics-core": {
-            "locked": "3.2.2",
-            "transitive": [
-                "com.addthis.metrics:reporter-config3",
-                "com.datastax.cassandra:cassandra-driver-core",
-                "io.dropwizard.metrics:metrics-jvm",
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "io.dropwizard.metrics:metrics-jvm": {
-            "locked": "3.1.0",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "io.netty:netty-buffer": {
-            "locked": "4.0.56.Final",
-            "transitive": [
-                "io.netty:netty-handler",
-                "io.netty:netty-transport"
-            ]
-        },
-        "io.netty:netty-codec": {
-            "locked": "4.0.56.Final",
-            "transitive": [
-                "io.netty:netty-handler"
-            ]
-        },
-        "io.netty:netty-common": {
-            "locked": "4.0.56.Final",
-            "transitive": [
-                "io.netty:netty-buffer"
-            ]
-        },
-        "io.netty:netty-handler": {
-            "locked": "4.0.56.Final",
-            "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core",
-                "org.cassandraunit:cassandra-unit"
-            ]
-        },
-        "io.netty:netty-transport": {
-            "locked": "4.0.56.Final",
-            "transitive": [
-                "io.netty:netty-codec",
-                "io.netty:netty-handler"
-            ]
-        },
-        "io.reactivex:rxjava": {
-            "locked": "1.2.2",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "it.unimi.dsi:fastutil": {
-            "locked": "6.5.7",
-            "transitive": [
-                "com.clearspring.analytics:stream"
-            ]
-        },
-        "javax.inject:javax.inject": {
-            "locked": "1",
-            "transitive": [
-                "com.google.inject:guice",
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
-        "javax.validation:validation-api": {
-            "locked": "2.0.1.Final",
-            "transitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "joda-time:joda-time": {
-            "locked": "2.8.1",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core",
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "junit:junit": {
-            "locked": "4.12",
-            "requested": "4.12",
-            "transitive": [
-                "org.cassandraunit:cassandra-unit"
-            ]
-        },
-        "net.bytebuddy:byte-buddy": {
-            "locked": "1.9.10",
-            "transitive": [
-                "org.mockito:mockito-core"
-            ]
-        },
-        "net.bytebuddy:byte-buddy-agent": {
-            "locked": "1.9.10",
-            "transitive": [
-                "org.mockito:mockito-core"
-            ]
-        },
-        "net.java.dev.jna:jna": {
-            "locked": "4.1.0",
-            "transitive": [
-                "org.cassandraunit:cassandra-unit"
-            ]
-        },
-        "net.jpountz.lz4:lz4": {
-            "locked": "1.3.0",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "net.minidev:accessors-smart": {
-            "locked": "1.1",
-            "transitive": [
-                "net.minidev:json-smart"
-            ]
-        },
-        "net.minidev:json-smart": {
-            "locked": "2.2.1",
-            "transitive": [
-                "com.jayway.jsonpath:json-path"
-            ]
-        },
-        "org.antlr:ST4": {
-            "locked": "4.0.8",
-            "transitive": [
-                "org.antlr:antlr"
-            ]
-        },
-        "org.antlr:antlr": {
-            "locked": "3.5.2",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "org.antlr:antlr-runtime": {
-            "locked": "3.5.2",
-            "transitive": [
-                "org.antlr:ST4",
-                "org.antlr:antlr",
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "org.apache.ant:ant": {
-            "locked": "1.7.0",
-            "transitive": [
-                "de.jflex:jflex"
-            ]
-        },
-        "org.apache.ant:ant-launcher": {
-            "locked": "1.7.0",
-            "transitive": [
-                "org.apache.ant:ant"
-            ]
-        },
-        "org.apache.bval:bval-jsr": {
-            "locked": "2.0.3",
-            "transitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "org.apache.cassandra:cassandra-all": {
-            "locked": "3.11.2",
-            "transitive": [
-                "org.cassandraunit:cassandra-unit"
-            ]
-        },
-        "org.apache.cassandra:cassandra-thrift": {
-            "locked": "3.11.2",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "org.apache.commons:commons-lang3": {
-            "locked": "3.4",
-            "transitive": [
-                "com.addthis.metrics:reporter-config-base",
-                "com.addthis.metrics:reporter-config3",
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core",
-                "org.apache.cassandra:cassandra-all",
-                "org.apache.cassandra:cassandra-thrift",
-                "org.cassandraunit:cassandra-unit"
-            ]
-        },
-        "org.apache.commons:commons-math3": {
-            "locked": "3.2",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "org.apache.httpcomponents:httpclient": {
-            "locked": "4.5.2",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core",
-                "org.apache.thrift:libthrift"
-            ]
-        },
-        "org.apache.httpcomponents:httpcore": {
-            "locked": "4.4.4",
-            "transitive": [
-                "org.apache.httpcomponents:httpclient",
-                "org.apache.thrift:libthrift"
-            ]
-        },
-        "org.apache.thrift:libthrift": {
-            "locked": "0.9.2",
-            "transitive": [
-                "org.cassandraunit:cassandra-unit"
-            ]
-        },
-        "org.caffinitas.ohc:ohc-core": {
-            "locked": "0.4.4",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "org.cassandraunit:cassandra-unit": {
-            "locked": "3.5.0.1",
-            "requested": "3.5.0.1"
-        },
-        "org.codehaus.jackson:jackson-core-asl": {
-            "locked": "1.9.2",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all",
-                "org.codehaus.jackson:jackson-mapper-asl"
-            ]
-        },
-        "org.codehaus.jackson:jackson-mapper-asl": {
-            "locked": "1.9.2",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "org.eclipse.jdt.core.compiler:ecj": {
-            "locked": "4.4.2",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "org.fusesource:sigar": {
-            "locked": "1.6.4",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "org.glassfish:javax.el": {
-            "locked": "3.0.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "org.hamcrest:hamcrest-core": {
-            "locked": "1.3",
-            "transitive": [
-                "junit:junit",
-                "org.cassandraunit:cassandra-unit",
-                "org.hamcrest:hamcrest-library"
-            ]
-        },
-        "org.hamcrest:hamcrest-library": {
-            "locked": "1.3",
-            "transitive": [
-                "org.cassandraunit:cassandra-unit"
-            ]
-        },
-        "org.jctools:jctools-core": {
-            "locked": "1.2.1",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "org.mindrot:jbcrypt": {
-            "locked": "0.3m",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "org.mockito:mockito-core": {
-            "locked": "3.1.0",
-            "requested": "3.1.0"
-        },
-        "org.objenesis:objenesis": {
-            "locked": "2.6",
-            "transitive": [
-                "org.mockito:mockito-core"
-            ]
-        },
-        "org.ow2.asm:asm": {
-            "locked": "5.0.4",
-            "transitive": [
-                "com.github.jnr:jnr-ffi",
-                "net.minidev:accessors-smart",
-                "org.apache.cassandra:cassandra-all",
-                "org.ow2.asm:asm-tree"
-            ]
-        },
-        "org.ow2.asm:asm-analysis": {
-            "locked": "5.0.3",
-            "transitive": [
-                "com.github.jnr:jnr-ffi"
-            ]
-        },
-        "org.ow2.asm:asm-commons": {
-            "locked": "5.0.3",
-            "transitive": [
-                "com.github.jnr:jnr-ffi"
-            ]
-        },
-        "org.ow2.asm:asm-tree": {
-            "locked": "5.0.3",
-            "transitive": [
-                "com.github.jnr:jnr-ffi",
-                "org.ow2.asm:asm-analysis",
-                "org.ow2.asm:asm-commons",
-                "org.ow2.asm:asm-util"
-            ]
-        },
-        "org.ow2.asm:asm-util": {
-            "locked": "5.0.3",
-            "transitive": [
-                "com.github.jnr:jnr-ffi"
-            ]
-        },
-        "org.slf4j:jcl-over-slf4j": {
-            "locked": "1.7.7",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all",
-                "org.apache.cassandra:cassandra-thrift"
-            ]
-        },
-        "org.slf4j:slf4j-api": {
-            "locked": "1.7.25",
-            "transitive": [
-                "ch.qos.logback:logback-classic",
-                "com.addthis.metrics:reporter-config-base",
-                "com.addthis.metrics:reporter-config3",
-                "com.datastax.cassandra:cassandra-driver-core",
-                "com.jayway.jsonpath:json-path",
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.servo:servo-core",
-                "com.netflix.spectator:spectator-api",
-                "com.thinkaurelius.thrift:thrift-server",
-                "io.dropwizard.metrics:metrics-core",
-                "io.dropwizard.metrics:metrics-jvm",
-                "org.apache.cassandra:cassandra-all",
-                "org.apache.cassandra:cassandra-thrift",
-                "org.apache.thrift:libthrift",
-                "org.caffinitas.ohc:ohc-core",
-                "org.cassandraunit:cassandra-unit",
-                "org.slf4j:jcl-over-slf4j"
-            ]
-        },
-        "org.xerial.snappy:snappy-java": {
-            "locked": "1.1.1.7",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "org.yaml:snakeyaml": {
-            "locked": "1.12",
-            "transitive": [
-                "com.addthis.metrics:reporter-config-base",
-                "com.addthis.metrics:reporter-config3",
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "software.amazon.ion:ion-java": {
-            "locked": "1.0.1",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
-            ]
         }
     },
     "testCompileClasspath": {
-        "aopalliance:aopalliance": {
-            "locked": "1.0",
-            "transitive": [
-                "com.google.inject:guice"
-            ]
-        },
-        "ch.qos.logback:logback-classic": {
-            "locked": "1.1.3",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "ch.qos.logback:logback-core": {
-            "locked": "1.1.3",
-            "transitive": [
-                "ch.qos.logback:logback-classic",
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
         "com.addthis.metrics:reporter-config-base": {
             "locked": "3.0.3",
             "transitive": [
@@ -2532,32 +597,6 @@
             "locked": "3.0.3",
             "transitive": [
                 "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "com.amazonaws:aws-java-sdk-core": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-kms",
-                "com.amazonaws:aws-java-sdk-s3"
-            ]
-        },
-        "com.amazonaws:aws-java-sdk-kms": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-s3"
-            ]
-        },
-        "com.amazonaws:aws-java-sdk-s3": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.amazonaws:jmespath-java": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-kms",
-                "com.amazonaws:aws-java-sdk-s3"
             ]
         },
         "com.boundary:high-scale-lib": {
@@ -2579,41 +618,28 @@
             ]
         },
         "com.datastax.cassandra:cassandra-driver-core": {
-            "locked": "3.6.0",
-            "requested": "3.6.0"
+            "locked": "3.10.2"
         },
         "com.fasterxml.jackson.core:jackson-annotations": {
-            "locked": "2.10.0",
+            "locked": "2.11.4",
             "transitive": [
                 "com.fasterxml.jackson.core:jackson-databind"
             ]
         },
         "com.fasterxml.jackson.core:jackson-core": {
-            "locked": "2.10.0",
+            "locked": "2.11.4",
             "transitive": [
-                "com.fasterxml.jackson.core:jackson-databind",
-                "com.fasterxml.jackson.dataformat:jackson-dataformat-cbor",
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
+                "com.fasterxml.jackson.core:jackson-databind"
             ]
         },
         "com.fasterxml.jackson.core:jackson-databind": {
-            "locked": "2.10.0",
+            "locked": "2.11.4",
             "transitive": [
-                "com.amazonaws:aws-java-sdk-core",
-                "com.amazonaws:jmespath-java",
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.fasterxml.jackson.dataformat:jackson-dataformat-cbor": {
-            "locked": "2.6.6",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
+                "com.datastax.cassandra:cassandra-driver-core"
             ]
         },
         "com.github.ben-manes.caffeine:caffeine": {
-            "locked": "2.2.6",
+            "locked": "2.8.8",
             "transitive": [
                 "org.apache.cassandra:cassandra-all"
             ]
@@ -2655,59 +681,26 @@
                 "com.github.jnr:jnr-ffi"
             ]
         },
-        "com.github.rholder:guava-retrying": {
-            "locked": "2.0.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
         "com.github.rholder:snowball-stemmer": {
             "locked": "1.3.0.581.1",
             "transitive": [
                 "org.apache.cassandra:cassandra-thrift"
             ]
         },
-        "com.github.vmg.protogen:protogen-annotations": {
-            "locked": "1.0.0",
+        "com.google.errorprone:error_prone_annotations": {
+            "locked": "2.4.0",
             "transitive": [
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
-        "com.google.code.findbugs:jsr305": {
-            "locked": "2.0.2",
-            "transitive": [
-                "com.github.rholder:guava-retrying"
+                "com.github.ben-manes.caffeine:caffeine"
             ]
         },
         "com.google.guava:guava": {
             "locked": "21.0",
             "transitive": [
                 "com.datastax.cassandra:cassandra-driver-core",
-                "com.github.rholder:guava-retrying",
-                "com.google.inject:guice",
-                "com.netflix.servo:servo-core",
+                "io.airlift:airline",
                 "org.apache.cassandra:cassandra-all",
                 "org.caffinitas.ohc:ohc-core",
                 "org.cassandraunit:cassandra-unit"
-            ]
-        },
-        "com.google.inject.extensions:guice-multibindings": {
-            "locked": "4.1.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.google.inject:guice": {
-            "locked": "4.1.0",
-            "transitive": [
-                "com.google.inject.extensions:guice-multibindings",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.google.protobuf:protobuf-java": {
-            "locked": "3.5.1",
-            "transitive": [
-                "com.netflix.conductor:conductor-common"
             ]
         },
         "com.googlecode.concurrent-trees:concurrent-trees": {
@@ -2729,9 +722,9 @@
             ]
         },
         "com.jayway.jsonpath:json-path": {
-            "locked": "2.2.0",
+            "locked": "2.4.0",
             "transitive": [
-                "com.netflix.conductor:conductor-core"
+                "org.springframework.boot:spring-boot-starter-test"
             ]
         },
         "com.lmax:disruptor": {
@@ -2741,25 +734,10 @@
             ]
         },
         "com.netflix.conductor:conductor-common": {
-            "project": true,
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
+            "project": true
         },
         "com.netflix.conductor:conductor-core": {
             "project": true
-        },
-        "com.netflix.servo:servo-core": {
-            "locked": "0.12.17",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.netflix.spectator:spectator-api": {
-            "locked": "0.68.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
         },
         "com.ning:compress-lzf": {
             "locked": "0.8.4",
@@ -2767,16 +745,16 @@
                 "org.apache.cassandra:cassandra-all"
             ]
         },
-        "com.spotify:completable-futures": {
-            "locked": "0.3.1",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
         "com.thinkaurelius.thrift:thrift-server": {
             "locked": "0.3.7",
             "transitive": [
                 "org.apache.cassandra:cassandra-all"
+            ]
+        },
+        "com.vaadin.external.google:android-json": {
+            "locked": "0.0.20131108.vaadin1",
+            "transitive": [
+                "org.skyscreamer:jsonassert"
             ]
         },
         "commons-cli:commons-cli": {
@@ -2786,17 +764,9 @@
             ]
         },
         "commons-codec:commons-codec": {
-            "locked": "1.9",
+            "locked": "1.14",
             "transitive": [
-                "org.apache.cassandra:cassandra-all",
-                "org.apache.httpcomponents:httpclient"
-            ]
-        },
-        "commons-logging:commons-logging": {
-            "locked": "1.2",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core",
-                "org.apache.httpcomponents:httpclient"
+                "org.apache.cassandra:cassandra-all"
             ]
         },
         "de.jflex:jflex": {
@@ -2805,8 +775,14 @@
                 "org.apache.cassandra:cassandra-thrift"
             ]
         },
+        "io.airlift:airline": {
+            "locked": "0.6",
+            "transitive": [
+                "org.apache.cassandra:cassandra-all"
+            ]
+        },
         "io.dropwizard.metrics:metrics-core": {
-            "locked": "3.2.2",
+            "locked": "4.1.22",
             "transitive": [
                 "com.addthis.metrics:reporter-config3",
                 "com.datastax.cassandra:cassandra-driver-core",
@@ -2815,48 +791,54 @@
             ]
         },
         "io.dropwizard.metrics:metrics-jvm": {
-            "locked": "3.1.0",
+            "locked": "4.1.22",
             "transitive": [
                 "org.apache.cassandra:cassandra-all"
             ]
         },
         "io.netty:netty-buffer": {
-            "locked": "4.0.56.Final",
+            "locked": "4.1.65.Final",
             "transitive": [
+                "io.netty:netty-codec",
                 "io.netty:netty-handler",
                 "io.netty:netty-transport"
             ]
         },
         "io.netty:netty-codec": {
-            "locked": "4.0.56.Final",
+            "locked": "4.1.65.Final",
             "transitive": [
                 "io.netty:netty-handler"
             ]
         },
         "io.netty:netty-common": {
-            "locked": "4.0.56.Final",
+            "locked": "4.1.65.Final",
             "transitive": [
-                "io.netty:netty-buffer"
+                "io.netty:netty-buffer",
+                "io.netty:netty-codec",
+                "io.netty:netty-handler",
+                "io.netty:netty-resolver",
+                "io.netty:netty-transport"
             ]
         },
         "io.netty:netty-handler": {
-            "locked": "4.0.56.Final",
+            "locked": "4.1.65.Final",
             "transitive": [
                 "com.datastax.cassandra:cassandra-driver-core",
                 "org.cassandraunit:cassandra-unit"
             ]
         },
+        "io.netty:netty-resolver": {
+            "locked": "4.1.65.Final",
+            "transitive": [
+                "io.netty:netty-handler",
+                "io.netty:netty-transport"
+            ]
+        },
         "io.netty:netty-transport": {
-            "locked": "4.0.56.Final",
+            "locked": "4.1.65.Final",
             "transitive": [
                 "io.netty:netty-codec",
                 "io.netty:netty-handler"
-            ]
-        },
-        "io.reactivex:rxjava": {
-            "locked": "1.2.2",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
             ]
         },
         "it.unimi.dsi:fastutil": {
@@ -2865,42 +847,51 @@
                 "com.clearspring.analytics:stream"
             ]
         },
+        "jakarta.activation:jakarta.activation-api": {
+            "locked": "1.2.2",
+            "transitive": [
+                "jakarta.xml.bind:jakarta.xml.bind-api"
+            ]
+        },
+        "jakarta.annotation:jakarta.annotation-api": {
+            "locked": "1.3.5",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter"
+            ]
+        },
+        "jakarta.xml.bind:jakarta.xml.bind-api": {
+            "locked": "2.3.3",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter-test"
+            ]
+        },
         "javax.inject:javax.inject": {
             "locked": "1",
             "transitive": [
-                "com.google.inject:guice",
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
-        "javax.validation:validation-api": {
-            "locked": "2.0.1.Final",
-            "transitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
+                "io.airlift:airline"
             ]
         },
         "joda-time:joda-time": {
-            "locked": "2.8.1",
+            "locked": "2.4",
             "transitive": [
-                "com.amazonaws:aws-java-sdk-core",
                 "org.apache.cassandra:cassandra-all"
             ]
         },
         "junit:junit": {
-            "locked": "4.12",
-            "requested": "4.12",
+            "locked": "4.13.2",
             "transitive": [
-                "org.cassandraunit:cassandra-unit"
+                "org.cassandraunit:cassandra-unit",
+                "org.junit.vintage:junit-vintage-engine"
             ]
         },
         "net.bytebuddy:byte-buddy": {
-            "locked": "1.9.10",
+            "locked": "1.10.22",
             "transitive": [
                 "org.mockito:mockito-core"
             ]
         },
         "net.bytebuddy:byte-buddy-agent": {
-            "locked": "1.9.10",
+            "locked": "1.10.22",
             "transitive": [
                 "org.mockito:mockito-core"
             ]
@@ -2918,13 +909,13 @@
             ]
         },
         "net.minidev:accessors-smart": {
-            "locked": "1.1",
+            "locked": "2.3.1",
             "transitive": [
                 "net.minidev:json-smart"
             ]
         },
         "net.minidev:json-smart": {
-            "locked": "2.2.1",
+            "locked": "2.3.1",
             "transitive": [
                 "com.jayway.jsonpath:json-path"
             ]
@@ -2961,32 +952,23 @@
                 "org.apache.ant:ant"
             ]
         },
-        "org.apache.bval:bval-jsr": {
-            "locked": "2.0.3",
-            "transitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
         "org.apache.cassandra:cassandra-all": {
-            "locked": "3.11.2",
+            "locked": "3.11.4",
             "transitive": [
                 "org.cassandraunit:cassandra-unit"
             ]
         },
         "org.apache.cassandra:cassandra-thrift": {
-            "locked": "3.11.2",
+            "locked": "3.11.4",
             "transitive": [
                 "org.apache.cassandra:cassandra-all"
             ]
         },
         "org.apache.commons:commons-lang3": {
-            "locked": "3.4",
+            "locked": "3.10",
             "transitive": [
                 "com.addthis.metrics:reporter-config-base",
                 "com.addthis.metrics:reporter-config3",
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core",
                 "org.apache.cassandra:cassandra-all",
                 "org.apache.cassandra:cassandra-thrift",
                 "org.cassandraunit:cassandra-unit"
@@ -2999,18 +981,48 @@
             ]
         },
         "org.apache.httpcomponents:httpclient": {
-            "locked": "4.5.2",
+            "locked": "4.5.13",
             "transitive": [
-                "com.amazonaws:aws-java-sdk-core",
                 "org.apache.thrift:libthrift"
             ]
         },
         "org.apache.httpcomponents:httpcore": {
-            "locked": "4.4.4",
+            "locked": "4.4.14",
             "transitive": [
                 "org.apache.httpcomponents:httpclient",
                 "org.apache.thrift:libthrift"
             ]
+        },
+        "org.apache.logging.log4j:log4j-api": {
+            "locked": "2.13.3",
+            "transitive": [
+                "org.apache.logging.log4j:log4j-core",
+                "org.apache.logging.log4j:log4j-jul",
+                "org.apache.logging.log4j:log4j-slf4j-impl",
+                "org.apache.logging.log4j:log4j-web"
+            ]
+        },
+        "org.apache.logging.log4j:log4j-core": {
+            "locked": "2.13.3",
+            "transitive": [
+                "org.apache.logging.log4j:log4j-web",
+                "org.springframework.boot:spring-boot-starter-log4j2"
+            ]
+        },
+        "org.apache.logging.log4j:log4j-jul": {
+            "locked": "2.13.3",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter-log4j2"
+            ]
+        },
+        "org.apache.logging.log4j:log4j-slf4j-impl": {
+            "locked": "2.13.3",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter-log4j2"
+            ]
+        },
+        "org.apache.logging.log4j:log4j-web": {
+            "locked": "2.13.3"
         },
         "org.apache.thrift:libthrift": {
             "locked": "0.9.2",
@@ -3018,15 +1030,43 @@
                 "org.cassandraunit:cassandra-unit"
             ]
         },
+        "org.apiguardian:apiguardian-api": {
+            "locked": "1.1.0",
+            "transitive": [
+                "org.junit.jupiter:junit-jupiter-api",
+                "org.junit.jupiter:junit-jupiter-params",
+                "org.junit.platform:junit-platform-commons",
+                "org.junit.platform:junit-platform-engine",
+                "org.junit.vintage:junit-vintage-engine"
+            ]
+        },
+        "org.assertj:assertj-core": {
+            "locked": "3.16.1",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter-test"
+            ]
+        },
         "org.caffinitas.ohc:ohc-core": {
+            "locked": "0.4.4",
+            "transitive": [
+                "org.apache.cassandra:cassandra-all",
+                "org.caffinitas.ohc:ohc-core-j8"
+            ]
+        },
+        "org.caffinitas.ohc:ohc-core-j8": {
             "locked": "0.4.4",
             "transitive": [
                 "org.apache.cassandra:cassandra-all"
             ]
         },
         "org.cassandraunit:cassandra-unit": {
-            "locked": "3.5.0.1",
-            "requested": "3.5.0.1"
+            "locked": "3.11.2.0"
+        },
+        "org.checkerframework:checker-qual": {
+            "locked": "3.8.0",
+            "transitive": [
+                "com.github.ben-manes.caffeine:caffeine"
+            ]
         },
         "org.codehaus.jackson:jackson-core-asl": {
             "locked": "1.9.2",
@@ -3053,15 +1093,15 @@
                 "org.apache.cassandra:cassandra-all"
             ]
         },
-        "org.glassfish:javax.el": {
-            "locked": "3.0.0",
+        "org.hamcrest:hamcrest": {
+            "locked": "2.2",
             "transitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
+                "org.hamcrest:hamcrest-core",
+                "org.springframework.boot:spring-boot-starter-test"
             ]
         },
         "org.hamcrest:hamcrest-core": {
-            "locked": "1.3",
+            "locked": "2.2",
             "transitive": [
                 "junit:junit",
                 "org.cassandraunit:cassandra-unit",
@@ -3069,7 +1109,7 @@
             ]
         },
         "org.hamcrest:hamcrest-library": {
-            "locked": "1.3",
+            "locked": "2.2",
             "transitive": [
                 "org.cassandraunit:cassandra-unit"
             ]
@@ -3080,6 +1120,55 @@
                 "org.apache.cassandra:cassandra-all"
             ]
         },
+        "org.junit.jupiter:junit-jupiter": {
+            "locked": "5.6.3",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter-test"
+            ]
+        },
+        "org.junit.jupiter:junit-jupiter-api": {
+            "locked": "5.6.3",
+            "transitive": [
+                "org.junit.jupiter:junit-jupiter",
+                "org.junit.jupiter:junit-jupiter-params"
+            ]
+        },
+        "org.junit.jupiter:junit-jupiter-params": {
+            "locked": "5.6.3",
+            "transitive": [
+                "org.junit.jupiter:junit-jupiter"
+            ]
+        },
+        "org.junit.platform:junit-platform-commons": {
+            "locked": "1.6.3",
+            "transitive": [
+                "org.junit.jupiter:junit-jupiter-api",
+                "org.junit.platform:junit-platform-engine"
+            ]
+        },
+        "org.junit.platform:junit-platform-engine": {
+            "locked": "1.6.3",
+            "transitive": [
+                "org.junit.vintage:junit-vintage-engine"
+            ]
+        },
+        "org.junit.vintage:junit-vintage-engine": {
+            "locked": "5.6.3",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter-test"
+            ]
+        },
+        "org.junit:junit-bom": {
+            "locked": "5.6.3",
+            "transitive": [
+                "org.junit.jupiter:junit-jupiter",
+                "org.junit.jupiter:junit-jupiter-api",
+                "org.junit.jupiter:junit-jupiter-params",
+                "org.junit.platform:junit-platform-commons",
+                "org.junit.platform:junit-platform-engine",
+                "org.junit.vintage:junit-vintage-engine"
+            ]
+        },
         "org.mindrot:jbcrypt": {
             "locked": "0.3m",
             "transitive": [
@@ -3087,13 +1176,29 @@
             ]
         },
         "org.mockito:mockito-core": {
-            "locked": "3.1.0",
-            "requested": "3.1.0"
+            "locked": "3.3.3",
+            "transitive": [
+                "org.mockito:mockito-junit-jupiter",
+                "org.springframework.boot:spring-boot-starter-test"
+            ]
+        },
+        "org.mockito:mockito-junit-jupiter": {
+            "locked": "3.3.3",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter-test"
+            ]
         },
         "org.objenesis:objenesis": {
             "locked": "2.6",
             "transitive": [
                 "org.mockito:mockito-core"
+            ]
+        },
+        "org.opentest4j:opentest4j": {
+            "locked": "1.2.0",
+            "transitive": [
+                "org.junit.jupiter:junit-jupiter-api",
+                "org.junit.platform:junit-platform-engine"
             ]
         },
         "org.ow2.asm:asm": {
@@ -3132,33 +1237,141 @@
                 "com.github.jnr:jnr-ffi"
             ]
         },
+        "org.skyscreamer:jsonassert": {
+            "locked": "1.5.0",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter-test"
+            ]
+        },
         "org.slf4j:jcl-over-slf4j": {
-            "locked": "1.7.7",
+            "locked": "1.7.30",
             "transitive": [
                 "org.apache.cassandra:cassandra-all",
                 "org.apache.cassandra:cassandra-thrift"
             ]
         },
-        "org.slf4j:slf4j-api": {
-            "locked": "1.7.25",
+        "org.slf4j:jul-to-slf4j": {
+            "locked": "1.7.30",
             "transitive": [
-                "ch.qos.logback:logback-classic",
+                "org.springframework.boot:spring-boot-starter-log4j2",
+                "org.springframework.boot:spring-boot-starter-logging"
+            ]
+        },
+        "org.slf4j:slf4j-api": {
+            "locked": "1.7.30",
+            "transitive": [
                 "com.addthis.metrics:reporter-config-base",
                 "com.addthis.metrics:reporter-config3",
                 "com.datastax.cassandra:cassandra-driver-core",
                 "com.jayway.jsonpath:json-path",
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.servo:servo-core",
-                "com.netflix.spectator:spectator-api",
                 "com.thinkaurelius.thrift:thrift-server",
                 "io.dropwizard.metrics:metrics-core",
                 "io.dropwizard.metrics:metrics-jvm",
                 "org.apache.cassandra:cassandra-all",
                 "org.apache.cassandra:cassandra-thrift",
+                "org.apache.logging.log4j:log4j-slf4j-impl",
                 "org.apache.thrift:libthrift",
                 "org.caffinitas.ohc:ohc-core",
                 "org.cassandraunit:cassandra-unit",
-                "org.slf4j:jcl-over-slf4j"
+                "org.slf4j:jcl-over-slf4j",
+                "org.slf4j:jul-to-slf4j"
+            ]
+        },
+        "org.springframework.boot:spring-boot": {
+            "locked": "2.3.12.RELEASE",
+            "transitive": [
+                "org.springframework.boot:spring-boot-autoconfigure",
+                "org.springframework.boot:spring-boot-starter",
+                "org.springframework.boot:spring-boot-test",
+                "org.springframework.boot:spring-boot-test-autoconfigure"
+            ]
+        },
+        "org.springframework.boot:spring-boot-autoconfigure": {
+            "locked": "2.3.12.RELEASE",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter",
+                "org.springframework.boot:spring-boot-test-autoconfigure"
+            ]
+        },
+        "org.springframework.boot:spring-boot-starter": {
+            "locked": "2.3.12.RELEASE",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter-test"
+            ]
+        },
+        "org.springframework.boot:spring-boot-starter-log4j2": {
+            "locked": "2.3.12.RELEASE"
+        },
+        "org.springframework.boot:spring-boot-starter-logging": {
+            "locked": "2.3.12.RELEASE",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter"
+            ]
+        },
+        "org.springframework.boot:spring-boot-starter-test": {
+            "locked": "2.3.12.RELEASE"
+        },
+        "org.springframework.boot:spring-boot-test": {
+            "locked": "2.3.12.RELEASE",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter-test",
+                "org.springframework.boot:spring-boot-test-autoconfigure"
+            ]
+        },
+        "org.springframework.boot:spring-boot-test-autoconfigure": {
+            "locked": "2.3.12.RELEASE",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter-test"
+            ]
+        },
+        "org.springframework:spring-aop": {
+            "locked": "5.2.15.RELEASE",
+            "transitive": [
+                "org.springframework:spring-context"
+            ]
+        },
+        "org.springframework:spring-beans": {
+            "locked": "5.2.15.RELEASE",
+            "transitive": [
+                "org.springframework:spring-aop",
+                "org.springframework:spring-context"
+            ]
+        },
+        "org.springframework:spring-context": {
+            "locked": "5.2.15.RELEASE",
+            "transitive": [
+                "org.springframework.boot:spring-boot"
+            ]
+        },
+        "org.springframework:spring-core": {
+            "locked": "5.2.15.RELEASE",
+            "transitive": [
+                "org.springframework.boot:spring-boot",
+                "org.springframework.boot:spring-boot-starter",
+                "org.springframework.boot:spring-boot-starter-test",
+                "org.springframework:spring-aop",
+                "org.springframework:spring-beans",
+                "org.springframework:spring-context",
+                "org.springframework:spring-expression",
+                "org.springframework:spring-test"
+            ]
+        },
+        "org.springframework:spring-expression": {
+            "locked": "5.2.15.RELEASE",
+            "transitive": [
+                "org.springframework:spring-context"
+            ]
+        },
+        "org.springframework:spring-jcl": {
+            "locked": "5.2.15.RELEASE",
+            "transitive": [
+                "org.springframework:spring-core"
+            ]
+        },
+        "org.springframework:spring-test": {
+            "locked": "5.2.15.RELEASE",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter-test"
             ]
         },
         "org.xerial.snappy:snappy-java": {
@@ -3167,721 +1380,23 @@
                 "org.apache.cassandra:cassandra-all"
             ]
         },
-        "org.yaml:snakeyaml": {
-            "locked": "1.12",
+        "org.xmlunit:xmlunit-core": {
+            "locked": "2.7.0",
             "transitive": [
-                "com.addthis.metrics:reporter-config-base",
-                "com.addthis.metrics:reporter-config3",
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "software.amazon.ion:ion-java": {
-            "locked": "1.0.1",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
-            ]
-        }
-    },
-    "testRuntime": {
-        "aopalliance:aopalliance": {
-            "locked": "1.0",
-            "transitive": [
-                "com.google.inject:guice"
-            ]
-        },
-        "ch.qos.logback:logback-classic": {
-            "locked": "1.1.3",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "ch.qos.logback:logback-core": {
-            "locked": "1.1.3",
-            "transitive": [
-                "ch.qos.logback:logback-classic",
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "com.addthis.metrics:reporter-config-base": {
-            "locked": "3.0.3",
-            "transitive": [
-                "com.addthis.metrics:reporter-config3"
-            ]
-        },
-        "com.addthis.metrics:reporter-config3": {
-            "locked": "3.0.3",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "com.amazonaws:aws-java-sdk-core": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-kms",
-                "com.amazonaws:aws-java-sdk-s3"
-            ]
-        },
-        "com.amazonaws:aws-java-sdk-kms": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-s3"
-            ]
-        },
-        "com.amazonaws:aws-java-sdk-s3": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.amazonaws:jmespath-java": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-kms",
-                "com.amazonaws:aws-java-sdk-s3"
-            ]
-        },
-        "com.boundary:high-scale-lib": {
-            "locked": "1.0.6",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "com.carrotsearch:hppc": {
-            "locked": "0.5.4",
-            "transitive": [
-                "org.apache.cassandra:cassandra-thrift"
-            ]
-        },
-        "com.clearspring.analytics:stream": {
-            "locked": "2.5.2",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "com.datastax.cassandra:cassandra-driver-core": {
-            "locked": "3.6.0",
-            "requested": "3.6.0"
-        },
-        "com.fasterxml.jackson.core:jackson-annotations": {
-            "locked": "2.10.0",
-            "transitive": [
-                "com.fasterxml.jackson.core:jackson-databind"
-            ]
-        },
-        "com.fasterxml.jackson.core:jackson-core": {
-            "locked": "2.10.0",
-            "transitive": [
-                "com.fasterxml.jackson.core:jackson-databind",
-                "com.fasterxml.jackson.dataformat:jackson-dataformat-cbor",
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.fasterxml.jackson.core:jackson-databind": {
-            "locked": "2.10.0",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core",
-                "com.amazonaws:jmespath-java",
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.fasterxml.jackson.dataformat:jackson-dataformat-cbor": {
-            "locked": "2.6.6",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
-            ]
-        },
-        "com.github.ben-manes.caffeine:caffeine": {
-            "locked": "2.2.6",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "com.github.jbellis:jamm": {
-            "locked": "0.3.0",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "com.github.jnr:jffi": {
-            "locked": "1.2.16",
-            "transitive": [
-                "com.github.jnr:jnr-ffi"
-            ]
-        },
-        "com.github.jnr:jnr-constants": {
-            "locked": "0.9.9",
-            "transitive": [
-                "com.github.jnr:jnr-posix"
-            ]
-        },
-        "com.github.jnr:jnr-ffi": {
-            "locked": "2.1.7",
-            "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core",
-                "com.github.jnr:jnr-posix"
-            ]
-        },
-        "com.github.jnr:jnr-posix": {
-            "locked": "3.0.44",
-            "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core"
-            ]
-        },
-        "com.github.jnr:jnr-x86asm": {
-            "locked": "1.0.2",
-            "transitive": [
-                "com.github.jnr:jnr-ffi"
-            ]
-        },
-        "com.github.rholder:guava-retrying": {
-            "locked": "2.0.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
-        "com.github.rholder:snowball-stemmer": {
-            "locked": "1.3.0.581.1",
-            "transitive": [
-                "org.apache.cassandra:cassandra-thrift"
-            ]
-        },
-        "com.github.vmg.protogen:protogen-annotations": {
-            "locked": "1.0.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
-        "com.google.code.findbugs:jsr305": {
-            "locked": "2.0.2",
-            "transitive": [
-                "com.github.rholder:guava-retrying"
-            ]
-        },
-        "com.google.guava:guava": {
-            "locked": "21.0",
-            "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core",
-                "com.github.rholder:guava-retrying",
-                "com.google.inject:guice",
-                "com.netflix.servo:servo-core",
-                "org.apache.cassandra:cassandra-all",
-                "org.caffinitas.ohc:ohc-core",
-                "org.cassandraunit:cassandra-unit"
-            ]
-        },
-        "com.google.inject.extensions:guice-multibindings": {
-            "locked": "4.1.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.google.inject:guice": {
-            "locked": "4.1.0",
-            "transitive": [
-                "com.google.inject.extensions:guice-multibindings",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.google.protobuf:protobuf-java": {
-            "locked": "3.5.1",
-            "transitive": [
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
-        "com.googlecode.concurrent-trees:concurrent-trees": {
-            "locked": "2.4.0",
-            "transitive": [
-                "org.apache.cassandra:cassandra-thrift"
-            ]
-        },
-        "com.googlecode.concurrentlinkedhashmap:concurrentlinkedhashmap-lru": {
-            "locked": "1.4",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "com.googlecode.json-simple:json-simple": {
-            "locked": "1.1",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "com.jayway.jsonpath:json-path": {
-            "locked": "2.2.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.lmax:disruptor": {
-            "locked": "3.0.1",
-            "transitive": [
-                "com.thinkaurelius.thrift:thrift-server"
-            ]
-        },
-        "com.netflix.conductor:conductor-common": {
-            "project": true,
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.netflix.conductor:conductor-core": {
-            "project": true
-        },
-        "com.netflix.servo:servo-core": {
-            "locked": "0.12.17",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.netflix.spectator:spectator-api": {
-            "locked": "0.68.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.ning:compress-lzf": {
-            "locked": "0.8.4",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "com.spotify:completable-futures": {
-            "locked": "0.3.1",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.thinkaurelius.thrift:thrift-server": {
-            "locked": "0.3.7",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "commons-cli:commons-cli": {
-            "locked": "1.1",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "commons-codec:commons-codec": {
-            "locked": "1.9",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all",
-                "org.apache.httpcomponents:httpclient"
-            ]
-        },
-        "commons-logging:commons-logging": {
-            "locked": "1.2",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core",
-                "org.apache.httpcomponents:httpclient"
-            ]
-        },
-        "de.jflex:jflex": {
-            "locked": "1.6.0",
-            "transitive": [
-                "org.apache.cassandra:cassandra-thrift"
-            ]
-        },
-        "io.dropwizard.metrics:metrics-core": {
-            "locked": "3.2.2",
-            "transitive": [
-                "com.addthis.metrics:reporter-config3",
-                "com.datastax.cassandra:cassandra-driver-core",
-                "io.dropwizard.metrics:metrics-jvm",
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "io.dropwizard.metrics:metrics-jvm": {
-            "locked": "3.1.0",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "io.netty:netty-buffer": {
-            "locked": "4.0.56.Final",
-            "transitive": [
-                "io.netty:netty-handler",
-                "io.netty:netty-transport"
-            ]
-        },
-        "io.netty:netty-codec": {
-            "locked": "4.0.56.Final",
-            "transitive": [
-                "io.netty:netty-handler"
-            ]
-        },
-        "io.netty:netty-common": {
-            "locked": "4.0.56.Final",
-            "transitive": [
-                "io.netty:netty-buffer"
-            ]
-        },
-        "io.netty:netty-handler": {
-            "locked": "4.0.56.Final",
-            "transitive": [
-                "com.datastax.cassandra:cassandra-driver-core",
-                "org.cassandraunit:cassandra-unit"
-            ]
-        },
-        "io.netty:netty-transport": {
-            "locked": "4.0.56.Final",
-            "transitive": [
-                "io.netty:netty-codec",
-                "io.netty:netty-handler"
-            ]
-        },
-        "io.reactivex:rxjava": {
-            "locked": "1.2.2",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "it.unimi.dsi:fastutil": {
-            "locked": "6.5.7",
-            "transitive": [
-                "com.clearspring.analytics:stream"
-            ]
-        },
-        "javax.inject:javax.inject": {
-            "locked": "1",
-            "transitive": [
-                "com.google.inject:guice",
-                "com.netflix.conductor:conductor-common"
-            ]
-        },
-        "javax.validation:validation-api": {
-            "locked": "2.0.1.Final",
-            "transitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "joda-time:joda-time": {
-            "locked": "2.8.1",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core",
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "junit:junit": {
-            "locked": "4.12",
-            "requested": "4.12",
-            "transitive": [
-                "org.cassandraunit:cassandra-unit"
-            ]
-        },
-        "net.bytebuddy:byte-buddy": {
-            "locked": "1.9.10",
-            "transitive": [
-                "org.mockito:mockito-core"
-            ]
-        },
-        "net.bytebuddy:byte-buddy-agent": {
-            "locked": "1.9.10",
-            "transitive": [
-                "org.mockito:mockito-core"
-            ]
-        },
-        "net.java.dev.jna:jna": {
-            "locked": "4.1.0",
-            "transitive": [
-                "org.cassandraunit:cassandra-unit"
-            ]
-        },
-        "net.jpountz.lz4:lz4": {
-            "locked": "1.3.0",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "net.minidev:accessors-smart": {
-            "locked": "1.1",
-            "transitive": [
-                "net.minidev:json-smart"
-            ]
-        },
-        "net.minidev:json-smart": {
-            "locked": "2.2.1",
-            "transitive": [
-                "com.jayway.jsonpath:json-path"
-            ]
-        },
-        "org.antlr:ST4": {
-            "locked": "4.0.8",
-            "transitive": [
-                "org.antlr:antlr"
-            ]
-        },
-        "org.antlr:antlr": {
-            "locked": "3.5.2",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "org.antlr:antlr-runtime": {
-            "locked": "3.5.2",
-            "transitive": [
-                "org.antlr:ST4",
-                "org.antlr:antlr",
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "org.apache.ant:ant": {
-            "locked": "1.7.0",
-            "transitive": [
-                "de.jflex:jflex"
-            ]
-        },
-        "org.apache.ant:ant-launcher": {
-            "locked": "1.7.0",
-            "transitive": [
-                "org.apache.ant:ant"
-            ]
-        },
-        "org.apache.bval:bval-jsr": {
-            "locked": "2.0.3",
-            "transitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "org.apache.cassandra:cassandra-all": {
-            "locked": "3.11.2",
-            "transitive": [
-                "org.cassandraunit:cassandra-unit"
-            ]
-        },
-        "org.apache.cassandra:cassandra-thrift": {
-            "locked": "3.11.2",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "org.apache.commons:commons-lang3": {
-            "locked": "3.4",
-            "transitive": [
-                "com.addthis.metrics:reporter-config-base",
-                "com.addthis.metrics:reporter-config3",
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core",
-                "org.apache.cassandra:cassandra-all",
-                "org.apache.cassandra:cassandra-thrift",
-                "org.cassandraunit:cassandra-unit"
-            ]
-        },
-        "org.apache.commons:commons-math3": {
-            "locked": "3.2",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "org.apache.httpcomponents:httpclient": {
-            "locked": "4.5.2",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core",
-                "org.apache.thrift:libthrift"
-            ]
-        },
-        "org.apache.httpcomponents:httpcore": {
-            "locked": "4.4.4",
-            "transitive": [
-                "org.apache.httpcomponents:httpclient",
-                "org.apache.thrift:libthrift"
-            ]
-        },
-        "org.apache.thrift:libthrift": {
-            "locked": "0.9.2",
-            "transitive": [
-                "org.cassandraunit:cassandra-unit"
-            ]
-        },
-        "org.caffinitas.ohc:ohc-core": {
-            "locked": "0.4.4",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "org.cassandraunit:cassandra-unit": {
-            "locked": "3.5.0.1",
-            "requested": "3.5.0.1"
-        },
-        "org.codehaus.jackson:jackson-core-asl": {
-            "locked": "1.9.2",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all",
-                "org.codehaus.jackson:jackson-mapper-asl"
-            ]
-        },
-        "org.codehaus.jackson:jackson-mapper-asl": {
-            "locked": "1.9.2",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "org.eclipse.jdt.core.compiler:ecj": {
-            "locked": "4.4.2",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "org.fusesource:sigar": {
-            "locked": "1.6.4",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "org.glassfish:javax.el": {
-            "locked": "3.0.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "org.hamcrest:hamcrest-core": {
-            "locked": "1.3",
-            "transitive": [
-                "junit:junit",
-                "org.cassandraunit:cassandra-unit",
-                "org.hamcrest:hamcrest-library"
-            ]
-        },
-        "org.hamcrest:hamcrest-library": {
-            "locked": "1.3",
-            "transitive": [
-                "org.cassandraunit:cassandra-unit"
-            ]
-        },
-        "org.jctools:jctools-core": {
-            "locked": "1.2.1",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "org.mindrot:jbcrypt": {
-            "locked": "0.3m",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "org.mockito:mockito-core": {
-            "locked": "3.1.0",
-            "requested": "3.1.0"
-        },
-        "org.objenesis:objenesis": {
-            "locked": "2.6",
-            "transitive": [
-                "org.mockito:mockito-core"
-            ]
-        },
-        "org.ow2.asm:asm": {
-            "locked": "5.0.4",
-            "transitive": [
-                "com.github.jnr:jnr-ffi",
-                "net.minidev:accessors-smart",
-                "org.apache.cassandra:cassandra-all",
-                "org.ow2.asm:asm-tree"
-            ]
-        },
-        "org.ow2.asm:asm-analysis": {
-            "locked": "5.0.3",
-            "transitive": [
-                "com.github.jnr:jnr-ffi"
-            ]
-        },
-        "org.ow2.asm:asm-commons": {
-            "locked": "5.0.3",
-            "transitive": [
-                "com.github.jnr:jnr-ffi"
-            ]
-        },
-        "org.ow2.asm:asm-tree": {
-            "locked": "5.0.3",
-            "transitive": [
-                "com.github.jnr:jnr-ffi",
-                "org.ow2.asm:asm-analysis",
-                "org.ow2.asm:asm-commons",
-                "org.ow2.asm:asm-util"
-            ]
-        },
-        "org.ow2.asm:asm-util": {
-            "locked": "5.0.3",
-            "transitive": [
-                "com.github.jnr:jnr-ffi"
-            ]
-        },
-        "org.slf4j:jcl-over-slf4j": {
-            "locked": "1.7.7",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all",
-                "org.apache.cassandra:cassandra-thrift"
-            ]
-        },
-        "org.slf4j:slf4j-api": {
-            "locked": "1.7.25",
-            "transitive": [
-                "ch.qos.logback:logback-classic",
-                "com.addthis.metrics:reporter-config-base",
-                "com.addthis.metrics:reporter-config3",
-                "com.datastax.cassandra:cassandra-driver-core",
-                "com.jayway.jsonpath:json-path",
-                "com.netflix.conductor:conductor-common",
-                "com.netflix.servo:servo-core",
-                "com.netflix.spectator:spectator-api",
-                "com.thinkaurelius.thrift:thrift-server",
-                "io.dropwizard.metrics:metrics-core",
-                "io.dropwizard.metrics:metrics-jvm",
-                "org.apache.cassandra:cassandra-all",
-                "org.apache.cassandra:cassandra-thrift",
-                "org.apache.thrift:libthrift",
-                "org.caffinitas.ohc:ohc-core",
-                "org.cassandraunit:cassandra-unit",
-                "org.slf4j:jcl-over-slf4j"
-            ]
-        },
-        "org.xerial.snappy:snappy-java": {
-            "locked": "1.1.1.7",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
+                "org.springframework.boot:spring-boot-starter-test"
             ]
         },
         "org.yaml:snakeyaml": {
-            "locked": "1.12",
+            "locked": "1.26",
             "transitive": [
                 "com.addthis.metrics:reporter-config-base",
                 "com.addthis.metrics:reporter-config3",
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "software.amazon.ion:ion-java": {
-            "locked": "1.0.1",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
+                "org.apache.cassandra:cassandra-all",
+                "org.springframework.boot:spring-boot-starter"
             ]
         }
     },
     "testRuntimeClasspath": {
-        "aopalliance:aopalliance": {
-            "locked": "1.0",
-            "transitive": [
-                "com.google.inject:guice"
-            ]
-        },
-        "ch.qos.logback:logback-classic": {
-            "locked": "1.1.3",
-            "transitive": [
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "ch.qos.logback:logback-core": {
-            "locked": "1.1.3",
-            "transitive": [
-                "ch.qos.logback:logback-classic",
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
         "com.addthis.metrics:reporter-config-base": {
             "locked": "3.0.3",
             "transitive": [
@@ -3892,32 +1407,6 @@
             "locked": "3.0.3",
             "transitive": [
                 "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "com.amazonaws:aws-java-sdk-core": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-kms",
-                "com.amazonaws:aws-java-sdk-s3"
-            ]
-        },
-        "com.amazonaws:aws-java-sdk-kms": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-s3"
-            ]
-        },
-        "com.amazonaws:aws-java-sdk-s3": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.amazonaws:jmespath-java": {
-            "locked": "1.11.86",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-kms",
-                "com.amazonaws:aws-java-sdk-s3"
             ]
         },
         "com.boundary:high-scale-lib": {
@@ -3939,41 +1428,33 @@
             ]
         },
         "com.datastax.cassandra:cassandra-driver-core": {
-            "locked": "3.6.0",
-            "requested": "3.6.0"
+            "locked": "3.10.2"
         },
         "com.fasterxml.jackson.core:jackson-annotations": {
-            "locked": "2.10.0",
+            "locked": "2.11.4",
             "transitive": [
-                "com.fasterxml.jackson.core:jackson-databind"
+                "com.fasterxml.jackson.core:jackson-databind",
+                "com.netflix.conductor:conductor-core"
             ]
         },
         "com.fasterxml.jackson.core:jackson-core": {
-            "locked": "2.10.0",
+            "locked": "2.11.4",
             "transitive": [
                 "com.fasterxml.jackson.core:jackson-databind",
-                "com.fasterxml.jackson.dataformat:jackson-dataformat-cbor",
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ]
         },
         "com.fasterxml.jackson.core:jackson-databind": {
-            "locked": "2.10.0",
+            "locked": "2.11.4",
             "transitive": [
-                "com.amazonaws:aws-java-sdk-core",
-                "com.amazonaws:jmespath-java",
+                "com.datastax.cassandra:cassandra-driver-core",
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ]
         },
-        "com.fasterxml.jackson.dataformat:jackson-dataformat-cbor": {
-            "locked": "2.6.6",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
-            ]
-        },
         "com.github.ben-manes.caffeine:caffeine": {
-            "locked": "2.2.6",
+            "locked": "2.8.8",
             "transitive": [
                 "org.apache.cassandra:cassandra-all"
             ]
@@ -4039,35 +1520,29 @@
                 "com.github.rholder:guava-retrying"
             ]
         },
+        "com.google.errorprone:error_prone_annotations": {
+            "locked": "2.4.0",
+            "transitive": [
+                "com.github.ben-manes.caffeine:caffeine"
+            ]
+        },
         "com.google.guava:guava": {
             "locked": "21.0",
             "transitive": [
                 "com.datastax.cassandra:cassandra-driver-core",
                 "com.github.rholder:guava-retrying",
-                "com.google.inject:guice",
                 "com.netflix.servo:servo-core",
+                "io.airlift:airline",
                 "org.apache.cassandra:cassandra-all",
                 "org.caffinitas.ohc:ohc-core",
                 "org.cassandraunit:cassandra-unit"
             ]
         },
-        "com.google.inject.extensions:guice-multibindings": {
-            "locked": "4.1.0",
-            "transitive": [
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
-        "com.google.inject:guice": {
-            "locked": "4.1.0",
-            "transitive": [
-                "com.google.inject.extensions:guice-multibindings",
-                "com.netflix.conductor:conductor-core"
-            ]
-        },
         "com.google.protobuf:protobuf-java": {
-            "locked": "3.5.1",
+            "locked": "3.13.0",
             "transitive": [
-                "com.netflix.conductor:conductor-common"
+                "com.netflix.conductor:conductor-common",
+                "com.netflix.conductor:conductor-core"
             ]
         },
         "com.googlecode.concurrent-trees:concurrent-trees": {
@@ -4089,9 +1564,10 @@
             ]
         },
         "com.jayway.jsonpath:json-path": {
-            "locked": "2.2.0",
+            "locked": "2.4.0",
             "transitive": [
-                "com.netflix.conductor:conductor-core"
+                "com.netflix.conductor:conductor-core",
+                "org.springframework.boot:spring-boot-starter-test"
             ]
         },
         "com.lmax:disruptor": {
@@ -4110,15 +1586,16 @@
             "project": true
         },
         "com.netflix.servo:servo-core": {
-            "locked": "0.12.17",
+            "locked": "0.13.0",
             "transitive": [
                 "com.netflix.conductor:conductor-core"
             ]
         },
         "com.netflix.spectator:spectator-api": {
-            "locked": "0.68.0",
+            "locked": "0.122.0",
             "transitive": [
-                "com.netflix.conductor:conductor-core"
+                "com.netflix.conductor:conductor-core",
+                "com.netflix.servo:servo-core"
             ]
         },
         "com.ning:compress-lzf": {
@@ -4128,15 +1605,33 @@
             ]
         },
         "com.spotify:completable-futures": {
-            "locked": "0.3.1",
+            "locked": "0.3.3",
             "transitive": [
                 "com.netflix.conductor:conductor-core"
+            ]
+        },
+        "com.sun.activation:jakarta.activation": {
+            "locked": "1.2.2",
+            "transitive": [
+                "org.glassfish.jaxb:jaxb-runtime"
+            ]
+        },
+        "com.sun.istack:istack-commons-runtime": {
+            "locked": "3.0.12",
+            "transitive": [
+                "org.glassfish.jaxb:jaxb-runtime"
             ]
         },
         "com.thinkaurelius.thrift:thrift-server": {
             "locked": "0.3.7",
             "transitive": [
                 "org.apache.cassandra:cassandra-all"
+            ]
+        },
+        "com.vaadin.external.google:android-json": {
+            "locked": "0.0.20131108.vaadin1",
+            "transitive": [
+                "org.skyscreamer:jsonassert"
             ]
         },
         "commons-cli:commons-cli": {
@@ -4146,17 +1641,15 @@
             ]
         },
         "commons-codec:commons-codec": {
-            "locked": "1.9",
+            "locked": "1.14",
             "transitive": [
-                "org.apache.cassandra:cassandra-all",
-                "org.apache.httpcomponents:httpclient"
+                "org.apache.cassandra:cassandra-all"
             ]
         },
-        "commons-logging:commons-logging": {
-            "locked": "1.2",
+        "commons-io:commons-io": {
+            "locked": "2.7",
             "transitive": [
-                "com.amazonaws:aws-java-sdk-core",
-                "org.apache.httpcomponents:httpclient"
+                "com.netflix.conductor:conductor-core"
             ]
         },
         "de.jflex:jflex": {
@@ -4165,8 +1658,14 @@
                 "org.apache.cassandra:cassandra-thrift"
             ]
         },
+        "io.airlift:airline": {
+            "locked": "0.6",
+            "transitive": [
+                "org.apache.cassandra:cassandra-all"
+            ]
+        },
         "io.dropwizard.metrics:metrics-core": {
-            "locked": "3.2.2",
+            "locked": "4.1.22",
             "transitive": [
                 "com.addthis.metrics:reporter-config3",
                 "com.datastax.cassandra:cassandra-driver-core",
@@ -4175,46 +1674,58 @@
             ]
         },
         "io.dropwizard.metrics:metrics-jvm": {
-            "locked": "3.1.0",
+            "locked": "4.1.22",
             "transitive": [
                 "org.apache.cassandra:cassandra-all"
             ]
         },
         "io.netty:netty-buffer": {
-            "locked": "4.0.56.Final",
+            "locked": "4.1.65.Final",
             "transitive": [
+                "io.netty:netty-codec",
                 "io.netty:netty-handler",
                 "io.netty:netty-transport"
             ]
         },
         "io.netty:netty-codec": {
-            "locked": "4.0.56.Final",
+            "locked": "4.1.65.Final",
             "transitive": [
                 "io.netty:netty-handler"
             ]
         },
         "io.netty:netty-common": {
-            "locked": "4.0.56.Final",
+            "locked": "4.1.65.Final",
             "transitive": [
-                "io.netty:netty-buffer"
+                "io.netty:netty-buffer",
+                "io.netty:netty-codec",
+                "io.netty:netty-handler",
+                "io.netty:netty-resolver",
+                "io.netty:netty-transport"
             ]
         },
         "io.netty:netty-handler": {
-            "locked": "4.0.56.Final",
+            "locked": "4.1.65.Final",
             "transitive": [
                 "com.datastax.cassandra:cassandra-driver-core",
                 "org.cassandraunit:cassandra-unit"
             ]
         },
+        "io.netty:netty-resolver": {
+            "locked": "4.1.65.Final",
+            "transitive": [
+                "io.netty:netty-handler",
+                "io.netty:netty-transport"
+            ]
+        },
         "io.netty:netty-transport": {
-            "locked": "4.0.56.Final",
+            "locked": "4.1.65.Final",
             "transitive": [
                 "io.netty:netty-codec",
                 "io.netty:netty-handler"
             ]
         },
         "io.reactivex:rxjava": {
-            "locked": "1.2.2",
+            "locked": "1.3.8",
             "transitive": [
                 "com.netflix.conductor:conductor-core"
             ]
@@ -4225,42 +1736,70 @@
                 "com.clearspring.analytics:stream"
             ]
         },
+        "jakarta.activation:jakarta.activation-api": {
+            "locked": "1.2.2",
+            "transitive": [
+                "jakarta.xml.bind:jakarta.xml.bind-api"
+            ]
+        },
+        "jakarta.annotation:jakarta.annotation-api": {
+            "locked": "1.3.5",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter"
+            ]
+        },
+        "jakarta.xml.bind:jakarta.xml.bind-api": {
+            "locked": "2.3.3",
+            "transitive": [
+                "org.glassfish.jaxb:jaxb-runtime",
+                "org.springframework.boot:spring-boot-starter-test"
+            ]
+        },
+        "javax.activation:activation": {
+            "locked": "1.1.1",
+            "transitive": [
+                "com.netflix.conductor:conductor-core"
+            ]
+        },
+        "javax.activation:javax.activation-api": {
+            "locked": "1.2.0",
+            "transitive": [
+                "javax.xml.bind:jaxb-api"
+            ]
+        },
         "javax.inject:javax.inject": {
             "locked": "1",
             "transitive": [
-                "com.google.inject:guice",
-                "com.netflix.conductor:conductor-common"
+                "io.airlift:airline"
             ]
         },
-        "javax.validation:validation-api": {
-            "locked": "2.0.1.Final",
+        "javax.xml.bind:jaxb-api": {
+            "locked": "2.3.1",
             "transitive": [
-                "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ]
         },
         "joda-time:joda-time": {
-            "locked": "2.8.1",
+            "locked": "2.4",
             "transitive": [
-                "com.amazonaws:aws-java-sdk-core",
                 "org.apache.cassandra:cassandra-all"
             ]
         },
         "junit:junit": {
-            "locked": "4.12",
-            "requested": "4.12",
+            "locked": "4.13.2",
             "transitive": [
-                "org.cassandraunit:cassandra-unit"
+                "org.cassandraunit:cassandra-unit",
+                "org.junit.vintage:junit-vintage-engine"
             ]
         },
         "net.bytebuddy:byte-buddy": {
-            "locked": "1.9.10",
+            "locked": "1.10.22",
             "transitive": [
                 "org.mockito:mockito-core"
             ]
         },
         "net.bytebuddy:byte-buddy-agent": {
-            "locked": "1.9.10",
+            "locked": "1.10.22",
             "transitive": [
                 "org.mockito:mockito-core"
             ]
@@ -4278,13 +1817,13 @@
             ]
         },
         "net.minidev:accessors-smart": {
-            "locked": "1.1",
+            "locked": "2.3.1",
             "transitive": [
                 "net.minidev:json-smart"
             ]
         },
         "net.minidev:json-smart": {
-            "locked": "2.2.1",
+            "locked": "2.3.1",
             "transitive": [
                 "com.jayway.jsonpath:json-path"
             ]
@@ -4322,26 +1861,26 @@
             ]
         },
         "org.apache.bval:bval-jsr": {
-            "locked": "2.0.3",
+            "locked": "2.0.5",
             "transitive": [
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ]
         },
         "org.apache.cassandra:cassandra-all": {
-            "locked": "3.11.2",
+            "locked": "3.11.4",
             "transitive": [
                 "org.cassandraunit:cassandra-unit"
             ]
         },
         "org.apache.cassandra:cassandra-thrift": {
-            "locked": "3.11.2",
+            "locked": "3.11.4",
             "transitive": [
                 "org.apache.cassandra:cassandra-all"
             ]
         },
         "org.apache.commons:commons-lang3": {
-            "locked": "3.4",
+            "locked": "3.10",
             "transitive": [
                 "com.addthis.metrics:reporter-config-base",
                 "com.addthis.metrics:reporter-config3",
@@ -4359,18 +1898,49 @@
             ]
         },
         "org.apache.httpcomponents:httpclient": {
-            "locked": "4.5.2",
+            "locked": "4.5.13",
             "transitive": [
-                "com.amazonaws:aws-java-sdk-core",
                 "org.apache.thrift:libthrift"
             ]
         },
         "org.apache.httpcomponents:httpcore": {
-            "locked": "4.4.4",
+            "locked": "4.4.14",
             "transitive": [
                 "org.apache.httpcomponents:httpclient",
                 "org.apache.thrift:libthrift"
             ]
+        },
+        "org.apache.logging.log4j:log4j-api": {
+            "locked": "2.13.3",
+            "transitive": [
+                "org.apache.logging.log4j:log4j-core",
+                "org.apache.logging.log4j:log4j-jul",
+                "org.apache.logging.log4j:log4j-slf4j-impl",
+                "org.apache.logging.log4j:log4j-web"
+            ]
+        },
+        "org.apache.logging.log4j:log4j-core": {
+            "locked": "2.13.3",
+            "transitive": [
+                "org.apache.logging.log4j:log4j-slf4j-impl",
+                "org.apache.logging.log4j:log4j-web",
+                "org.springframework.boot:spring-boot-starter-log4j2"
+            ]
+        },
+        "org.apache.logging.log4j:log4j-jul": {
+            "locked": "2.13.3",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter-log4j2"
+            ]
+        },
+        "org.apache.logging.log4j:log4j-slf4j-impl": {
+            "locked": "2.13.3",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter-log4j2"
+            ]
+        },
+        "org.apache.logging.log4j:log4j-web": {
+            "locked": "2.13.3"
         },
         "org.apache.thrift:libthrift": {
             "locked": "0.9.2",
@@ -4378,15 +1948,44 @@
                 "org.cassandraunit:cassandra-unit"
             ]
         },
+        "org.apiguardian:apiguardian-api": {
+            "locked": "1.1.0",
+            "transitive": [
+                "org.junit.jupiter:junit-jupiter-api",
+                "org.junit.jupiter:junit-jupiter-engine",
+                "org.junit.jupiter:junit-jupiter-params",
+                "org.junit.platform:junit-platform-commons",
+                "org.junit.platform:junit-platform-engine",
+                "org.junit.vintage:junit-vintage-engine"
+            ]
+        },
+        "org.assertj:assertj-core": {
+            "locked": "3.16.1",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter-test"
+            ]
+        },
         "org.caffinitas.ohc:ohc-core": {
+            "locked": "0.4.4",
+            "transitive": [
+                "org.apache.cassandra:cassandra-all",
+                "org.caffinitas.ohc:ohc-core-j8"
+            ]
+        },
+        "org.caffinitas.ohc:ohc-core-j8": {
             "locked": "0.4.4",
             "transitive": [
                 "org.apache.cassandra:cassandra-all"
             ]
         },
         "org.cassandraunit:cassandra-unit": {
-            "locked": "3.5.0.1",
-            "requested": "3.5.0.1"
+            "locked": "3.11.2.0"
+        },
+        "org.checkerframework:checker-qual": {
+            "locked": "3.8.0",
+            "transitive": [
+                "com.github.ben-manes.caffeine:caffeine"
+            ]
         },
         "org.codehaus.jackson:jackson-core-asl": {
             "locked": "1.9.2",
@@ -4413,15 +2012,27 @@
                 "org.apache.cassandra:cassandra-all"
             ]
         },
-        "org.glassfish:javax.el": {
-            "locked": "3.0.0",
+        "org.glassfish.jaxb:jaxb-runtime": {
+            "locked": "2.3.4",
             "transitive": [
-                "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ]
         },
+        "org.glassfish.jaxb:txw2": {
+            "locked": "2.3.4",
+            "transitive": [
+                "org.glassfish.jaxb:jaxb-runtime"
+            ]
+        },
+        "org.hamcrest:hamcrest": {
+            "locked": "2.2",
+            "transitive": [
+                "org.hamcrest:hamcrest-core",
+                "org.springframework.boot:spring-boot-starter-test"
+            ]
+        },
         "org.hamcrest:hamcrest-core": {
-            "locked": "1.3",
+            "locked": "2.2",
             "transitive": [
                 "junit:junit",
                 "org.cassandraunit:cassandra-unit",
@@ -4429,7 +2040,7 @@
             ]
         },
         "org.hamcrest:hamcrest-library": {
-            "locked": "1.3",
+            "locked": "2.2",
             "transitive": [
                 "org.cassandraunit:cassandra-unit"
             ]
@@ -4440,6 +2051,65 @@
                 "org.apache.cassandra:cassandra-all"
             ]
         },
+        "org.junit.jupiter:junit-jupiter": {
+            "locked": "5.6.3",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter-test"
+            ]
+        },
+        "org.junit.jupiter:junit-jupiter-api": {
+            "locked": "5.6.3",
+            "transitive": [
+                "org.junit.jupiter:junit-jupiter",
+                "org.junit.jupiter:junit-jupiter-engine",
+                "org.junit.jupiter:junit-jupiter-params",
+                "org.mockito:mockito-junit-jupiter"
+            ]
+        },
+        "org.junit.jupiter:junit-jupiter-engine": {
+            "locked": "5.6.3",
+            "transitive": [
+                "org.junit.jupiter:junit-jupiter"
+            ]
+        },
+        "org.junit.jupiter:junit-jupiter-params": {
+            "locked": "5.6.3",
+            "transitive": [
+                "org.junit.jupiter:junit-jupiter"
+            ]
+        },
+        "org.junit.platform:junit-platform-commons": {
+            "locked": "1.6.3",
+            "transitive": [
+                "org.junit.jupiter:junit-jupiter-api",
+                "org.junit.platform:junit-platform-engine"
+            ]
+        },
+        "org.junit.platform:junit-platform-engine": {
+            "locked": "1.6.3",
+            "transitive": [
+                "org.junit.jupiter:junit-jupiter-engine",
+                "org.junit.vintage:junit-vintage-engine"
+            ]
+        },
+        "org.junit.vintage:junit-vintage-engine": {
+            "locked": "5.6.3",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter-test"
+            ]
+        },
+        "org.junit:junit-bom": {
+            "locked": "5.6.3",
+            "transitive": [
+                "org.junit.jupiter:junit-jupiter",
+                "org.junit.jupiter:junit-jupiter-api",
+                "org.junit.jupiter:junit-jupiter-engine",
+                "org.junit.jupiter:junit-jupiter-params",
+                "org.junit.platform:junit-platform-commons",
+                "org.junit.platform:junit-platform-engine",
+                "org.junit.vintage:junit-vintage-engine"
+            ]
+        },
         "org.mindrot:jbcrypt": {
             "locked": "0.3m",
             "transitive": [
@@ -4447,13 +2117,29 @@
             ]
         },
         "org.mockito:mockito-core": {
-            "locked": "3.1.0",
-            "requested": "3.1.0"
+            "locked": "3.3.3",
+            "transitive": [
+                "org.mockito:mockito-junit-jupiter",
+                "org.springframework.boot:spring-boot-starter-test"
+            ]
+        },
+        "org.mockito:mockito-junit-jupiter": {
+            "locked": "3.3.3",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter-test"
+            ]
         },
         "org.objenesis:objenesis": {
             "locked": "2.6",
             "transitive": [
                 "org.mockito:mockito-core"
+            ]
+        },
+        "org.opentest4j:opentest4j": {
+            "locked": "1.2.0",
+            "transitive": [
+                "org.junit.jupiter:junit-jupiter-api",
+                "org.junit.platform:junit-platform-engine"
             ]
         },
         "org.ow2.asm:asm": {
@@ -4492,22 +2178,33 @@
                 "com.github.jnr:jnr-ffi"
             ]
         },
+        "org.skyscreamer:jsonassert": {
+            "locked": "1.5.0",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter-test"
+            ]
+        },
         "org.slf4j:jcl-over-slf4j": {
-            "locked": "1.7.7",
+            "locked": "1.7.30",
             "transitive": [
                 "org.apache.cassandra:cassandra-all",
                 "org.apache.cassandra:cassandra-thrift"
             ]
         },
-        "org.slf4j:slf4j-api": {
-            "locked": "1.7.25",
+        "org.slf4j:jul-to-slf4j": {
+            "locked": "1.7.30",
             "transitive": [
-                "ch.qos.logback:logback-classic",
+                "org.springframework.boot:spring-boot-starter-log4j2",
+                "org.springframework.boot:spring-boot-starter-logging"
+            ]
+        },
+        "org.slf4j:slf4j-api": {
+            "locked": "1.7.30",
+            "transitive": [
                 "com.addthis.metrics:reporter-config-base",
                 "com.addthis.metrics:reporter-config3",
                 "com.datastax.cassandra:cassandra-driver-core",
                 "com.jayway.jsonpath:json-path",
-                "com.netflix.conductor:conductor-common",
                 "com.netflix.servo:servo-core",
                 "com.netflix.spectator:spectator-api",
                 "com.thinkaurelius.thrift:thrift-server",
@@ -4515,10 +2212,109 @@
                 "io.dropwizard.metrics:metrics-jvm",
                 "org.apache.cassandra:cassandra-all",
                 "org.apache.cassandra:cassandra-thrift",
+                "org.apache.logging.log4j:log4j-slf4j-impl",
                 "org.apache.thrift:libthrift",
                 "org.caffinitas.ohc:ohc-core",
                 "org.cassandraunit:cassandra-unit",
-                "org.slf4j:jcl-over-slf4j"
+                "org.slf4j:jcl-over-slf4j",
+                "org.slf4j:jul-to-slf4j"
+            ]
+        },
+        "org.springframework.boot:spring-boot": {
+            "locked": "2.3.12.RELEASE",
+            "transitive": [
+                "org.springframework.boot:spring-boot-autoconfigure",
+                "org.springframework.boot:spring-boot-starter",
+                "org.springframework.boot:spring-boot-test",
+                "org.springframework.boot:spring-boot-test-autoconfigure"
+            ]
+        },
+        "org.springframework.boot:spring-boot-autoconfigure": {
+            "locked": "2.3.12.RELEASE",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter",
+                "org.springframework.boot:spring-boot-test-autoconfigure"
+            ]
+        },
+        "org.springframework.boot:spring-boot-starter": {
+            "locked": "2.3.12.RELEASE",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter-test"
+            ]
+        },
+        "org.springframework.boot:spring-boot-starter-log4j2": {
+            "locked": "2.3.12.RELEASE"
+        },
+        "org.springframework.boot:spring-boot-starter-logging": {
+            "locked": "2.3.12.RELEASE",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter"
+            ]
+        },
+        "org.springframework.boot:spring-boot-starter-test": {
+            "locked": "2.3.12.RELEASE"
+        },
+        "org.springframework.boot:spring-boot-test": {
+            "locked": "2.3.12.RELEASE",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter-test",
+                "org.springframework.boot:spring-boot-test-autoconfigure"
+            ]
+        },
+        "org.springframework.boot:spring-boot-test-autoconfigure": {
+            "locked": "2.3.12.RELEASE",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter-test"
+            ]
+        },
+        "org.springframework:spring-aop": {
+            "locked": "5.2.15.RELEASE",
+            "transitive": [
+                "org.springframework:spring-context"
+            ]
+        },
+        "org.springframework:spring-beans": {
+            "locked": "5.2.15.RELEASE",
+            "transitive": [
+                "org.springframework:spring-aop",
+                "org.springframework:spring-context"
+            ]
+        },
+        "org.springframework:spring-context": {
+            "locked": "5.2.15.RELEASE",
+            "transitive": [
+                "org.springframework.boot:spring-boot"
+            ]
+        },
+        "org.springframework:spring-core": {
+            "locked": "5.2.15.RELEASE",
+            "transitive": [
+                "org.springframework.boot:spring-boot",
+                "org.springframework.boot:spring-boot-starter",
+                "org.springframework.boot:spring-boot-starter-test",
+                "org.springframework:spring-aop",
+                "org.springframework:spring-beans",
+                "org.springframework:spring-context",
+                "org.springframework:spring-expression",
+                "org.springframework:spring-test"
+            ]
+        },
+        "org.springframework:spring-expression": {
+            "locked": "5.2.15.RELEASE",
+            "transitive": [
+                "org.springframework:spring-context"
+            ]
+        },
+        "org.springframework:spring-jcl": {
+            "locked": "5.2.15.RELEASE",
+            "transitive": [
+                "org.springframework:spring-core"
+            ]
+        },
+        "org.springframework:spring-test": {
+            "locked": "5.2.15.RELEASE",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter-test"
             ]
         },
         "org.xerial.snappy:snappy-java": {
@@ -4527,18 +2323,19 @@
                 "org.apache.cassandra:cassandra-all"
             ]
         },
+        "org.xmlunit:xmlunit-core": {
+            "locked": "2.7.0",
+            "transitive": [
+                "org.springframework.boot:spring-boot-starter-test"
+            ]
+        },
         "org.yaml:snakeyaml": {
-            "locked": "1.12",
+            "locked": "1.26",
             "transitive": [
                 "com.addthis.metrics:reporter-config-base",
                 "com.addthis.metrics:reporter-config3",
-                "org.apache.cassandra:cassandra-all"
-            ]
-        },
-        "software.amazon.ion:ion-java": {
-            "locked": "1.0.1",
-            "transitive": [
-                "com.amazonaws:aws-java-sdk-core"
+                "org.apache.cassandra:cassandra-all",
+                "org.springframework.boot:spring-boot-starter"
             ]
         }
     }
